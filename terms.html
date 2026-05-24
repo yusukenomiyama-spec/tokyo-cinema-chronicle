@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>利用規約 — 東京映画浪漫記</title>
+  <meta name="description" content="東京映画浪漫記の利用規約。サービスのご利用条件を定めます。">
+  <meta property="og:type"    content="website">
+  <meta property="og:title"   content="利用規約 — 東京映画浪漫記">
+  <meta property="og:image"   content="https://tokyocinemachronicle.com/ogp.svg">
+  <meta property="og:url"     content="https://tokyocinemachronicle.com/terms.html">
+  <meta property="og:locale"  content="ja_JP">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:    #f5f0e8;
+      --card:  #ffffff;
+      --red:   #cc1a1a;
+      --text:  #1a1510;
+      --muted: #9a8a78;
+      --border: rgba(0,0,0,0.1);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Serif JP', serif;
+      line-height: 1.9;
+    }
+
+    .film-strip {
+      height: 28px;
+      background-color: #d8d0c4;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='28'%3E%3Crect width='32' height='28' fill='%23d8d0c4'/%3E%3Crect x='9' y='5' width='14' height='18' rx='3' fill='%23f5f0e8'/%3E%3C/svg%3E");
+      background-size: 32px 100%;
+      background-repeat: repeat-x;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+    }
+
+    .site-header {
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 2rem 1.5rem 1.5rem;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .site-logo {
+      font-size: 1.4rem;
+      font-weight: 900;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .site-logo:hover { color: var(--red); }
+
+    .back-link {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.12em;
+      border-bottom: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .back-link:hover { color: var(--red); border-bottom-color: var(--red); }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+    }
+
+    .page-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      color: var(--red);
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .page-label::before { content: '◆ '; }
+
+    h1 {
+      font-size: clamp(1.6rem, 5vw, 2.4rem);
+      font-weight: 900;
+      line-height: 1.2;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .updated {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.08em;
+      margin-bottom: 2.5rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section { margin-bottom: 2.5rem; }
+
+    h2 {
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+      padding-left: 0.8rem;
+      border-left: 3px solid var(--red);
+      line-height: 1.4;
+    }
+
+    p {
+      font-size: 0.875rem;
+      color: rgba(26,21,16,0.82);
+      margin-bottom: 0.75rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 0.75rem;
+    }
+
+    ul li {
+      font-size: 0.875rem;
+      color: rgba(26,21,16,0.82);
+      padding: 0.25rem 0 0.25rem 1.2em;
+      position: relative;
+    }
+
+    ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: var(--red);
+      font-size: 0.8rem;
+    }
+
+    .notice-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      padding: 1rem 1.2rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.84rem;
+      color: rgba(26,21,16,0.8);
+    }
+
+    .prohibited-list li::before { color: var(--red); content: '✕  '; }
+
+    a {
+      color: var(--red);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(204,26,26,0.3);
+      transition: border-color 0.2s;
+    }
+
+    a:hover { border-bottom-color: var(--red); }
+
+    .site-footer {
+      background: #ede8dc;
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 1.5rem 1rem;
+    }
+
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.6rem;
+    }
+
+    .footer-links a {
+      font-size: 0.65rem;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      border: none;
+    }
+
+    .footer-links a:hover { color: var(--red); }
+
+    .copyright {
+      font-size: 0.62rem;
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+
+<div class="film-strip"></div>
+<div class="site-header">
+  <div class="header-inner">
+    <a href="index.html" class="site-logo">東京映画浪漫記</a>
+    <a href="index.html" class="back-link">← TIMELINE に戻る</a>
+  </div>
+</div>
+
+<main>
+  <div class="page-label">Legal</div>
+  <h1>利用規約</h1>
+  <div class="updated">最終更新日：2026年5月</div>
+
+  <div class="notice-box">
+    本利用規約（以下「本規約」）は、「東京映画浪漫記」（以下「当サービス」）の利用条件を定めるものです。当サービスにアクセスまたはご利用いただくことで、本規約に同意したものとみなします。同意いただけない場合は、当サービスのご利用をお控えください。
+  </div>
+
+  <section>
+    <h2>1. サービスの目的と性質</h2>
+    <p>当サービスは、東京を舞台にした映画作品を時系列で紹介することを目的とした、個人運営の非営利情報サイトです。掲載する映画情報・あらすじ・年代解説はエンターテインメントおよび情報提供を目的としており、学術的・法的な正確性を保証するものではありません。</p>
+    <p>当サービスは特定の映画会社・配給会社・プロダクションとは一切の関係がなく、公式サービスではありません。</p>
+  </section>
+
+  <section>
+    <h2>2. 著作権・知的財産権</h2>
+    <p>当サービスに掲載されている映画タイトル・作品情報・キャラクター名等の知的財産権は、それぞれの権利者（映画会社、制作会社、監督等）に帰属します。</p>
+    <p>当サービスのデザイン・構成・独自のテキスト表現（出来事の説明文等）については、サイト運営者に著作権が帰属します。無断転載・複製はお断りします。</p>
+    <ul>
+      <li>当サービスは著作権法上の引用・紹介の範囲内での情報掲載を行っています</li>
+      <li>映画の予告編・スチール写真等の著作物は掲載しておりません</li>
+      <li>権利者より削除要請があった場合、速やかに対応します</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>3. ユーザーによる情報の追加</h2>
+    <p>当サービスには「記録に追加」機能があり、ユーザーが映画情報を入力することができます。この機能についての注意事項：</p>
+    <ul>
+      <li>入力されたデータはお使いのブラウザのローカルストレージに保存され、外部サーバーへの送信は行われません</li>
+      <li>ブラウザのデータを削除した場合、または「データをリセット」操作を行った場合、追加したデータは消去されます</li>
+      <li>他者の著作物を無断で転載・複製するような内容の入力はご遠慮ください</li>
+      <li>虚偽の情報や第三者を誹謗中傷する内容の入力はお控えください</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>4. 禁止事項</h2>
+    <p>当サービスの利用にあたり、以下の行為を禁止します。</p>
+    <ul class="prohibited-list">
+      <li>当サービスの運営を妨害する行為（大量アクセス・スクレイピング等）</li>
+      <li>当サービスのコンテンツを無断で複製・転載・販売する行為</li>
+      <li>当サービスを経由して第三者に損害を与える行為</li>
+      <li>法令または公序良俗に反する行為</li>
+      <li>当サービスを逆コンパイル・リバースエンジニアリングする行為</li>
+    </ul>
+  </section>
+
+  <section>
+    <h2>5. 免責事項</h2>
+    <p>当サービスは現状有姿で提供されており、以下について一切の保証を行いません。</p>
+    <ul>
+      <li>掲載情報の正確性・完全性・最新性</li>
+      <li>当サービスの継続的な提供・稼働保証</li>
+      <li>当サービスの利用により生じた損害（直接・間接を問わず）</li>
+      <li>外部リンク先サービスの内容・安全性</li>
+    </ul>
+    <p>当サービスの利用は、ユーザー自身の責任において行うものとします。</p>
+  </section>
+
+  <section>
+    <h2>6. サービスの変更・終了</h2>
+    <p>サイト運営者は、予告なく当サービスの内容を変更または終了する場合があります。変更・終了によってユーザーに生じた損害について、サイト運営者は責任を負いません。</p>
+  </section>
+
+  <section>
+    <h2>7. 準拠法・管轄</h2>
+    <p>本規約の解釈・適用は日本法に準拠します。本規約に関して生じた紛争については、サイト運営者の所在地を管轄する裁判所を専属的合意管轄とします。</p>
+  </section>
+
+  <section>
+    <h2>8. 規約の変更</h2>
+    <p>サイト運営者は必要に応じて本規約を変更することができます。変更後の規約は本ページへの掲載をもって効力を生じるものとし、継続して当サービスをご利用いただいた場合、変更後の規約に同意したものとみなします。</p>
+  </section>
+</main>
+
+<div class="film-strip"></div>
+<footer class="site-footer">
+  <div class="footer-links">
+    <a href="index.html">TIMELINE</a>
+    <a href="privacy-policy.html">PRIVACY POLICY</a>
+    <a href="terms.html">TERMS OF USE</a>
+  </div>
+  <div class="copyright">© 2026 東京映画浪漫記. All rights reserved.</div>
+</footer>
+
+</body>
+</html>

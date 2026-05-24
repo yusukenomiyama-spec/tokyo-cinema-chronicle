@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(anthropic-skills:xlsx)",
+      "Skill(anthropic-skills:xlsx:*)",
+      "Read(//Users/nozamurai/Library/Application Support/Claude/local-agent-mode-sessions/skills-plugin/82dc83ce-ac6a-4613-92f7-6195aca9a00e/b29b601e-faca-44b7-9e86-733dcc47a470/skills/xlsx/**)",
+      "Bash(python3 -c ' *)",
+      "Bash(pip3 install *)",
+      "mcp__Claude_Preview__preview_start",
+      "Bash(ipconfig getifaddr *)",
+      "Read(//Users/nozamurai/Desktop/Project/東京映画年表/**)",
+      "Bash(cp \"/Users/nozamurai/Desktop/Project/東京映画年表/東京映画年表.xlsx\" /tmp/tokyo_movies.xlsx && echo \"OK\")",
+      "Bash(ls -la \"/Users/nozamurai/Desktop/Project/\" 2>&1)",
+      "Bash(python3 -m http.server 8765)",
+      "Bash(sort -t: -k2 -n)",
+      "Bash(whois tokyomoviechronicle.com)"
+    ]
+  }
+}

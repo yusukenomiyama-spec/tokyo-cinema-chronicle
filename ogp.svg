@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#f5f0e8"/>
+
+  <!-- Film strip top -->
+  <rect width="1200" height="44" fill="#d8d0c4"/>
+  <rect y="587" width="1200" height="44" fill="#d8d0c4"/>
+
+  <!-- Sprocket holes top -->
+  <rect x="9"   y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="49"  y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="89"  y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="129" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="169" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="209" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="249" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="289" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="329" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="369" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="409" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="449" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="489" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="529" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="569" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="609" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="649" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="689" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="729" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="769" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="809" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="849" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="889" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="929" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="969" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="1009" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="1049" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="1089" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="1129" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="1169" y="8" width="22" height="28" rx="4" fill="#f5f0e8"/>
+
+  <!-- Sprocket holes bottom (same pattern) -->
+  <rect x="9"   y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="49"  y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="89"  y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="129" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="169" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="209" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="249" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="289" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="329" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="369" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="409" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="449" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="489" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="529" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="569" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="609" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="649" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="689" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="729" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="769" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="809" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="849" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="889" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="929" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="969" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="1009" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="1049" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="1089" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="1129" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+  <rect x="1169" y="595" width="22" height="28" rx="4" fill="#f5f0e8"/>
+
+  <!-- Red accent line -->
+  <rect x="100" y="300" width="4" height="240" fill="#cc1a1a"/>
+
+  <!-- Main title -->
+  <text x="600" y="240" text-anchor="middle" font-family="serif" font-weight="900" font-size="148" fill="#1a1510" letter-spacing="8">東京映画浪漫記</text>
+
+  <!-- Red underline rule -->
+  <rect x="530" y="268" width="140" height="3" fill="#cc1a1a"/>
+
+  <!-- Subtitle -->
+  <text x="600" y="318" text-anchor="middle" font-family="'Courier New', monospace" font-size="22" fill="#9a8a78" letter-spacing="10">TOKYO CINEMA CHRONICLE</text>
+
+  <!-- Description -->
+  <text x="600" y="380" text-anchor="middle" font-family="serif" font-size="22" fill="#1a1510" opacity="0.7">江戸時代から未来まで——東京を舞台にした映画の出来事を時系列で紐解く。</text>
+  <text x="600" y="415" text-anchor="middle" font-family="serif" font-size="20" fill="#9a8a78">75 TIME PERIODS  ◆  107 MOVIES  ◆  9 GENRES</text>
+</svg>

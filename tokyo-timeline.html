@@ -1,0 +1,1801 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>東京映画浪漫記 — Tokyo Cinema Chronicle</title>
+  <meta name="description" content="江戸時代から未来まで——東京を舞台にした映画の出来事を時系列で紐解く。ジャンルを超えた107作品が共存するカオスな東京年代記。">
+
+  <!-- OGP -->
+  <meta property="og:type"        content="website">
+  <meta property="og:site_name"   content="東京映画浪漫記">
+  <meta property="og:title"       content="東京映画浪漫記 — Tokyo Cinema Chronicle">
+  <meta property="og:description" content="江戸時代から未来まで——東京を舞台にした映画の出来事を時系列で紐解く。ジャンルを超えた107作品が共存するカオスな東京年代記。">
+  <meta property="og:image"       content="https://YOUR-DOMAIN/ogp.svg">
+  <meta property="og:url"         content="https://YOUR-DOMAIN/tokyo-timeline.html">
+  <meta property="og:locale"      content="ja_JP">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:title"       content="東京映画浪漫記 — Tokyo Cinema Chronicle">
+  <meta name="twitter:description" content="江戸時代から未来まで——東京を舞台にした映画の出来事を時系列で紐解く。107作品が共存するカオスな東京年代記。">
+  <meta name="twitter:image"       content="https://YOUR-DOMAIN/ogp.svg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #f5f0e8;
+      --bg-card: #ffffff;
+      --bg-card2:#ede8dc;
+      --red:     #cc1a1a;
+      --red-dim: rgba(204,26,26,0.07);
+      --white:   #1a1510;
+      --muted:   #9a8a78;
+      --border:  rgba(0,0,0,0.1);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'Noto Serif JP', serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── フィルムグレイン ── */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.88' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9998;
+      opacity: 0.5;
+    }
+
+    /* ── フィルムストリップ（スプロケット穴） ── */
+    .film-strip {
+      height: 30px;
+      background-color: #d8d0c4;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='30'%3E%3Crect width='32' height='30' fill='%23d8d0c4'/%3E%3Crect x='9' y='6' width='14' height='18' rx='3' fill='%23f5f0e8'/%3E%3C/svg%3E");
+      background-size: 32px 100%;
+      background-repeat: repeat-x;
+      border-top: 1px solid rgba(0,0,0,0.08);
+      border-bottom: 1px solid rgba(0,0,0,0.08);
+      flex-shrink: 0;
+    }
+
+    /* ── HEADER ── */
+    header {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      top: 30px; bottom: 30px;
+      left: 50%; transform: translateX(-50%);
+      width: 600px;
+      background: radial-gradient(ellipse, rgba(204,26,26,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .header-inner {
+      padding: 4rem 2rem 3rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .site-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      margin-bottom: 2rem;
+    }
+
+    .site-tag span {
+      color: var(--red);
+      margin: 0 0.5em;
+    }
+
+    .title-block {
+      margin-bottom: 1rem;
+    }
+
+    .title-hero {
+      display: block;
+      font-size: clamp(2rem, 7.3vw, 4.7rem);
+      font-weight: 900;
+      letter-spacing: 0.15em;
+      line-height: 1;
+      color: var(--white);
+    }
+
+    .title-rule {
+      width: 44px;
+      height: 2px;
+      background: var(--red);
+      margin: 1.4rem auto;
+    }
+
+    .title-roman {
+      font-family: 'Noto Serif JP', serif;
+      font-size: clamp(0.65rem, 1.8vw, 0.9rem);
+      letter-spacing: 0.5em;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    .site-subtitle {
+      font-size: clamp(0.75rem, 2vw, 0.88rem);
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: 0.05em;
+      max-width: 420px;
+      margin: 0.6rem auto 2.5rem;
+      line-height: 1.9;
+    }
+
+    /* Filter & Add */
+    .header-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-bar { display: flex; gap: 0.35rem; flex-wrap: wrap; justify-content: center; }
+
+    .filter-btn {
+      padding: 0.28rem 0.8rem;
+      border-radius: 0;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      font-size: 0.68rem;
+      font-family: 'Noto Serif JP', serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .filter-btn:hover { color: var(--white); border-color: rgba(255,255,255,0.2); }
+    .filter-btn.active { border-color: var(--red); color: var(--red); }
+
+    .divider { width: 1px; height: 18px; background: var(--border); align-self: center; flex-shrink: 0; }
+
+    .add-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 1.1rem;
+      border-radius: 0;
+      background: var(--red);
+      color: #f5f0e8;
+      font-weight: 700;
+      font-size: 0.72rem;
+      font-family: 'Noto Serif JP', serif;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    .add-btn:hover { background: #e01e1e; }
+
+    /* ── STATS ── */
+    .stats-bar {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      padding: 0.85rem 2rem;
+      border-bottom: 1px solid var(--border);
+      background: #ede8dc;
+    }
+
+    .stat-item { text-align: center; }
+    .stat-num {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.5rem;
+      color: var(--red);
+      letter-spacing: 0.1em;
+      line-height: 1;
+    }
+    .stat-label { font-size: 0.58rem; color: var(--muted); letter-spacing: 0.18em; text-transform: uppercase; font-family: 'Courier New', monospace; }
+
+    /* ── TIMELINE ── */
+    .timeline {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3.5rem 1.25rem 8rem;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%; transform: translateX(-50%);
+      width: 1px;
+      background: linear-gradient(to bottom,
+        transparent 0%, var(--red) 2%, var(--red) 98%, transparent 100%);
+      box-shadow: 0 0 10px rgba(204,26,26,0.45);
+    }
+
+    /* Year group */
+    .year-group {
+      position: relative;
+      margin-bottom: 2.25rem;
+    }
+
+    .year-marker {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      position: relative;
+      z-index: 10;
+    }
+
+    .year-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: var(--bg);
+      border: 1px solid rgba(0,0,0,0.12);
+      border-left: 3px solid var(--red);
+      border-radius: 0;
+      padding: 0.35rem 1rem 0.35rem 0.8rem;
+      cursor: pointer;
+      transition: all 0.22s;
+      user-select: none;
+      max-width: 90vw;
+    }
+
+    .year-badge:hover {
+      background: var(--red-dim);
+      border-color: rgba(0,0,0,0.2);
+      border-left-color: var(--red);
+    }
+
+    .year-num {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      line-height: 1;
+    }
+
+    .year-period {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .year-hint {
+      font-size: 0.58rem;
+      color: var(--red);
+      letter-spacing: 0.12em;
+      font-family: 'Courier New', monospace;
+      white-space: nowrap;
+    }
+
+    /* Cards */
+    .cards-row {
+      display: grid;
+      grid-template-columns: 1fr 56px 1fr;
+      align-items: start;
+    }
+
+    .card-left  { display: flex; flex-direction: column; align-items: flex-end;   padding-right: 2rem; }
+    .card-right { display: flex; flex-direction: column; align-items: flex-start; padding-left:  2rem; }
+    .card-center { display: flex; flex-direction: column; align-items: center; padding-top: 0.85rem; }
+    .card-empty { min-height: 0; }
+
+    .movie-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      border-radius: 0;
+      padding: 1.1rem 1.1rem 1.1rem 1rem;
+      width: 100%;
+      max-width: 390px;
+      cursor: pointer;
+      transition: border-color 0.22s, background 0.22s, transform 0.22s;
+      position: relative;
+    }
+
+    .movie-card:hover {
+      background: #f0e8dc;
+      border-color: rgba(0,0,0,0.18);
+      border-left-color: var(--red);
+      transform: translateY(-3px);
+    }
+
+    .card-head {
+      display: flex;
+      gap: 0.65rem;
+      align-items: flex-start;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-titles { margin-bottom: 0.15rem; }
+
+    .card-title-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+    .genre-tag-sm {
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 0.08rem 0.35rem;
+      border: 1px solid var(--red);
+      color: var(--red);
+      background: transparent;
+      font-family: 'Courier New', monospace;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--white);
+    }
+
+    .card-title-alt {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--white);
+      margin-top: 0.1rem;
+    }
+
+    .card-meta { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
+
+    .genre-tag {
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 0.1rem 0.4rem;
+      border-radius: 0;
+      background: transparent;
+      border: 1px solid var(--red);
+      color: var(--red);
+      text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+    }
+
+    .card-synopsis {
+      font-size: 0.77rem;
+      color: var(--muted);
+      line-height: 1.7;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-movies {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .movie-chip {
+      font-size: 0.62rem;
+      padding: 0.08rem 0.4rem;
+      border-radius: 0;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      white-space: nowrap;
+    }
+
+    .connector-dot {
+      width: 9px; height: 9px;
+      border-radius: 50%;
+      background: var(--red);
+      box-shadow: 0 0 8px rgba(204,26,26,0.7);
+      flex-shrink: 0;
+    }
+
+    /* ── MODALS ── */
+    .overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.88);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s;
+    }
+
+    .overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--bg-card2);
+      border: 1px solid rgba(0,0,0,0.1);
+      border-top: 3px solid var(--red);
+      border-radius: 0;
+      padding: 2.25rem;
+      max-width: 600px;
+      width: 100%;
+      max-height: 88vh;
+      overflow-y: auto;
+      position: relative;
+      transform: translateY(18px);
+      transition: transform 0.28s;
+      scrollbar-width: thin;
+      scrollbar-color: var(--red) transparent;
+    }
+
+    .overlay.open .modal { transform: translateY(0); }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      color: var(--muted);
+      font-size: 0.8rem;
+      transition: all 0.18s;
+      font-family: 'Courier New', monospace;
+    }
+
+    .modal-close:hover { border-color: var(--red); color: var(--red); }
+
+    /* Detail modal */
+    .dm-header {
+      margin-bottom: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dm-year {
+      font-weight: 900;
+      font-size: clamp(1.6rem, 5vw, 2.5rem);
+      line-height: 1.1;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+
+    .dm-meta { display: flex; gap: 0.4rem; flex-wrap: wrap; align-items: center; }
+
+    .section-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: 0.5rem;
+      margin-top: 1.25rem;
+      font-family: 'Courier New', monospace;
+    }
+
+    .section-label::before { content: '◆ '; }
+
+    .section-body {
+      font-size: 0.875rem;
+      color: rgba(26,21,16,0.75);
+      line-height: 1.95;
+    }
+
+    .section-edit {
+      width: 100%;
+      min-height: 90px;
+      font-size: 0.875rem;
+      font-family: 'Noto Serif JP', serif;
+      color: var(--white);
+      line-height: 1.95;
+      background: rgba(0,0,0,0.04);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--red);
+      border-radius: 0;
+      padding: 0.6rem 0.8rem;
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+
+    .section-edit:focus { outline: none; border-color: var(--red); border-left-width: 3px; }
+
+    .save-btn {
+      margin-top: 0.5rem;
+      padding: 0.3rem 1rem;
+      background: var(--red);
+      color: #f5f0e8;
+      border: none;
+      border-radius: 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+
+    .save-btn:hover { background: #e01e1e; }
+    .save-ok { color: var(--red); font-size: 0.65rem; font-family: 'Courier New', monospace; margin-left: 0.6rem; opacity: 0; transition: opacity 0.3s; }
+
+    .movie-list-grid { display: flex; flex-direction: column; gap: 0.3rem; }
+
+    .movie-list-item {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.5rem 0.75rem;
+      background: rgba(0,0,0,0.03);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--red);
+      border-radius: 0;
+      font-size: 0.84rem;
+      color: var(--white);
+    }
+
+    /* Add form */
+    .form-modal-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: var(--white);
+      margin-bottom: 0.2rem;
+      margin-top: 0.3rem;
+    }
+
+    .form-modal-desc { font-size: 0.75rem; color: var(--muted); margin-bottom: 1.5rem; font-family: 'Courier New', monospace; letter-spacing: 0.04em; }
+
+    .form-group { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.85rem; }
+
+    .form-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      font-family: 'Courier New', monospace;
+    }
+
+    .form-input, .form-select, .form-textarea {
+      background: rgba(0,0,0,0.03);
+      border: 1px solid var(--border);
+      border-radius: 0;
+      padding: 0.6rem 0.8rem;
+      color: var(--white);
+      font-size: 0.84rem;
+      font-family: 'Noto Serif JP', serif;
+      width: 100%;
+      transition: border-color 0.2s;
+      appearance: none;
+    }
+
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--muted); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { outline: none; border-color: var(--red); }
+    .form-select option { background: #f5f0e8; color: var(--white); }
+    .form-textarea { resize: vertical; min-height: 80px; }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+
+    .submit-btn {
+      width: 100%;
+      padding: 0.82rem;
+      border-radius: 0;
+      background: var(--red);
+      color: var(--white);
+      font-weight: 700;
+      font-size: 0.82rem;
+      font-family: 'Noto Serif JP', serif;
+      border: none;
+      cursor: pointer;
+      transition: background 0.18s;
+      margin-top: 0.4rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .submit-btn:hover { background: #e01e1e; }
+
+    /* No results */
+    .no-results { text-align: center; padding: 5rem 2rem; color: var(--muted); }
+    .no-results-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+    .no-results p { font-size: 0.85rem; line-height: 1.8; }
+
+    /* ── STICKY NAV ── */
+    .sticky-nav {
+      position: fixed;
+      top: -72px;
+      left: 0; right: 0;
+      z-index: 9000;
+      background: rgba(245,240,232,0.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 2px solid var(--red);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      transition: top 0.32s cubic-bezier(0.4,0,0.2,1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      height: 56px;
+      gap: 0.75rem;
+    }
+
+    .sticky-nav.visible { top: 0; }
+
+    .sticky-logo {
+      font-size: 1.15rem;
+      font-weight: 900;
+      font-family: 'Noto Serif JP', serif;
+      color: var(--text, #1a1510);
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .sticky-logo span {
+      display: inline-block;
+      width: 3px;
+      height: 14px;
+      background: var(--red);
+      margin: 0 0.6rem 0 0.5rem;
+      vertical-align: middle;
+      flex-shrink: 0;
+    }
+
+    /* .sticky-filters は検索パネル内に移動したため sticky-nav 側では非表示 */
+    .sticky-filters { display: none; }
+
+    .sticky-filter-btn {
+      padding: 0.18rem 0.65rem;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--muted, #9a8a78);
+      font-size: 0.62rem;
+      font-family: 'Noto Serif JP', serif;
+      cursor: pointer;
+      transition: all 0.18s;
+      white-space: nowrap;
+      border-radius: 0;
+      letter-spacing: 0.04em;
+    }
+
+    .sticky-filter-btn:hover,
+    .sticky-filter-btn.active {
+      background: var(--red);
+      color: #f5f0e8;
+      border-color: var(--red);
+    }
+
+    .sticky-add-btn {
+      padding: 0.28rem 0.9rem;
+      border-radius: 0;
+      background: var(--red);
+      color: #f5f0e8;
+      font-weight: 700;
+      font-size: 0.65rem;
+      font-family: 'Noto Serif JP', serif;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: background 0.18s;
+    }
+
+    .sticky-add-btn:hover { background: #e01e1e; }
+
+    @media (max-width: 680px) {
+      .sticky-filters { display: none; }
+      .sticky-logo span { display: none; }
+      .sticky-icon-btn { width: 26px; height: 26px; }
+      .sticky-add-btn { padding: 0.24rem 0.65rem; font-size: 0.6rem; }
+    }
+
+    /* Fade in */
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    /* Decade divider */
+    .decade-divider {
+      position: relative;
+      margin: 0.5rem 0 2.5rem;
+      z-index: 5;
+    }
+    .decade-divider-inner {
+      background: var(--text);
+      border-left: 4px solid var(--red);
+      padding: 1rem 1.8rem 1rem 1.4rem;
+    }
+    .decade-meta {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.6rem 1rem;
+      margin-bottom: 0.4rem;
+    }
+    .decade-year-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.25em;
+      color: var(--red);
+      text-transform: uppercase;
+    }
+    .decade-era {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: var(--bg);
+      letter-spacing: 0.04em;
+    }
+    .decade-desc {
+      font-size: 0.77rem;
+      color: rgba(245,240,232,0.68);
+      line-height: 1.9;
+      margin: 0;
+    }
+    @media (max-width: 680px) {
+      .decade-divider-inner { padding: 0.85rem 1rem 0.85rem 1rem; }
+      .decade-era { font-size: 0.85rem; }
+      .decade-desc { font-size: 0.72rem; }
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 0; }
+
+    /* Scroll to top */
+    .scroll-top-btn {
+      position: fixed;
+      bottom: 1.8rem;
+      right: 1.5rem;
+      z-index: 9000;
+      width: 40px;
+      height: 40px;
+      background: var(--text);
+      border: 1px solid var(--red);
+      color: var(--red);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      transform: translateY(8px);
+    }
+    .scroll-top-btn.visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+    .scroll-top-btn:hover {
+      background: var(--red);
+      color: var(--bg);
+    }
+    .scroll-top-btn svg { width: 16px; height: 16px; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 680px) {
+      .timeline::before { left: 1rem; }
+      .year-marker { justify-content: flex-start; }
+      .stats-bar { gap: 1.5rem; }
+
+      .cards-row { grid-template-columns: 1.8rem 1fr; }
+      .card-left { grid-column:2; grid-row:1; align-items:flex-start; padding-right:0; padding-left:0.7rem; }
+      .card-center { grid-column:1; grid-row:1; padding-top:0.8rem; align-self:flex-start; }
+      .card-right { grid-column:2; grid-row:2; padding-left:0.7rem; }
+      .movie-card { max-width: 100%; }
+
+      .modal { padding: 1.75rem 1.25rem; }
+      .form-row { grid-template-columns: 1fr; }
+      .search-wrap { width: 100%; max-width: 280px; }
+      .header-icon-group { top: 0.8rem; right: 1rem; }
+    }
+
+    /* ── HEADER ICON GROUP ── */
+    .header-icon-group {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.5rem;
+      display: flex;
+      gap: 0.45rem;
+      align-items: center;
+      z-index: 2;
+    }
+
+    .header-icon-btn {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .header-icon-btn:hover { color: var(--white); border-color: rgba(0,0,0,0.25); }
+    .header-icon-btn.active { color: var(--red); border-color: var(--red); }
+    .header-icon-btn svg { width: 15px; height: 15px; }
+
+    /* ── SEARCH BAR (アイコン直下ドロップダウン) ── */
+    .header-search-container { position: relative; }
+
+    .header-search-bar {
+      position: absolute;
+      top: calc(32px + 0.45rem);
+      right: 0;
+      width: 240px;
+      background: rgba(245,240,232,0.98);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--red);
+      padding: 0.45rem 0.6rem;
+      display: none;
+      z-index: 20;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+    }
+    .header-search-bar.open { display: block; }
+    .header-search-bar .search-wrap { width: 100%; }
+    .header-search-bar .search-input { font-size: 0.8rem; }
+
+    .search-wrap {
+      position: relative;
+      width: 260px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.38rem 1.8rem 0.38rem 0.75rem;
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--red);
+      border-radius: 0;
+      background: rgba(0,0,0,0.03);
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.78rem;
+      color: var(--white);
+      transition: border-color 0.2s;
+    }
+    .search-input::placeholder { color: var(--muted); }
+    .search-input:focus { outline: none; border-left: 3px solid var(--red); }
+
+    .search-clear {
+      position: absolute;
+      right: 0.45rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 0.7rem;
+      line-height: 1;
+      padding: 0;
+      transition: color 0.18s;
+    }
+    .search-clear:hover { color: var(--red); }
+
+    .about-link {
+      font-family: 'Courier New', monospace;
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      background: transparent;
+      border: 1px solid var(--border);
+      padding: 0.32rem 0.7rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      border-radius: 0;
+    }
+    .about-link:hover { color: var(--white); border-color: rgba(0,0,0,0.25); }
+
+    .search-count {
+      display: none;
+      text-align: center;
+      padding: 0.4rem 1rem;
+      font-size: 0.65rem;
+      color: var(--red);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.12em;
+      background: var(--red-dim);
+      border-bottom: 1px solid rgba(204,26,26,0.12);
+    }
+    .search-count.visible { display: block; }
+
+    /* ── STICKY NAV ADDITIONS ── */
+    .sticky-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      flex-shrink: 0;
+    }
+
+    .sticky-icon-btn {
+      position: relative;
+      width: 28px; height: 28px;
+      display: flex; align-items: center; justify-content: center;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 0;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+    .sticky-icon-btn svg { width: 14px; height: 14px; }
+    .sticky-icon-btn:hover { color: var(--white); border-color: rgba(0,0,0,0.28); }
+    .sticky-icon-btn.active { color: var(--red); border-color: var(--red); }
+
+    .notif-badge {
+      position: absolute;
+      top: -5px; right: -5px;
+      background: var(--red);
+      color: #f5f0e8;
+      font-size: 0.46rem;
+      min-width: 13px; height: 13px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      padding: 0 2px;
+    }
+
+    .sticky-search-panel {
+      position: fixed;
+      top: -160px;
+      left: 0; right: 0;
+      z-index: 8990;
+      background: rgba(245,240,232,0.97);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1.5rem 0.55rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      transition: top 0.28s cubic-bezier(0.4,0,0.2,1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+    }
+    .sticky-search-panel.open { top: 56px; }
+
+    .sticky-search-top {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .sticky-search-genres {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding-bottom: 1px;
+    }
+    .sticky-search-genres::-webkit-scrollbar { display: none; }
+
+    .sticky-search-input {
+      flex: 1;
+      padding: 0.32rem 0.75rem;
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--red);
+      border-radius: 0;
+      background: rgba(0,0,0,0.03);
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.8rem;
+      color: var(--white);
+      transition: border-color 0.2s;
+    }
+    .sticky-search-input:focus { outline: none; border-left: 3px solid var(--red); }
+    .sticky-search-input::placeholder { color: var(--muted); }
+
+    .sticky-search-close {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 0.58rem;
+      cursor: pointer;
+      padding: 0.2rem 0.4rem;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+      transition: color 0.18s;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .sticky-search-close:hover { color: var(--red); }
+
+    /* ── ABOUT MODAL ── */
+    .about-lead {
+      font-size: 0.95rem;
+      font-weight: 700;
+      line-height: 1.8;
+      color: var(--white);
+      margin-bottom: 1rem;
+      letter-spacing: 0.02em;
+      border-left: 3px solid var(--red);
+      padding-left: 0.8rem;
+    }
+    .about-body {
+      font-size: 0.84rem;
+      color: rgba(26,21,16,0.75);
+      line-height: 2;
+      margin-bottom: 0.8rem;
+    }
+    .about-stats-row {
+      display: flex;
+      gap: 2rem;
+      padding: 1rem 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin: 1rem 0 1.2rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .about-stat { text-align: center; }
+    .about-stat-num { font-size: 1.7rem; font-weight: 900; color: var(--red); line-height: 1; font-family: 'Noto Serif JP', serif; }
+    .about-stat-label { font-size: 0.54rem; letter-spacing: 0.18em; color: var(--muted); font-family: 'Courier New', monospace; text-transform: uppercase; margin-top: 0.2rem; }
+    .about-features { list-style: none; padding: 0; margin-bottom: 1rem; }
+    .about-features li {
+      font-size: 0.82rem;
+      color: rgba(26,21,16,0.75);
+      padding: 0.22rem 0 0.22rem 1.1em;
+      position: relative;
+      line-height: 1.75;
+    }
+    .about-features li::before { content: '—'; position: absolute; left: 0; color: var(--red); font-size: 0.75rem; }
+    .about-note { font-size: 0.7rem; color: var(--muted); font-family: 'Courier New', monospace; letter-spacing: 0.04em; line-height: 1.8; border-top: 1px solid var(--border); padding-top: 0.8rem; margin-top: 0.8rem; }
+
+    /* ── NOTIFICATION MODAL ── */
+    .notif-empty { text-align: center; padding: 2.5rem 1rem; color: var(--muted); font-size: 0.84rem; line-height: 2; }
+    .notif-item {
+      padding: 0.7rem 0.9rem;
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--red);
+      background: rgba(0,0,0,0.02);
+      margin-bottom: 0.45rem;
+      cursor: pointer;
+      transition: background 0.18s;
+    }
+    .notif-item:hover { background: rgba(204,26,26,0.05); }
+    .notif-item-title { font-size: 0.88rem; font-weight: 700; color: var(--white); margin-bottom: 0.15rem; line-height: 1.5; }
+    .notif-item-meta { font-size: 0.6rem; color: var(--muted); font-family: 'Courier New', monospace; letter-spacing: 0.06em; }
+  </style>
+</head>
+<body>
+
+<!-- ── STICKY NAV ── -->
+<nav class="sticky-nav" id="stickyNav" aria-label="サイトナビゲーション">
+  <div class="sticky-logo">東京映画浪漫記<span></span></div>
+  <div class="sticky-actions">
+    <button class="sticky-icon-btn" id="stickySearchToggle" onclick="toggleStickySearch()" title="検索">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </button>
+    <button class="sticky-icon-btn" onclick="openModal('aboutModal')" title="このサイトについて">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+    </button>
+    <button class="sticky-icon-btn" id="notifBtn" onclick="openModal('notifModal')" title="最近の追加">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-badge" id="notifBadge" style="display:none">0</span>
+    </button>
+    <button class="sticky-add-btn" onclick="openModal('addModal')">＋ 追加</button>
+  </div>
+</nav>
+
+<!-- ── STICKY SEARCH PANEL ── -->
+<div class="sticky-search-panel" id="stickySearchPanel">
+  <div class="sticky-search-top">
+    <input type="text" class="sticky-search-input" id="stickySearchInput" placeholder="映画名・年代を検索…" oninput="setSearch(this.value)">
+    <button class="sticky-search-close" onclick="closeStickySearch()">✕ 閉じる</button>
+  </div>
+  <div class="sticky-search-genres" id="stickySearchGenres"></div>
+</div>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="film-strip"></div>
+  <div class="header-inner">
+    <div class="title-block">
+      <span class="title-hero">東京映画浪漫記</span>
+    </div>
+    <div class="title-rule"></div>
+    <div class="title-roman">Tokyo Cinema Chronicle</div>
+    <p class="site-subtitle">
+      ー江戸から東京へー<br>
+      映画の中に在る「東京」の面影を時系列で紐解く。<br>
+      創られた東京と人の記憶が重なる東京年代記。
+    </p>
+    <!-- 右上アイコングループ -->
+    <div class="header-icon-group">
+      <!-- 検索アイコン＋直下ドロップダウン -->
+      <div class="header-search-container">
+        <button class="header-icon-btn" id="headerSearchToggle" onclick="toggleHeaderSearch()" title="検索">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </button>
+        <div class="header-search-bar" id="headerSearchBar">
+          <div class="search-wrap">
+            <input type="text" class="search-input" id="searchInput" placeholder="映画タイトル・年代を検索…" oninput="setSearch(this.value)">
+            <button class="search-clear" id="searchClear" style="display:none" onclick="clearSearch()">✕</button>
+          </div>
+        </div>
+      </div>
+      <button class="header-icon-btn" onclick="openModal('aboutModal')" title="このサイトについて">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+      </button>
+      <button class="header-icon-btn" id="headerBellBtn" onclick="openModal('notifModal')" title="通知">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+        <span class="notif-badge" id="headerNotifBadge" style="display:none">0</span>
+      </button>
+    </div>
+
+    <div class="header-actions">
+      <div class="filter-bar" id="filterBar"></div>
+      <div class="divider"></div>
+      <button class="add-btn" onclick="openModal('addModal')">＋ 記録に追加</button>
+    </div>
+  </div>
+  <div class="film-strip"></div>
+</header>
+
+<!-- ── STATS ── -->
+<div class="stats-bar" id="statsBar"></div>
+<div class="search-count" id="searchCount"></div>
+
+<!-- ── TIMELINE ── -->
+<div class="timeline" id="timeline"></div>
+
+<!-- ── DETAIL MODAL ── -->
+<div class="overlay" id="detailModal" onclick="closeModal('detailModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('detailModal')">✕</button>
+    <div id="detailContent"></div>
+  </div>
+</div>
+
+<!-- ── ADD MODAL ── -->
+<div class="overlay" id="addModal" onclick="closeModal('addModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('addModal')">✕</button>
+    <div class="form-modal-title">Record Entry</div>
+    <p class="form-modal-desc">// 東京を舞台にした作品を年表に追加する</p>
+    <form id="addForm" onsubmit="submitEntry(event)">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">劇中年代（表示名）*</label>
+          <input type="text" class="form-input" id="f-yeardisplay" placeholder="例：1987年　昭和60年代" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">西暦（ソート用）*</label>
+          <input type="number" class="form-input" id="f-yearsort" placeholder="例：1987" min="1600" max="2200" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">ジャンル *</label>
+          <select class="form-select" id="f-genre" required>
+            <option value="">選択</option>
+            <option value="SF">SF</option>
+            <option value="アニメ">アニメ</option>
+            <option value="ドラマ">ドラマ</option>
+            <option value="アクション">アクション</option>
+            <option value="コメディ">コメディ</option>
+            <option value="ホラー">ホラー</option>
+            <option value="サスペンス">サスペンス</option>
+            <option value="戦争">戦争</option>
+            <option value="その他">その他</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">東京での出来事 *</label>
+        <textarea class="form-textarea" id="f-events" placeholder="この年の東京で起きた出来事..." required></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">関連作品（改行で複数入力）*</label>
+        <textarea class="form-textarea" id="f-movies" placeholder="例：ゴジラ&#10;シン・ゴジラ" required></textarea>
+      </div>
+      <button type="submit" class="submit-btn">年表に追加する</button>
+    </form>
+  </div>
+</div>
+
+<!-- ── ABOUT MODAL ── -->
+<div class="overlay" id="aboutModal" onclick="closeModal('aboutModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('aboutModal')">✕</button>
+    <div class="section-label" style="margin-top:0;">ABOUT THIS SITE</div>
+    <div style="font-size:1.4rem;font-weight:900;letter-spacing:0.04em;color:var(--white);margin-bottom:1rem;font-family:'Noto Serif JP',serif;">東京映画浪漫記とは</div>
+
+    <p class="about-lead">東京は、物語の「背景」なのか？</p>
+
+    <p class="about-body">本サイトは東京を舞台にした映画を集めて並べた、いわば「映画の中に在る東京の年表」です。</p>
+    <p class="about-body">映画の中の東京という街は——</p>
+    <p class="about-body">引いて見ると、時代と共に色や形が移り変わり、時に災害や戦争に巻き込まれながら変貌を遂げていく都市があり、寄って見ると、誰かと誰かが恋して、嫉妬して、嘆いて、喜んで、恐れて、抗って、赦して、祈ってと、様々な感情の人々がいる。</p>
+    <p class="about-body">もはや単なる舞台の背景であると言い表せられない程に、人々が持つ東京の記憶に、映画の中に在る東京の面影が重なっていく。</p>
+    <p class="about-body">それほどまでに自由で浪漫が詰まったうつろいの軌跡を、年表という形で紐解いてみようという試みです。</p>
+
+    <div class="about-stats-row" id="aboutStats"></div>
+
+
+<p class="about-note">個人が制作・運営する非営利の映画情報サイトです。掲載する映画タイトル・キャラクター等の知的財産権は各権利者に帰属します。</p>
+  </div>
+</div>
+
+<!-- ── NOTIFICATION MODAL ── -->
+<div class="overlay" id="notifModal" onclick="closeModal('notifModal')">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal('notifModal')">✕</button>
+    <div class="section-label" style="margin-top:0;">RECENT ADDITIONS</div>
+    <div style="font-size:1.3rem;font-weight:900;letter-spacing:0.04em;color:var(--white);margin-bottom:0.25rem;font-family:'Noto Serif JP',serif;">最近の追加</div>
+    <p style="font-size:0.7rem;color:var(--muted);margin-bottom:1.2rem;font-family:'Courier New',monospace;letter-spacing:0.06em;">直近30日以内に追加された記録</p>
+    <div id="notifContent"></div>
+  </div>
+</div>
+
+<script>
+function gc() { return '#cc1a1a'; }
+
+let entries = [
+  { id:1,  yearDisplay:'1700年代（江戸時代）', yearSort:1750,   genre:'コメディ',  icon:'🏯', events:'陸奥国湯長谷藩が、幕府の陰謀によりわずか5日での江戸への参勤交代を命じられ、様々な奇策を用いてこれを完遂した。', movieList:['超高速!参勤交代'] },
+  { id:2,  yearDisplay:'1825年頃（文政年間）', yearSort:1825,   genre:'ホラー',    icon:'👻', events:'四谷において、夫に毒殺された女性の怨霊が凄惨な復讐劇を繰り広げたという記録が残る。', movieList:['四谷怪談'] },
+  { id:3,  yearDisplay:'1868年（明治元年）',   yearSort:1868,   genre:'アクション', icon:'⚔️', events:'廃刀令下の東京（神田や赤坂等）において、かつて「人斬り抜刀斎」と呼ばれた暗殺者が流浪の旅を行ったとされる。また、現代からタイムスリップした女子高生が森鴎外ら歴史的人物と邂逅したという記録がある。', movieList:['るろうに剣心', '明治東亰恋伽'], movieGenres:['アクション','ドラマ'] },
+  { id:4,  yearDisplay:'1883年',               yearSort:1883,   genre:'ドラマ',    icon:'🎭', events:'日比谷に落成したばかりの「鹿鳴館」にて、華やかな西洋風の舞踏会が催された。', movieList:['鹿鳴館'] },
+  { id:5,  yearDisplay:'1904年',               yearSort:1904,   genre:'戦争',      icon:'⚔️', events:'日露戦争が勃発し、神田駿河台周辺などで激動の事態が発生した。', movieList:['二百三高地'] },
+  { id:6,  yearDisplay:'明治後期〜末期',        yearSort:1908,   genre:'ドラマ',    icon:'💄', events:'近代化が進む東京において、人々の心と生活を彩る化粧師が活動した。', movieList:['化粧師 KEWAISHI'] },
+  { id:7,  yearDisplay:'大正時代',              yearSort:1920,   genre:'アニメ',    icon:'🎞️', events:'浅草の映画館「靑木館」周辺において活動弁士を志す青年を中心とした騒動が勃発。また同時期、浅草などで鬼を狩る剣士たちの秘密裏の戦闘が記録されたほか、お転婆な女学生が古い慣習を打ち破り激動の時代を駆け抜けた。', movieList:['カツベン！', '鬼滅の刃', 'はいからさんが通る'], movieGenres:['ドラマ','アニメ','アニメ'] },
+  { id:8,  yearDisplay:'1920年代〜1930年代',    yearSort:1922,   genre:'ドラマ',    icon:'🐕', events:'渋谷駅周辺において、亡き主人を待ち続ける秋田犬の姿が人々の涙を誘う事象が長期にわたり観測された。', movieList:['ハチ公物語'] },
+  { id:9,  yearDisplay:'1923年',               yearSort:1923,   genre:'ドラマ',    icon:'🌋', events:'関東大震災が発生。ある世界線では女相撲一座とアナキスト集団が接触し、別の世界線ではこの震災自体が魔人・加藤保憲の呪術と怨霊の力によって引き起こされた。本郷の大学に通う青年と上野広小路の少女が震災に遭遇したという記録も残る。', movieList:['菊とギロチン', '帝都物語', '風立ちぬ'], movieGenres:['ドラマ','SF','アニメ'] },
+  { id:10, yearDisplay:'1925年',               yearSort:1925,   genre:'コメディ',  icon:'⚾', events:'セーラー服を着た乙女たちによる野球の練習が目撃された。', movieList:['大正野球娘。'] },
+  { id:11, yearDisplay:'1926年',               yearSort:1926,   genre:'ドラマ',    icon:'🎪', events:'大正最後の年の東京において、新派の劇作家が夢と現実が交錯する幻想的な世界に迷い込んだという記録がある。', movieList:['陽炎座'] },
+  { id:12, yearDisplay:'1936年',               yearSort:1936,   genre:'戦争',      icon:'❄️', events:'雪降る帝都の永田町や皇居周辺において、青年将校たちによるクーデター（二・二六事件）が勃発した。', movieList:['226'] },
+  { id:13, yearDisplay:'1944年頃',              yearSort:1944,   genre:'戦争',      icon:'🏫', events:'戦局の悪化に伴い、品川区戸越から保母と子供たちが空襲を逃れて疎開を開始した。', movieList:['あの日のオルガン'] },
+  { id:14, yearDisplay:'1940年代後半',          yearSort:1947,   genre:'ドラマ',    icon:'🌃', events:'戦後の有楽町のガード下や上野の闇市において娼婦たちが生存競争を繰り広げ、すられた拳銃を探す若き刑事が路地裏を彷徨う事案が発生した。', movieList:['肉体の門', '野良犬'], movieGenres:['ドラマ','ドラマ'] },
+  { id:15, yearDisplay:'1945年',               yearSort:1945,   genre:'戦争',      icon:'💣', events:'3月の東京大空襲で下町一帯が火の海となり甚大な被害を受けた。同年8月には、焼け野原となった皇居周辺で玉音放送を巡るクーデター未遂事件が勃発した。', movieList:['戦争と青春', 'ペーパーシティ 東京大空襲の記憶', '日本のいちばん長い日', '東京大空襲 ガラスのうさぎ'], movieGenres:['戦争','ドラマ','戦争','戦争'] },
+  { id:16, yearDisplay:'1950年代（架空）',      yearSort:1951,   genre:'SF',        icon:'🐺', events:'第二次大戦でドイツの占領下におかれた「架空の戦後東京」において、特殊部隊「ケルベロス」と過激派による凄惨な市街戦や地下水路での銃撃戦が展開された。', movieList:['人狼 JIN-ROH'] },
+  { id:17, yearDisplay:'1952年',               yearSort:1952,   genre:'ドラマ',    icon:'🎠', events:'末期ガンを宣告された市役所の課長が、お役所仕事を脱して公園建設に奔走した。', movieList:['生きる'] },
+  { id:18, yearDisplay:'1953年',               yearSort:1953,   genre:'ドラマ',    icon:'🚂', events:'尾道から上京してきた老夫婦が子供たちを訪ねるも、近代化しつつある東京の生活の中で家族の絆の崩壊や孤独を感じる事象が観察された。', movieList:['東京物語'] },
+  { id:19, yearDisplay:'1954年',               yearSort:1954,   genre:'SF',    icon:'🦕', events:'水爆実験によって目覚めた巨大怪獣（ゴジラ）が品川から上陸し、再建されたばかりの銀座の和光の時計塔や国会議事堂を破壊、火の海へと変えた。', movieList:['ゴジラ'] },
+  { id:20, yearDisplay:'1955年',               yearSort:1955,   genre:'アクション', icon:'🎋', events:'戦後の日本において、悪事を働く元軍人のアメリカ人ギャングが暗躍した。', movieList:['竹の家'] },
+  { id:21, yearDisplay:'1958年',               yearSort:1958,   genre:'ドラマ',    icon:'🏗️', events:'建設中の東京タワーを背景に、下町の夕日町三丁目において人情味あふれる人々の営みが記録された。', movieList:['ALWAYS 三丁目の夕日'] },
+  { id:22, yearDisplay:'1959年',               yearSort:1959,   genre:'ドラマ',    icon:'🚀', events:'東京オリンピック開催が決定し、高度経済成長時代を迎えつつある夕日町三丁目で、芥川賞を目指す小説家や自動車修理工場の人々が生活していた。', movieList:['ALWAYS 続・三丁目の夕日'] },
+  { id:23, yearDisplay:'1962年',               yearSort:1962,   genre:'ドラマ',    icon:'🌟', events:'オリンピックに向けてスタンドが増設された旧国立競技場を背景に、若者たちが希望に向かって歩む姿が見られた。', movieList:['上を向いて歩こう'] },
+  { id:24, yearDisplay:'1963年',               yearSort:1963,   genre:'ドラマ',    icon:'🦋', events:'東京タワー建設ブームや新幹線開通前夜の東京において、田舎から上京した女性が娼館のマダムへと成り上がる過程が記録された。', movieList:['にっぽん昆虫記'] },
+  { id:25, yearDisplay:'1964年',               yearSort:1964,   genre:'ドラマ',    icon:'🏅', events:'復興を遂げた国際都市として、平和の祭典である第1回東京オリンピックが開催された。', movieList:['東京オリンピック', "ALWAYS 三丁目の夕日'64"], movieGenres:['ドラマ','ドラマ'] },
+  { id:26, yearDisplay:'1960年代後半',          yearSort:1967,   genre:'ドラマ',    icon:'✊', events:'新宿において若者たちによるカウンターカルチャーのエネルギーの噴出が確認された。また同時期の学生運動の熱気と虚無感が交錯する中、深い喪失感を抱える若者たちの恋愛と死が記録されている。', movieList:['新宿泥棒日記', '薔薇の葬列', 'おもひでぽろぽろ', 'ノルウェイの森'], movieGenres:['ドラマ','ドラマ','アニメ','ドラマ'] },
+  { id:27, yearDisplay:'1969年〜',              yearSort:1972,   genre:'コメディ',  icon:'🏮', events:'葛飾区柴又において、テキ屋を稼業とする風来坊と彼を温かく迎える家族や下町の人々との人情劇が長年にわたり観測された。', movieList:['男はつらいよ シリーズ'] },
+  { id:28, yearDisplay:'1973年',               yearSort:1973,   genre:'SF',        icon:'🌊', events:'大規模な地殻変動により、東京を含む日本列島が海中へと沈没していく未曾有の大災害が発生した。', movieList:['日本沈没（1973年版）'] },
+  { id:29, yearDisplay:'1975年',               yearSort:1975,   genre:'アクション', icon:'🚄', events:'東京発の新幹線に爆弾が仕掛けられるというパニック事件が発生した。同時期、新宿や府中ではヤクザによる破滅的な抗争が記録された。', movieList:['新幹線大爆破', '仁義の墓場'], movieGenres:['アクション','アクション'] },
+  { id:30, yearDisplay:'1976年',               yearSort:1976,   genre:'SF',    icon:'🤖', events:'宇宙からの脅威に立ち向かうため、巨大ロボットが浅草の下町において激しい戦闘を展開した。', movieList:['ジーマイン'] },
+  { id:31, yearDisplay:'1980年代半ば',          yearSort:1985,   genre:'ドラマ',    icon:'📷', events:'バブル景気の絶頂期において、ビルの屋上のゴルフ練習場や原宿のネオンが奇妙な迷宮として記録された。', movieList:['東京画'] },
+  { id:32, yearDisplay:'1986年頃',              yearSort:1986,   genre:'ドラマ',    icon:'🎵', events:'バブル前夜のエネルギッシュな東京において、アメリカから来た女性がロックバンドの青年と出会い、音楽チャートを駆け上がる事象が発生した。', movieList:['TOKYO POP'] },
+  { id:33, yearDisplay:'1980年代後半',          yearSort:1987,   genre:'SF',        icon:'☁️', events:'突如、東京が半径30キロにわたる巨大な「雲（物体O）」に完全に覆い尽くされ、外部との通信や交通が一切遮断されるという未曾有の異常事態が発生した。', movieList:['首都消失'] },
+  { id:34, yearDisplay:'1988年',               yearSort:1988,   genre:'ドラマ',    icon:'🏙️', events:'実際の巣鴨子供置き去り事件をモチーフに、都会の死角で身を寄せ合って生きる子供たちの姿が確認された。', movieList:['誰も知らない'] },
+  { id:35, yearDisplay:'1988年7月16日',         yearSort:1988.5, genre:'SF',        icon:'💥', events:'関東地区において謎の「新型爆弾」が炸裂して第三次世界大戦が勃発し、旧東京は完全に消滅した。', movieList:['AKIRA'] },
+  { id:36, yearDisplay:'1990年代末',            yearSort:1995,   genre:'ホラー',    icon:'📼', events:'伊豆大島から始まり、東京などに広がった「見ると1週間後に死ぬビデオテープ」による連続不審死事件が発生した。', movieList:['リング'] },
+  { id:37, yearDisplay:'1997年〜',              yearSort:1997,   genre:'コメディ',  icon:'🚓', events:'お台場が空き地から巨大観光地へと開発されていく過程で、青島刑事が湾岸署を舞台に様々な事件の捜査に奔走した。', movieList:['踊る大捜査線'] },
+  { id:38, yearDisplay:'1998年',               yearSort:1998,   genre:'サスペンス', icon:'👁️', events:'下北沢の1時間に10分しか開かない「開かずの踏切」付近において、謎の無差別発砲魔と彼に恋する女の物語が展開された。', movieList:['TOKYO EYES'] },
+  { id:39, yearDisplay:'1999年',               yearSort:1999,   genre:'アニメ',    icon:'🦾', events:'コンピュータウイルスによる汎用作業機械「レイバー」の一斉暴走テロを防ぐため、「方舟」解体作戦が決行された。同時期のお台場や光が丘において、デジタルワールドと現実世界を繋ぐ「選ばれし子供たち」と怪物（デジモン）による戦闘が目撃された。', movieList:['機動警察パトレイバー the Movie', 'デジモンアドベンチャー'], movieGenres:['アニメ','アニメ'] },
+  { id:40, yearDisplay:'2000年',               yearSort:2000,   genre:'アニメ',    icon:'⚠️', events:'「セカンドインパクト」および新型爆弾の投下により東京都が完全に壊滅した。', movieList:['新世紀エヴァンゲリオン'] },
+  { id:41, yearDisplay:'2000年代初頭',          yearSort:2002,   genre:'アニメ',    icon:'📓', events:'名前を書かれた人間が死に至る謎のノートを用いた連続殺人事件が発生し、警視庁に設置された捜査本部と世界最高峰の名探偵が頭脳戦を繰り広げた。', movieList:['DEATH NOTE'] },
+  { id:42, yearDisplay:'2000年代〜',            yearSort:2006,   genre:'アニメ',    icon:'🏍️', events:'豊島区池袋においてカラーギャングの抗争や「首なしライダー」などの都市伝説的な存在が入り乱れ、不良グループによる抗争をタイムリープを繰り返して回避しようとする少年の活動が確認された。', movieList:['デュラララ!!', '東京リベンジャーズ'], movieGenres:['アニメ','アニメ'] },
+  { id:43, yearDisplay:'2001年',               yearSort:2001,   genre:'アクション', icon:'🌿', events:'19年前に姿を消した最愛の女性の死を知り、フランスの警察官がヤクザから娘を守るため東京において戦闘を繰り広げた。', movieList:['WASABI'] },
+  { id:44, yearDisplay:'2003年',               yearSort:2003,   genre:'SF',    icon:'🎄', events:'新宿のホテルでハリウッド俳優と若い女性が孤独を共有し、クリスマスの夜の街をホームレス3人が駆け回る事象が観測された。また、ゴジラと機龍が死闘を繰り広げ、お台場では連続殺人事件に伴うレインボーブリッジの完全封鎖が試みられた。', movieList:['ロスト・イン・トランスレーション', '東京ゴッドファーザーズ', 'ゴジラ×モスラ×メカゴジラ 東京SOS', '踊る大捜査線 THE MOVIE 2 レインボーブリッジを封鎖せよ！'], movieGenres:['ドラマ','アニメ','SF','コメディ'] },
+  { id:45, yearDisplay:'2004年',               yearSort:2004,   genre:'ドラマ',    icon:'☕', events:'神保町の純喫茶などにおいて、東京人の生活のディテールが息づく静かな時間が観測された。', movieList:['珈琲時光'] },
+  { id:46, yearDisplay:'2007年',               yearSort:2007,   genre:'コメディ',  icon:'🚶', events:'借金を抱えた大学生が借金取りの中年男とともに東京の街を散歩し、奇妙な友情を深める事象が記録された。', movieList:['転々'] },
+  { id:47, yearDisplay:'2008年',               yearSort:2008,   genre:'ドラマ',    icon:'🎹', events:'リーマンショック後にリストラされたサラリーマンの苦悩が浮き彫りになり、怪人や引きこもり男の冒険などシュールな事象が展開した。', movieList:['トウキョウソナタ', 'TOKYO!'], movieGenres:['ドラマ','ドラマ'] },
+  { id:48, yearDisplay:'2009年',               yearSort:2009,   genre:'ドラマ',    icon:'💊', events:'ドラッグディーラーの青年が東京のアンダーグラウンドやナイトライフをサイケデリックに彷徨う事案が発生した。', movieList:['エンター・ザ・ボイド'] },
+  { id:49, yearDisplay:'2010年',               yearSort:2010,   genre:'SF',        icon:'📱', events:'千代田区秋葉原の雑居ビルにおいて、若者たちがタイムマシン（電話レンジ）の開発に成功し、複数の世界線が交錯する事態が発生した。また同時期、白黒のコスチュームを身にまとった小学校教師が宇宙人と死闘を繰り広げた。', movieList:['STEINS;GATE', 'ゼブラーマン'], movieGenres:['SF','アクション'] },
+  { id:50, yearDisplay:'2010年代〜',            yearSort:2014,   genre:'アニメ',    icon:'🎤', events:'秋葉原やお台場などで女子高生たちによるスクールアイドル活動が隆盛を極める中、マンションの一室に置かれた謎の黒い球体により、死んだはずの人間たちが異形の星人との戦闘を強いられる事象が確認された。', movieList:['ラブライブ！', 'GANTZ'], movieGenres:['アニメ','SF'] },
+  { id:51, yearDisplay:'2012年',               yearSort:2012,   genre:'ドラマ',    icon:'🌐', events:'新宿や秋葉原などで活動するレジスタンスが空間転送の実験を強行した。一方で、デートクラブで働く女子大生と元大学教授がラブストーリーを展開した。', movieList:['世紀末オカルト学院', 'ライク・サムワン・イン・ラブ'], movieGenres:['アニメ','ドラマ'] },
+  { id:52, yearDisplay:'2015年',               yearSort:2015,   genre:'アニメ',    icon:'🤖', events:'セカンドインパクト後の世界線において、箱根・仙石原に「第3新東京市」が建設され、使徒とエヴァンゲリオンによる決戦の舞台となった。', movieList:['新世紀エヴァンゲリオン', 'ヱヴァンゲリヲン新劇場版'], movieGenres:['アニメ','アニメ'] },
+  { id:53, yearDisplay:'2016年',               yearSort:2016,   genre:'SF',    icon:'🏙️', events:'巨大不明生物が都心へ侵攻し東京駅周辺で凍結される事態が発生した。同時に別の世界線では男子高校生が奇妙な「入れ替わり」現象を体験していた。', movieList:['シン・ゴジラ', '君の名は。'], movieGenres:['SF','アニメ'] },
+  { id:54, yearDisplay:'2018年',               yearSort:2018,   genre:'アニメ',    icon:'👺', events:'都市の死角に残された平屋で万引きで生計を立てる家族の存在が確認された。同年10月31日には渋谷駅周辺において大規模な呪術テロ「渋谷事変」が発生し甚大な被害を受けた。', movieList:['万引き家族', '呪術廻戦'], movieGenres:['ドラマ','アニメ'] },
+  { id:55, yearDisplay:'2019年（ネオ東京）',    yearSort:2019,   genre:'SF',        icon:'📚', events:'翌年の五輪を控えた東京湾上のメガロポリス「ネオ東京」で超能力者を巡る死闘が勃発。一方別の世界線では、公序良俗を乱す表現を取り締まる「メディア良化法」のもと、本を守る「図書隊」と検閲機関との武力抗争が展開された。', movieList:['AKIRA', '図書館戦争'], movieGenres:['SF','アクション'] },
+  { id:56, yearDisplay:'2020年代',              yearSort:2023,   genre:'アニメ',    icon:'🚿', events:'個性豊かな公共トイレで清掃員が静かな日常を送る一方、下北沢のライブハウスでは極度の人見知りの少女がロックバンド活動を開始。墨田区を中心に治安を維持する少女たちの組織（リコリス）が活動し、歌舞伎町では若者たちの逃避行が起きた。', movieList:['PERFECT DAYS', 'ぼっち・ざ・ろっく！', 'リコリス・リコイル', '東京逃避行'], movieGenres:['ドラマ','アニメ','アニメ','ドラマ'] },
+  { id:57, yearDisplay:'2021年',               yearSort:2021,   genre:'アニメ',    icon:'⛅', events:'異常気象により、東京において記録的な大雨が降り始める気象異変が観測された。', movieList:['天気の子'] },
+  { id:58, yearDisplay:'2022年',               yearSort:2022,   genre:'アニメ',    icon:'☄️', events:'四谷の須賀神社の階段において、大人になった男女が奇跡的な再会を果たす事象が確認された。', movieList:['君の名は。'] },
+  { id:59, yearDisplay:'2024年',               yearSort:2024,   genre:'アニメ',    icon:'🌊', events:'3年間降り続いた雨の影響でレインボーブリッジが沈没し、東京都の面積の約3分の1が水没する未曾有の災害が発生した。', movieList:['天気の子'] },
+  { id:60, yearDisplay:'2029年',               yearSort:2029,   genre:'SF',        icon:'🦾', events:'第四次非核大戦を経て一部が水没し、脳の電脳化やサイボーグ化が進んだ東京において、「公安9課」が高度なサイバーテロと交戦状態に入った。', movieList:['攻殻機動隊'] },
+  { id:61, yearDisplay:'2035年',               yearSort:2035,   genre:'SF',        icon:'🚔', events:'警察庁舎が吉祥寺駅直結となっている東京において、機動強襲室第八係による治安維持活動が展開された。', movieList:['アクティヴレイド -機動強襲室第八係-'] },
+  { id:62, yearDisplay:'2112年',               yearSort:2112,   genre:'SF',        icon:'🔮', events:'人間の心理状態を数値化するシステムによって完全に管理された東京において、公安局の刑事たちが犯罪鎮圧に従事した。', movieList:['PSYCHO-PASS サイコパス'] },
+  { id:63, yearDisplay:'21世紀半ば',            yearSort:2050,   genre:'SF',        icon:'🌿', events:'地球温暖化により東京が完全な熱帯ジャングルへと変貌を遂げ、富裕層が住む巨大空中都市と地上に取り残された貧困層との間でゲリラ抗争が勃発した。', movieList:['シャングリ・ラ'] },
+  { id:64, yearDisplay:'20XX年（架空の年代）',  yearSort:2099,   genre:'コメディ',  icon:'🗺️', events:'東京都民から迫害を受けていた埼玉県民が、通行手形の撤廃を求めて大規模なレジスタンス運動を展開し、千葉解放戦線との間で抗争状態に陥った。', movieList:['翔んで埼玉'] },
+
+  // ── 追加エントリ ──
+  { id:65, yearDisplay:'1948年',               yearSort:1948,   genre:'ドラマ',    icon:'', events:'終戦から3年、新宿の闇市を支配する若いヤクザが肺結核を患っていることが発覚した。貧しくも良心的な町医者が治療に奔走するが、出所してきた組の親分との対立が激化する。GHQ占領下の欲望と混乱が渦巻く戦後東京の縮図。', movieList:['酔いどれ天使'] },
+  { id:66, yearDisplay:'1960年代初頭',          yearSort:1960,   genre:'ドラマ',    icon:'', events:'東京郊外の団地では、テレビを欲しがる子供たちの反乱が近所の人間関係を揺さぶった。一方、老いた父親が嫁ぎ遅れた娘の縁談を進めながら、残される孤独と静かに向き合う姿が記録された。小津安二郎が描く高度経済成長期の東京の日常。', movieList:['お早よう', '秋刀魚の味'], movieGenres:['ドラマ','ドラマ'] },
+  { id:67, yearDisplay:'1963年（誘拐事件）',    yearSort:1963.5, genre:'サスペンス', icon:'', events:'横浜郊外の高台に建つ実業家の豪邸をめぐり、誤って部下の子が誘拐された。犯人はそれでも身代金を要求。捜査の舞台は東京・横浜の歓楽街から麻薬街・簡易宿泊所へと広がり、社会の上層と底辺の鮮烈な対比が描き出された。', movieList:['天国と地獄'] },
+  { id:68, yearDisplay:'1974年',               yearSort:1974,   genre:'サスペンス', icon:'', events:'東京・蒲田の国電操車場内で身元不明の中年男性の絞殺死体が発見された。刑事2人による執念の捜査は全国各地の断片を繋ぎ合わせ、天才ピアニスト兼作曲家の衝撃的な過去と犯行動機を浮かび上がらせた。', movieList:['砂の器'] },
+  { id:69, yearDisplay:'1984年頃',              yearSort:1984,   genre:'コメディ',  icon:'', events:'深夜の国道を走るトラック運転手が東京郊外の寂れたラーメン店の再建に奔走した。同時期、脚本家の義父が急死し、経験のない家族が右往左往しながら初めてのお葬式に臨む様子も記録されている。伊丹十三が描く食と死のユーモア。', movieList:['タンポポ', 'お葬式'], movieGenres:['コメディ','コメディ'] },
+  { id:70, yearDisplay:'1993年',               yearSort:1993,   genre:'コメディ',  icon:'', events:'東京都心の高級ホテルに組織暴力団が潜り込み、恐喝・ゆすり（ミンボー）を繰り返す実態が明らかになった。対応を迫られたホテル側は女性弁護士に依頼し、法律と機転で暴力と戦うことになる。伊丹十三が暴力団に迫った社会派コメディ。', movieList:['ミンボーの女'] },
+  { id:71, yearDisplay:'1996年',               yearSort:1996,   genre:'コメディ',  icon:'', events:'東京郊外に暮らす平凡なサラリーマンが、電車の窓越しに見えたダンス教室に秘かに通い始めた。妻の疑惑を招きながらも社交ダンスにのめり込む男の姿を通じ、くすんでいた日常が光を取り戻していく様子が記録された。', movieList:['Shall We ダンス?'] },
+  { id:72, yearDisplay:'2005年',               yearSort:2005,   genre:'コメディ',  icon:'', events:'秋葉原在住のオタク青年が電車内で痴漢から女性を救ったことをネット掲示板に投稿したところ、数千人の「住人」たちに見守られながら生まれて初めての恋愛に挑む事案が発生した。インターネット黎明期の東京が生んだ純愛物語。', movieList:['電車男'] },
+  { id:73, yearDisplay:'2013年',               yearSort:2013,   genre:'サスペンス', icon:'', events:'死刑囚からの告白をきっかけに、雑誌記者が未解決の連続殺人事件を追い始めた。不動産詐欺に絡んだ闇ブローカーと元組長による凶行が、東京の裏社会を舞台に次々と暴かれていく。バブル崩壊後の社会の腐敗を抉り出した衝撃作。', movieList:['凶悪'] },
+  { id:74, yearDisplay:'2017年',               yearSort:2017,   genre:'ドラマ',    icon:'', events:'東京・墨田区のアパートに一人暮らす17歳のプロ棋士が、孤独な対局の日々と、川向かいの下町に暮らす3姉妹との温かい交流を通じて生きる力を取り戻していく様子が記録された。', movieList:['3月のライオン'] },
+  { id:75, yearDisplay:'2020年',               yearSort:2020,   genre:'ドラマ',    icon:'', events:'京王線・明大前駅で終電を逃した男女が偶然出会い、吉祥寺〜下北沢〜新宿と東京各地を転々としながら5年間の同棲生活を送った。サブカルチャーと都市の景色を背景に、恋愛の始まりと終わりを鮮やかに描いた。', movieList:['花束みたいな恋をした'] },
+];
+
+let activeFilter = 'all';
+let searchQuery = '';
+
+// ── 検索・フィルター共通 ──
+function getFilteredEntries() {
+  let filtered = activeFilter === 'all' ? entries : entries.filter(e => e.genre === activeFilter);
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
+    filtered = filtered.filter(e =>
+      e.yearDisplay.toLowerCase().includes(q) ||
+      e.movieList.some(m => m.toLowerCase().includes(q)) ||
+      e.events.toLowerCase().includes(q)
+    );
+  }
+  return filtered;
+}
+
+function setSearch(q) {
+  searchQuery = q.trim();
+  // sync both inputs
+  const hi = document.getElementById('searchInput');
+  const si = document.getElementById('stickySearchInput');
+  if (hi && hi.value !== searchQuery) hi.value = searchQuery;
+  if (si && si.value !== searchQuery) si.value = searchQuery;
+  // show/hide clear button
+  const clr = document.getElementById('searchClear');
+  if (clr) clr.style.display = searchQuery ? 'block' : 'none';
+  renderTimeline();
+  renderStats();
+  updateSearchCount();
+}
+
+function clearSearch() {
+  searchQuery = '';
+  const hi = document.getElementById('searchInput');
+  const si = document.getElementById('stickySearchInput');
+  if (hi) hi.value = '';
+  if (si) si.value = '';
+  const clr = document.getElementById('searchClear');
+  if (clr) clr.style.display = 'none';
+  renderTimeline();
+  renderStats();
+  updateSearchCount();
+}
+
+function updateSearchCount() {
+  const el = document.getElementById('searchCount');
+  if (!el) return;
+  if (searchQuery) {
+    const filtered = getFilteredEntries();
+    const totalMovies = filtered.reduce((s, e) => s + e.movieList.length, 0);
+    el.textContent = `「${searchQuery}」の検索結果：${filtered.length} 件 / ${totalMovies} 作品`;
+    el.classList.add('visible');
+  } else {
+    el.classList.remove('visible');
+  }
+}
+
+// ── Header search toggle ──
+function toggleHeaderSearch() {
+  const bar = document.getElementById('headerSearchBar');
+  const btn = document.getElementById('headerSearchToggle');
+  if (!bar) return;
+  const isOpen = bar.classList.contains('open');
+  if (isOpen) {
+    bar.classList.remove('open');
+    if (btn) btn.classList.remove('active');
+    clearSearch();
+  } else {
+    bar.classList.add('open');
+    if (btn) btn.classList.add('active');
+    setTimeout(() => document.getElementById('searchInput')?.focus(), 60);
+  }
+}
+
+// ── Sticky search panel ──
+function toggleStickySearch() {
+  const panel = document.getElementById('stickySearchPanel');
+  const btn = document.getElementById('stickySearchToggle');
+  if (!panel) return;
+  if (panel.classList.contains('open')) {
+    closeStickySearch();
+  } else {
+    buildStickyGenres();
+    panel.classList.add('open');
+    if (btn) btn.classList.add('active');
+    setTimeout(() => panel.querySelector('input')?.focus(), 60);
+  }
+}
+
+function closeStickySearch() {
+  const panel = document.getElementById('stickySearchPanel');
+  const btn = document.getElementById('stickySearchToggle');
+  if (panel) panel.classList.remove('open');
+  if (btn) btn.classList.remove('active');
+}
+
+// ── About stats ──
+function buildAboutStats() {
+  const el = document.getElementById('aboutStats');
+  if (!el) return;
+  const totalPeriods = entries.length;
+  const totalMovies = entries.reduce((s, e) => s + e.movieList.length, 0);
+  const genres = new Set(entries.map(e => e.genre)).size;
+  el.innerHTML = `
+    <div class="about-stat"><div class="about-stat-num">${totalPeriods}</div><div class="about-stat-label">Time Periods</div></div>
+    <div class="about-stat"><div class="about-stat-num">${totalMovies}</div><div class="about-stat-label">Movies</div></div>
+    <div class="about-stat"><div class="about-stat-num">${genres}</div><div class="about-stat-label">Genres</div></div>`;
+}
+
+// ── Notifications ──
+function buildNotifModal() {
+  const now = Date.now();
+  const oneMonth = 30 * 24 * 60 * 60 * 1000;
+  const recent = entries
+    .filter(e => e.addedAt && (now - e.addedAt) <= oneMonth)
+    .sort((a, b) => b.addedAt - a.addedAt);
+
+  const content = document.getElementById('notifContent');
+  if (!content) return;
+
+  if (recent.length === 0) {
+    content.innerHTML = `<div class="notif-empty">最近30日以内に追加された作品はありません。<br>「＋ 記録に追加」から新しい作品を追加できます。</div>`;
+    return;
+  }
+
+  content.innerHTML = recent.map(e => {
+    const d = new Date(e.addedAt);
+    const dateStr = `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+    return `<div class="notif-item" onclick="closeModal('notifModal'); openDetail(${e.id})">
+      <div class="notif-item-title">${e.movieList.join(' / ')}</div>
+      <div class="notif-item-meta">${e.yearDisplay} ◆ ${e.genre} ◆ 追加日 ${dateStr}</div>
+    </div>`;
+  }).join('');
+}
+
+function updateNotifBadge() {
+  const now = Date.now();
+  const oneMonth = 30 * 24 * 60 * 60 * 1000;
+  const count = entries.filter(e => e.addedAt && (now - e.addedAt) <= oneMonth).length;
+  const countStr = count > 9 ? '9+' : String(count);
+  // スティッキーナビバッジ
+  const badge = document.getElementById('notifBadge');
+  if (badge) { badge.textContent = countStr; badge.style.display = count > 0 ? 'flex' : 'none'; }
+  // ヘッダーベルバッジ
+  const hbadge = document.getElementById('headerNotifBadge');
+  if (hbadge) { hbadge.textContent = countStr; hbadge.style.display = count > 0 ? 'flex' : 'none'; }
+}
+
+function renderStats() {
+  const shown = getFilteredEntries();
+  const totalMovies = shown.reduce((s, e) => s + e.movieList.length, 0);
+  const genres = new Set(shown.map(e => e.genre)).size;
+  document.getElementById('statsBar').innerHTML = `
+    <div class="stat-item"><div class="stat-num">${shown.length}</div><div class="stat-label">Time Periods</div></div>
+    <div class="stat-item"><div class="stat-num">${totalMovies}</div><div class="stat-label">Movies</div></div>
+    <div class="stat-item"><div class="stat-num">${genres}</div><div class="stat-label">Genres</div></div>`;
+}
+
+function renderFilterBar() {
+  const genres = ['all', ...new Set(entries.map(e => e.genre))];
+  document.getElementById('filterBar').innerHTML = genres.map(g => `
+    <button class="filter-btn ${g === activeFilter ? 'active' : ''}" onclick="setFilter('${g}')">
+      ${g === 'all' ? 'ALL' : g}
+    </button>`).join('');
+}
+
+function setFilter(genre) {
+  activeFilter = genre;
+  renderFilterBar();
+  renderStats();
+  renderTimeline();
+  buildStickyGenres();
+}
+
+const DECADE_INFO = {
+  1750: { label: '江戸時代', era: '天下泰平・江戸文化の最盛期', desc: '百万都市・江戸は世界最大級の都市へと成長した。武家と町人の文化が交差する中、歌舞伎・浮世絵・俳諧が花開き、独自の都市文明が育まれた時代。' },
+  1820: { label: '1820年代', era: '文政年間', desc: '文政の世の江戸。怪談・人情話が庶民の娯楽として定着し、因果応報の物語が人々の心を深く捉えた時代。' },
+  1860: { label: '1860年代', era: '幕末・明治維新', desc: '大政奉還により「江戸」は「東京」へと改名された。西洋文明の波が押し寄せ、街の様相が根底から変わった歴史の大転換期。' },
+  1880: { label: '1880年代', era: '明治中期・文明開化', desc: '煉瓦造りの建物と人力車が共存する新旧混在の都市へ。鹿鳴館に象徴される西洋化政策が社会の上層部から東京の姿を塗り替えていった。' },
+  1900: { label: '1900年代', era: '明治末期', desc: '日露戦争を経て帝国主義の路線を歩む日本。東京では路面電車が走り始め、近代都市としての基盤が整いつつあった。' },
+  1920: { label: '1920年代', era: '大正デモクラシーと関東大震災', desc: 'モガ・モボが行き交う大正デモクラシーの時代。1923年の関東大震災は東京を廃墟に変えたが、人々は力強く復興へと立ち上がった。' },
+  1930: { label: '1930年代', era: '昭和初期・軍国主義の台頭', desc: '世界恐慌と軍国主義が社会を覆い尽くした。二・二六事件が帝都の中枢を揺さぶり、日本は取り返しのつかない戦争への道を歩み始めた。' },
+  1940: { label: '1940年代', era: '戦争と敗戦・焦土からの出発', desc: '東京大空襲によって市街地の大部分が焼き払われた。1945年8月の終戦後、廃墟に闇市が立ち並び、人々は生き延びることに必死だった。' },
+  1950: { label: '1950年代', era: '戦後復興期', desc: '朝鮮戦争特需を追い風に経済が上向き、東京タワー建設に象徴される復興の槌音が街に響いた。「もはや戦後ではない」という言葉が生まれた時代。' },
+  1960: { label: '1960年代', era: '高度経済成長期', desc: '1964年東京オリンピックに向けて首都高速が整備され、東京は近代都市として世界に名乗りを上げた。経済成長の熱気が街全体を包んだ輝かしい時代。' },
+  1970: { label: '1970年代', era: '成長の陰り・副都心の台頭', desc: 'オイルショックで高度成長に翳りが見え始めるも、都市化は続いた。新宿・渋谷の副都心が台頭し、若者文化が街の顔を塗り替えていった。' },
+  1980: { label: '1980年代', era: 'バブル経済・消費文化の絶頂', desc: '地価が高騰し、消費文化が絶頂を迎えたバブルの時代。東京は世界の金融センターとして輝き、街はネオンと欲望に彩られた。' },
+  1990: { label: '1990年代', era: 'バブル崩壊・失われた10年', desc: 'バブル経済が崩壊し「失われた10年」が始まる。1995年の地下鉄サリン事件は社会に深刻な傷を残した。それでも渋谷を中心に若者文化は煌めいた。' },
+  2000: { label: '2000年代', era: '新世紀・情報化の加速', desc: '21世紀の幕開けとともにインターネットが生活を変え始めた。六本木ヒルズに象徴される再開発ラッシュが進み、東京の景色は急速に更新された。' },
+  2010: { label: '2010年代', era: '震災以降の東京', desc: '2011年東日本大震災が東京にも深刻な影響を与えた。2020年オリンピックへの機運が高まる中、SNSとスマートフォンが都市の体験を根本から変えていった。' },
+  2020: { label: '2020年代', era: 'パンデミックと変容する都市', desc: '新型コロナウイルスのパンデミックが都市のあり方を問い直した時代。リモートワークと分散化が進む一方で、東京は世界の映像文化の最前線であり続けた。' },
+  2030: { label: '2030年代', era: '近未来の東京', desc: '少子高齢化・AI・気候変動が現実となりつつある時代。東京という都市が、その問いに何を答えるのか——映画はその答えを探し続ける。' },
+  2050: { label: '2050年代', era: '中距離未来', desc: '人口減少と技術革新が交差する時代。かつて江戸と呼ばれたこの街は幾度の変容を経て、いまなお物語の舞台であり続ける。' },
+  2090: { label: '21世紀末', era: '遠未来の東京', desc: '文明の到達点と、新たな矛盾を孕んだ都市。映画の中の東京は、人類の夢と不安を映し出す鏡として輝き続ける。' },
+  2110: { label: '22世紀', era: '江戸から始まる物語の果て', desc: '22世紀に生きる人々も、この街の物語を紡いでいる。江戸から東京へ、過去から未来へ——記憶と創造の連鎖は終わらない。' },
+};
+
+function getDecadeKey(yearSort) {
+  const d = Math.floor(yearSort / 10) * 10;
+  if (DECADE_INFO[d]) return d;
+  // fallback: find closest defined key
+  const keys = Object.keys(DECADE_INFO).map(Number).sort((a, b) => a - b);
+  for (let i = keys.length - 1; i >= 0; i--) {
+    if (keys[i] <= d) return keys[i];
+  }
+  return keys[0];
+}
+
+function renderTimeline() {
+  const container = document.getElementById('timeline');
+  const filtered = getFilteredEntries();
+
+  if (!filtered.length) {
+    const msg = searchQuery
+      ? `「${searchQuery}」に一致する作品が見つかりませんでした。<br>別のキーワードをお試しください。`
+      : 'このジャンルはまだ登録されていません。<br>「記録に追加」から追加しましょう。';
+    container.innerHTML = `<div class="no-results"><div class="no-results-icon">🎬</div><p>${msg}</p></div>`;
+    return;
+  }
+
+  const sorted = [...filtered].sort((a, b) => a.yearSort - b.yearSort);
+  let html = '';
+  let prevDecadeKey = null;
+  let cardIndex = 0;
+
+  sorted.forEach((entry) => {
+    const decadeKey = getDecadeKey(entry.yearSort);
+    if (decadeKey !== prevDecadeKey) {
+      const info = DECADE_INFO[decadeKey];
+      html += `
+      <div class="decade-divider fade-in">
+        <div class="decade-divider-inner">
+          <div class="decade-meta">
+            <span class="decade-year-label">${info.label}</span>
+            <span class="decade-era">${info.era}</span>
+          </div>
+          <p class="decade-desc">${info.desc}</p>
+        </div>
+      </div>`;
+      prevDecadeKey = decadeKey;
+    }
+
+    const i = cardIndex++;
+    const side = i % 2 === 0 ? 'left' : 'right';
+    const isSimple = /^\d{4}年$/.test(entry.yearDisplay);
+    const badgeInner = isSimple
+      ? `<span class="year-num">${entry.yearDisplay.replace('年', '')}</span>`
+      : `<span class="year-period">${entry.yearDisplay}</span>`;
+
+    const hasMovieGenres = entry.movieGenres && entry.movieGenres.length === entry.movieList.length && entry.movieList.length > 1;
+    const titlesHtml = entry.movieList.map((m, idx) => `<div class="${idx === 0 ? 'card-title' : 'card-title card-title-alt'}">${m}</div>`).join('');
+    const metaHtml = hasMovieGenres
+      ? `<div class="card-meta">${[...new Set(entry.movieGenres)].map(g => `<span class="genre-tag-sm">${g}</span>`).join('')}</div>`
+      : `<div class="card-meta"><span class="genre-tag">${entry.genre}</span></div>`;
+
+    const card = `
+      <div class="movie-card" onclick="openDetail(${entry.id})">
+        <div class="card-head">
+          <div>
+            <div class="card-titles">${titlesHtml}</div>
+            ${metaHtml}
+          </div>
+        </div>
+        <div class="card-synopsis">${entry.events}</div>
+      </div>`;
+
+    html += `
+      <div class="year-group fade-in">
+        <div class="year-marker">
+          <div class="year-badge" onclick="openDetail(${entry.id})">
+            ${badgeInner}
+            <span class="year-hint">▶ DETAIL</span>
+          </div>
+        </div>
+        <div class="cards-row">
+          <div class="card-left">${side === 'left' ? card : '<div class="card-empty"></div>'}</div>
+          <div class="card-center"><div class="connector-dot"></div></div>
+          <div class="card-right">${side === 'right' ? card : '<div class="card-empty"></div>'}</div>
+        </div>
+      </div>`;
+  });
+
+  container.innerHTML = html;
+  activateFadeIn();
+}
+
+function openDetail(id) {
+  const e = entries.find(x => x.id === id);
+  if (!e) return;
+
+  document.getElementById('detailContent').innerHTML = `
+    <div class="dm-header">
+      <div class="dm-year">${e.yearDisplay}</div>
+      <div class="dm-meta"><span class="genre-tag">${e.genre}</span></div>
+    </div>
+    <div class="section-label">東京での出来事</div>
+    <textarea class="section-edit" id="events-edit">${e.events}</textarea>
+    <div style="display:flex;align-items:center;margin-bottom:0.5rem;">
+      <button class="save-btn" onclick="saveEvents(${e.id})">▶ 保存</button>
+      <span class="save-ok" id="save-ok">保存しました</span>
+    </div>
+    <div class="section-label">関連作品 — ${e.movieList.length} movies</div>
+    <div class="movie-list-grid">
+      ${e.movieList.map(m => `<div class="movie-list-item">${m}</div>`).join('')}
+      ${e.movieGenres && e.movieGenres.length === e.movieList.length && e.movieList.length > 1 ? `<div class="card-meta" style="margin-top:0.4rem;">${[...new Set(e.movieGenres)].map(g => `<span class="genre-tag-sm">${g}</span>`).join('')}</div>` : ''}
+    </div>`;
+
+  openModal('detailModal');
+}
+
+function saveEvents(id) {
+  const val = document.getElementById('events-edit').value.trim();
+  if (!val) return;
+  const entry = entries.find(x => x.id === id);
+  if (entry) { entry.events = val; saveStorage(); }
+  const ok = document.getElementById('save-ok');
+  ok.style.opacity = '1';
+  setTimeout(() => ok.style.opacity = '0', 2000);
+  renderTimeline();
+}
+
+function openModal(id) {
+  if (id === 'notifModal') buildNotifModal();
+  if (id === 'aboutModal') buildAboutStats();
+  document.getElementById(id).classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    ['detailModal', 'addModal', 'aboutModal', 'notifModal'].forEach(closeModal);
+    closeStickySearch();
+  }
+});
+
+function submitEntry(e) {
+  e.preventDefault();
+  const yearDisplay = document.getElementById('f-yeardisplay').value.trim();
+  const yearSort    = parseFloat(document.getElementById('f-yearsort').value) || 2000;
+  const genre       = document.getElementById('f-genre').value;
+  const events      = document.getElementById('f-events').value.trim();
+  const movieList   = document.getElementById('f-movies').value.trim().split('\n').map(s => s.trim()).filter(Boolean);
+
+  const now = Date.now();
+  entries.push({ id: now, yearDisplay, yearSort, genre, icon: '', events, movieList, addedAt: now });
+  saveStorage();
+  closeModal('addModal');
+  document.getElementById('addForm').reset();
+  renderFilterBar();
+  renderStats();
+  renderTimeline();
+  updateNotifBadge();
+
+  setTimeout(() => {
+    document.querySelectorAll('.year-period, .year-num').forEach(el => {
+      const t = el.textContent.trim();
+      if (t === yearDisplay || t === yearDisplay.replace('年', ''))
+        el.closest('.year-group')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  }, 150);
+}
+
+function activateFadeIn() {
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 55);
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in:not(.visible)').forEach(el => obs.observe(el));
+}
+
+// ── localStorage ──
+const STORAGE_KEY = 'tokyofilm_v1';
+
+function saveStorage() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); } catch(e) {}
+}
+
+function loadStorage() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length >= 75) entries = parsed;
+    }
+  } catch(e) {}
+}
+
+function resetStorage() {
+  if (!confirm('追加・編集したデータをすべてリセットし、初期状態に戻しますか？')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  location.reload();
+}
+
+// ── Sticky search genres ──
+function buildStickyGenres() {
+  const container = document.getElementById('stickySearchGenres');
+  if (!container) return;
+  const genres = ['ALL', ...new Set(entries.map(e => e.genre))];
+  container.innerHTML = genres.map(g => {
+    const key = g === 'ALL' ? 'all' : g;
+    const isActive = activeFilter === key;
+    return `<button class="sticky-filter-btn${isActive ? ' active' : ''}" onclick="setFilter('${key}')">${g}</button>`;
+  }).join('');
+}
+
+
+(function initStickyNav() {
+  const nav = document.getElementById('stickyNav');
+  const header = document.querySelector('header');
+  if (!nav || !header) return;
+  const obs = new IntersectionObserver(([entry]) => {
+    nav.classList.toggle('visible', !entry.isIntersecting);
+  }, { threshold: 0 });
+  obs.observe(header);
+})();
+
+loadStorage();
+renderFilterBar();
+renderStats();
+renderTimeline();
+updateNotifBadge();
+
+// Scroll to top button
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('scrollTopBtn');
+  if (btn) btn.classList.toggle('visible', window.scrollY > 400);
+}, { passive: true });
+</script>
+
+<button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="ページトップへ">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
+
+<footer style="background:#ede8dc;border-top:1px solid rgba(0,0,0,0.1);text-align:center;padding:1.5rem 1rem;">
+  <div style="display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-bottom:0.5rem;">
+    <a href="privacy-policy.html" style="font-size:0.62rem;font-family:'Courier New',monospace;letter-spacing:0.1em;color:#9a8a78;text-decoration:none;" onmouseover="this.style.color='#cc1a1a'" onmouseout="this.style.color='#9a8a78'">PRIVACY POLICY</a>
+    <a href="terms.html" style="font-size:0.62rem;font-family:'Courier New',monospace;letter-spacing:0.1em;color:#9a8a78;text-decoration:none;" onmouseover="this.style.color='#cc1a1a'" onmouseout="this.style.color='#9a8a78'">TERMS OF USE</a>
+    <button onclick="resetStorage()" style="font-size:0.62rem;font-family:'Courier New',monospace;letter-spacing:0.1em;color:#9a8a78;background:none;border:none;cursor:pointer;padding:0;" onmouseover="this.style.color='#cc1a1a'" onmouseout="this.style.color='#9a8a78'">RESET DATA</button>
+  </div>
+  <div style="font-size:0.58rem;color:#9a8a78;font-family:'Courier New',monospace;letter-spacing:0.08em;">© 2026 東京映画浪漫記. All rights reserved.</div>
+</footer>
+
+</body>
+</html>
