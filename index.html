@@ -1108,7 +1108,6 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
       <span class="notif-badge" id="notifBadge" style="display:none">0</span>
     </button>
-    <button class="sticky-add-btn" onclick="openModal('addModal')">＋ 追加</button>
   </div>
 </nav>
 
@@ -1161,7 +1160,6 @@
     <div class="header-actions">
       <div class="filter-bar" id="filterBar"></div>
       <div class="divider"></div>
-      <button class="add-btn" onclick="openModal('addModal')">＋ 記録に追加</button>
     </div>
   </div>
   <div class="film-strip"></div>
@@ -1642,11 +1640,7 @@ function openDetail(id) {
       <div class="dm-meta"><span class="genre-tag">${e.genre}</span></div>
     </div>
     <div class="section-label">東京での出来事</div>
-    <textarea class="section-edit" id="events-edit">${e.events}</textarea>
-    <div style="display:flex;align-items:center;margin-bottom:0.5rem;">
-      <button class="save-btn" onclick="saveEvents(${e.id})">▶ 保存</button>
-      <span class="save-ok" id="save-ok">保存しました</span>
-    </div>
+    <div style="font-size:0.84rem;color:rgba(245,240,232,0.82);line-height:1.9;margin-bottom:1rem;">${e.events}</div>
     <div class="section-label">関連作品 — ${e.movieList.length} movies</div>
     <div class="movie-list-grid">
       ${e.movieList.map(m => `<div class="movie-list-item">${m}</div>`).join('')}
