@@ -1076,20 +1076,35 @@
     .about-features li::before { content: '—'; position: absolute; left: 0; color: var(--red); font-size: 0.75rem; }
     .about-note { font-size: 0.7rem; color: var(--muted); font-family: 'Courier New', monospace; letter-spacing: 0.04em; line-height: 1.8; border-top: 1px solid var(--border); padding-top: 0.8rem; margin-top: 0.8rem; }
 
-    /* ── NOTIFICATION MODAL ── */
-    .notif-empty { text-align: center; padding: 2.5rem 1rem; color: var(--muted); font-size: 0.84rem; line-height: 2; }
-    .notif-item {
-      padding: 0.7rem 0.9rem;
+    /* ── UPDATE LOG MODAL ── */
+    .update-empty { text-align: center; padding: 2.5rem 1rem; color: var(--muted); font-size: 0.84rem; line-height: 2; }
+    .update-entry {
+      padding: 0.75rem 0.9rem;
       border: 1px solid var(--border);
       border-left: 2px solid var(--red);
       background: rgba(0,0,0,0.02);
-      margin-bottom: 0.45rem;
-      cursor: pointer;
-      transition: background 0.18s;
+      margin-bottom: 0.5rem;
     }
-    .notif-item:hover { background: rgba(204,26,26,0.05); }
-    .notif-item-title { font-size: 0.88rem; font-weight: 700; color: var(--white); margin-bottom: 0.15rem; line-height: 1.5; }
-    .notif-item-meta { font-size: 0.6rem; color: var(--muted); font-family: 'Courier New', monospace; letter-spacing: 0.06em; }
+    .update-entry-header {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.3rem;
+    }
+    .update-entry-date { font-size: 0.6rem; font-family: 'Courier New', monospace; letter-spacing: 0.08em; color: var(--muted); }
+    .update-entry-tag {
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      padding: 0.05rem 0.38rem;
+      border: 1px solid var(--red);
+      color: var(--red);
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase;
+    }
+    .update-entry-title { font-size: 0.88rem; font-weight: 700; color: var(--white); line-height: 1.5; margin-bottom: 0.25rem; }
+    .update-entry-desc { font-size: 0.78rem; color: rgba(26,21,16,0.72); line-height: 1.85; }
   </style>
 </head>
 <body>
@@ -1104,7 +1119,7 @@
     <button class="sticky-icon-btn" onclick="openModal('aboutModal')" title="このサイトについて">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
     </button>
-    <button class="sticky-icon-btn" id="notifBtn" onclick="openModal('notifModal')" title="最近の追加">
+    <button class="sticky-icon-btn" id="notifBtn" onclick="openModal('notifModal')" title="更新情報">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
       <span class="notif-badge" id="notifBadge" style="display:none">0</span>
     </button>
@@ -1151,7 +1166,7 @@
       <button class="header-icon-btn" onclick="openModal('aboutModal')" title="このサイトについて">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
       </button>
-      <button class="header-icon-btn" id="headerBellBtn" onclick="openModal('notifModal')" title="通知">
+      <button class="header-icon-btn" id="headerBellBtn" onclick="openModal('notifModal')" title="更新情報">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
         <span class="notif-badge" id="headerNotifBadge" style="display:none">0</span>
       </button>
@@ -1253,9 +1268,9 @@
 <div class="overlay" id="notifModal" onclick="closeModal('notifModal')">
   <div class="modal" onclick="event.stopPropagation()">
     <button class="modal-close" onclick="closeModal('notifModal')">✕</button>
-    <div class="section-label" style="margin-top:0;">RECENT ADDITIONS</div>
-    <div style="font-size:1.3rem;font-weight:900;letter-spacing:0.04em;color:var(--white);margin-bottom:0.25rem;font-family:'Noto Serif JP',serif;">最近の追加</div>
-    <p style="font-size:0.7rem;color:var(--muted);margin-bottom:1.2rem;font-family:'Courier New',monospace;letter-spacing:0.06em;">直近30日以内に追加された記録</p>
+    <div class="section-label" style="margin-top:0;">UPDATES</div>
+    <div style="font-size:1.3rem;font-weight:900;letter-spacing:0.04em;color:var(--white);margin-bottom:0.25rem;font-family:'Noto Serif JP',serif;">更新情報</div>
+    <p style="font-size:0.7rem;color:var(--muted);margin-bottom:1.2rem;font-family:'Courier New',monospace;letter-spacing:0.06em;">サイトの更新・作品追加の記録</p>
     <div id="notifContent"></div>
   </div>
 </div>
@@ -1453,36 +1468,41 @@ function buildAboutStats() {
     <div class="about-stat"><div class="about-stat-num">${genres}</div><div class="about-stat-label">Genres</div></div>`;
 }
 
-// ── Notifications ──
-function buildNotifModal() {
-  const now = Date.now();
-  const oneMonth = 30 * 24 * 60 * 60 * 1000;
-  const recent = entries
-    .filter(e => e.addedAt && (now - e.addedAt) <= oneMonth)
-    .sort((a, b) => b.addedAt - a.addedAt);
+// ── Site Updates Log ──
+const SITE_UPDATES = [
+  {
+    date: '2026.05.26',
+    timestamp: new Date('2026-05-26').getTime(),
+    tag: 'LAUNCH',
+    title: 'β版 公開',
+    desc: '107作品・75の年代区間を収録した東京映画年代記をβ版として公開しました。江戸時代から近未来まで、東京を舞台にした映画の出来事を年表形式で辿ることができます。',
+  },
+];
 
+function buildNotifModal() {
   const content = document.getElementById('notifContent');
   if (!content) return;
 
-  if (recent.length === 0) {
-    content.innerHTML = `<div class="notif-empty">最近30日以内に追加された作品はありません。<br>「＋ 記録に追加」から新しい作品を追加できます。</div>`;
+  if (SITE_UPDATES.length === 0) {
+    content.innerHTML = `<div class="update-empty">現在お知らせはありません。<br>更新があった際にこちらでお知らせします。</div>`;
     return;
   }
 
-  content.innerHTML = recent.map(e => {
-    const d = new Date(e.addedAt);
-    const dateStr = `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-    return `<div class="notif-item" onclick="closeModal('notifModal'); openDetail(${e.id})">
-      <div class="notif-item-title">${e.movieList.join(' / ')}</div>
-      <div class="notif-item-meta">${e.yearDisplay} ◆ ${e.genre} ◆ 追加日 ${dateStr}</div>
-    </div>`;
-  }).join('');
+  content.innerHTML = SITE_UPDATES.map(u => `
+    <div class="update-entry">
+      <div class="update-entry-header">
+        <span class="update-entry-date">${u.date}</span>
+        <span class="update-entry-tag">${u.tag}</span>
+      </div>
+      <div class="update-entry-title">${u.title}</div>
+      <div class="update-entry-desc">${u.desc}</div>
+    </div>`).join('');
 }
 
 function updateNotifBadge() {
   const now = Date.now();
-  const oneMonth = 30 * 24 * 60 * 60 * 1000;
-  const count = entries.filter(e => e.addedAt && (now - e.addedAt) <= oneMonth).length;
+  const twoMonths = 60 * 24 * 60 * 60 * 1000;
+  const count = SITE_UPDATES.filter(u => (now - u.timestamp) <= twoMonths).length;
   const countStr = count > 9 ? '9+' : String(count);
   // スティッキーナビバッジ
   const badge = document.getElementById('notifBadge');
