@@ -1,0 +1,10 @@
+{
+  "name": "tokyo-cinema-chronicle",
+  "version": "1.0.0",
+  "description": "東京映画浪漫記 — Tokyo Cinema Chronicle",
+  "scripts": {
+    "build": "python3 scripts/build.py",
+    "extract": "python3 scripts/extract.py"
+  },
+  "private": true
+}
