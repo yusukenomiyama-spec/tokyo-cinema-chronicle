@@ -18,8 +18,12 @@ CSV 列:
 import csv
 import json
 import os
+import sys
 import urllib.request
 import urllib.error
+
+# --local フラグで Google Sheets をスキップしてローカル CSV を使用
+USE_LOCAL = '--local' in sys.argv
 
 ROOT      = os.path.join(os.path.dirname(__file__), '..')
 CSV_PATH  = os.path.join(ROOT, 'data', 'movies.csv')
@@ -40,6 +44,12 @@ def get_gsheet_csv_url():
 
 # ── データソースから CSV テキストを取得 ───────────────────────────
 def load_csv_text():
+    # --local フラグがある場合はローカル CSV を直接使用
+    if USE_LOCAL:
+        print('📂 ローカルモード: data/movies.csv を使用します')
+        with open(CSV_PATH, encoding='utf-8', newline='') as f:
+            return f.read()
+
     # 1. Google スプレッドシートを試みる
     url = get_gsheet_csv_url()
     try:
