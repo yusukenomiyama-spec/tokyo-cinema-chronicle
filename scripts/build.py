@@ -1,7 +1,13 @@
 """
 scripts/build.py
-data/movies.xlsx を読み込み、index.html のエントリ配列を更新する
+Google スプレッドシート（または data/movies.csv）を読み込み、
+index.html のエントリ配列を更新する
+
 Usage: python3 scripts/build.py
+
+データソースの優先順位:
+  1. Google スプレッドシート（公開設定の場合）
+  2. data/movies.csv（フォールバック）
 
 CSV 列:
   id, yearDisplay, yearSort, genre, icon, events, movieList, movieGenres
@@ -12,78 +18,65 @@ CSV 列:
 import csv
 import json
 import os
+import urllib.request
+import urllib.error
 
 ROOT      = os.path.join(os.path.dirname(__file__), '..')
-XLSX_PATH = os.path.join(ROOT, 'data', 'movies.xlsx')
 CSV_PATH  = os.path.join(ROOT, 'data', 'movies.csv')
 HTML_PATH = os.path.join(ROOT, 'index.html')
 
 START_MARKER = '// ═══ MOVIE DATA START ═══'
 END_MARKER   = '// ═══ MOVIE DATA END ═══'
 
-# ── xlsx / CSV どちらからでも読み込む ──────────────────────────────
-def load_from_xlsx():
-    from openpyxl import load_workbook
-    wb = load_workbook(XLSX_PATH, data_only=True)
-    ws = wb['映画データ']
+# ── Google スプレッドシートの設定 ─────────────────────────────────
+SHEET_ID    = '1HyKuMj19uvze-1bIXefj47ENHM8aGmW1Ia_Z9_1zWPY'
+SHEET_NAME  = ''   # シート名（空欄なら最初のシートを使用）
 
-    # 列は固定位置: A=id, B=yearDisplay, C=yearSort, D=genre,
-    #               E=icon, F=events, G=movieList, H=movieGenres
-    # データは 3行目から（1行目=タイトル, 2行目=ヘッダー）
-    KEYS = ['id', 'yearDisplay', 'yearSort', 'genre', 'icon', 'events', 'movieList', 'movieGenres']
+def get_gsheet_csv_url():
+    base = f'https://docs.google.com/spreadsheets/d/{SHEET_ID}/export?format=csv'
+    if SHEET_NAME:
+        return base + f'&sheet={urllib.parse.quote(SHEET_NAME)}'
+    return base
 
-    rows = []
-    for row in ws.iter_rows(min_row=3, max_col=8, values_only=True):
-        raw_id = row[0]
-        if raw_id is None or str(raw_id).strip() == '':
-            continue
-        try:
-            int(float(str(raw_id)))
-        except ValueError:
-            continue
-
-        def v(val):
-            return str(val).strip() if val is not None else ''
-
-        movie_list_val = v(row[6])
-        if not movie_list_val:  # movieList が空の行（入力用空欄）はスキップ
-            continue
-
-        rows.append({
-            'id':          v(row[0]),
-            'yearDisplay': v(row[1]),
-            'yearSort':    v(row[2]),
-            'genre':       v(row[3]),
-            'icon':        v(row[4]),
-            'events':      v(row[5]),
-            'movieList':   movie_list_val,
-            'movieGenres': v(row[7]),
-        })
-    return rows
-
-def load_from_csv():
-    rows = []
-    with open(CSV_PATH, encoding='utf-8', newline='') as f:
-        for row in csv.DictReader(f):
-            rows.append(row)
-    return rows
-
-# xlsx を優先、なければ CSV にフォールバック
-if os.path.exists(XLSX_PATH):
+# ── データソースから CSV テキストを取得 ───────────────────────────
+def load_csv_text():
+    # 1. Google スプレッドシートを試みる
+    url = get_gsheet_csv_url()
     try:
-        raw_rows = load_from_xlsx()
-        print(f'📖 xlsx から読み込み: {len(raw_rows)} 件')
+        req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+        with urllib.request.urlopen(req, timeout=15) as res:
+            text = res.read().decode('utf-8')
+        print(f'📥 Google スプレッドシートから取得')
+        return text
+    except urllib.error.HTTPError as e:
+        if e.code == 401:
+            print('⚠️  Google スプレッドシートは非公開です。')
+            print('   → スプレッドシートを「リンクを知っている全員が閲覧可」に設定してください。')
+        else:
+            print(f'⚠️  Google スプレッドシートの取得に失敗しました (HTTP {e.code})')
     except Exception as e:
-        print(f'⚠️  xlsx 読み込み失敗 ({e})、CSV にフォールバック')
-        raw_rows = load_from_csv()
-else:
-    raw_rows = load_from_csv()
-    print(f'📖 CSV から読み込み: {len(raw_rows)} 件')
+        print(f'⚠️  Google スプレッドシートに接続できません: {e}')
+
+    # 2. ローカル CSV にフォールバック
+    print(f'📂 ローカルの data/movies.csv を使用します')
+    with open(CSV_PATH, encoding='utf-8', newline='') as f:
+        return f.read()
+
+# ── CSV テキスト → エントリリスト ────────────────────────────────
+def parse_csv(text):
+    rows = list(csv.DictReader(text.splitlines()))
+    return rows
+
+raw_rows = parse_csv(load_csv_text())
 
 # ── dict → Entry オブジェクト ─────────────────────────────────────
 entries = []
 for row in raw_rows:
-    movie_list   = [m.strip() for m in str(row.get('movieList',   '')).split('|') if m.strip()]
+    movie_list_raw = str(row.get('movieList', '')).strip()
+    if not movie_list_raw:
+        continue  # movieList が空の行はスキップ
+
+    movie_list   = [m.strip() for m in movie_list_raw.split('|') if m.strip()]
     movie_genres = [g.strip() for g in str(row.get('movieGenres', '')).split('|') if g.strip()]
 
     year_sort_raw = str(row.get('yearSort', '0')).strip()
@@ -98,7 +91,7 @@ for row in raw_rows:
         'yearSort':    year_sort,
         'genre':       str(row.get('genre', '')).strip(),
         'icon':        str(row.get('icon',  '')).strip(),
-        'events':      str(row.get('events','  ')).strip(),
+        'events':      str(row.get('events', '')).strip(),
         'movieList':   movie_list,
     }
     if len(movie_list) > 1 and movie_genres:
@@ -106,10 +99,9 @@ for row in raw_rows:
 
     entries.append(entry)
 
-# id でソート
 entries.sort(key=lambda e: e['id'])
 
-# ── CSV を同期出力（xlsx 更新後に CSV も最新にしておく） ────────────
+# ── CSV を同期保存（Google Sheets から取得した内容をローカルにバックアップ） ──
 with open(CSV_PATH, 'w', encoding='utf-8', newline='') as f:
     writer = csv.writer(f)
     writer.writerow(['id','yearDisplay','yearSort','genre','icon','events','movieList','movieGenres'])
