@@ -310,55 +310,60 @@
     .card-center { display: flex; flex-direction: column; align-items: center; padding-top: 0.85rem; }
     .card-empty { min-height: 0; }
 
+    /* ── 2枚カード：虚構（前面・左）＋史実（背面・右） ── */
     .movie-card {
-      background: var(--bg-card2);       /* 史実の地面 */
-      border: 1px solid rgba(0,0,0,0.12);
-      border-left: 3px solid var(--red);
-      border-radius: 0;
-      padding: 0.55rem 0.5rem 0.55rem;   /* クリームが四辺に見える余白 */
+      background: transparent;
+      border: none;
+      padding: 0;
       width: 100%;
       max-width: 390px;
       cursor: pointer;
-      transition: border-color 0.25s;
       position: relative;
-      /* overflow: visible — 虚構層の影を外に出す */
     }
 
-    .movie-card:hover {
-      border-color: rgba(0,0,0,0.2);
-      border-left-color: var(--red);
-    }
-
-    /* 虚構レイヤー — 手前に浮遊 */
+    /* 虚構レイヤー — 前面・左寄せ（デフォルト） */
     .card-fiction-layer {
       background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
       padding: 1rem 1rem 1rem 0.9rem;
-      box-shadow:
-        0 4px 14px rgba(0,0,0,0.14),
-        0 1px 3px  rgba(0,0,0,0.08);
-      transform: translateY(-5px);
-      transition:
-        transform    0.28s cubic-bezier(.25,.46,.45,.94),
-        box-shadow   0.28s cubic-bezier(.25,.46,.45,.94);
       position: relative;
-      z-index: 1;
+      z-index: 2;
+      width: calc(100% - 8px);
+      margin-left: 0;
+      box-shadow: 3px 5px 18px rgba(0,0,0,0.15), 0 1px 3px rgba(0,0,0,0.07);
+      transition:
+        margin-left  0.38s cubic-bezier(.4,0,.2,1),
+        transform    0.3s  cubic-bezier(.25,.46,.45,.94),
+        box-shadow   0.3s  ease,
+        opacity      0.32s ease,
+        border-left-color 0.3s ease,
+        border-left-width 0.3s ease;
     }
 
     .movie-card:hover .card-fiction-layer {
-      transform: translateY(-10px);
-      box-shadow:
-        0 12px 32px rgba(0,0,0,0.2),
-        0 3px  8px  rgba(0,0,0,0.1);
+      transform: translateY(-4px) translateX(-2px);
+      box-shadow: 5px 9px 26px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.09);
     }
 
-    /* 史実レイヤー — 奥に留まる */
+    /* 史実レイヤー — 背面・右寄せ（デフォルト） */
     .card-real-layer {
-      padding: 0.3rem 0.3rem 0;
-      display: flex;
-      gap: 0.4rem;
-      align-items: flex-start;
+      background: var(--bg-card2);
+      border: 1px solid rgba(154,138,120,0.38);
+      border-left: 2px solid rgba(154,138,120,0.52);
+      padding: 0.75rem 1rem 0.75rem 0.95rem;
       position: relative;
-      z-index: 0;
+      z-index: 1;
+      width: calc(100% - 8px);
+      margin-left: 8px;
+      margin-top: -4px;
+      display: flex;
+      gap: 0.45rem;
+      align-items: flex-start;
+      transition:
+        margin-left 0.38s cubic-bezier(.4,0,.2,1),
+        transform   0.3s  ease,
+        box-shadow  0.3s  ease;
     }
 
     .card-real-badge {
@@ -370,17 +375,53 @@
       flex-shrink: 0;
       padding-top: 0.15rem;
       text-transform: uppercase;
-      opacity: 0.7;
+      opacity: 0.72;
+      transition: color 0.3s ease, opacity 0.3s ease;
     }
 
     .card-real-text {
-      font-size: 0.66rem;
-      color: rgba(26,21,16,0.46);
-      line-height: 1.65;
+      font-size: 0.7rem;
+      color: rgba(26,21,16,0.62);
+      line-height: 1.72;
       display: -webkit-box;
-      -webkit-line-clamp: 2;
+      -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      transition: color 0.3s ease, -webkit-line-clamp 0.3s ease;
+    }
+
+    /* ── 史実モード：入れ替え ── */
+    body.mode-real .card-fiction-layer {
+      margin-left: 8px;
+      opacity: 0.55;
+      box-shadow: none;
+      border-left-color: rgba(0,0,0,0.1);
+      border-left-width: 1px;
+    }
+
+    body.mode-real .movie-card:hover .card-fiction-layer {
+      transform: none;
+    }
+
+    body.mode-real .card-real-layer {
+      margin-left: 0;
+      box-shadow: -3px 5px 18px rgba(0,0,0,0.14), 0 1px 3px rgba(0,0,0,0.07);
+      border-left: 3px solid #8b7355;
+    }
+
+    body.mode-real .card-real-badge {
+      color: #6b5b45;
+      opacity: 1;
+    }
+
+    body.mode-real .card-real-text {
+      color: rgba(26,21,16,0.82);
+      -webkit-line-clamp: 4;
+    }
+
+    body.mode-real .movie-card:hover .card-real-layer {
+      transform: translateY(-4px) translateX(2px);
+      box-shadow: -5px 9px 26px rgba(0,0,0,0.2), 0 2px 5px rgba(0,0,0,0.09);
     }
 
     .card-meta {
@@ -871,6 +912,75 @@
       color: var(--bg);
     }
     .scroll-top-btn svg { width: 16px; height: 16px; }
+
+    /* ── LAYER TOGGLE ── */
+    .layer-toggle {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(20,16,12,0.93);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      align-items: stretch;
+      z-index: 8900;
+      overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.45);
+    }
+
+    .layer-toggle-label {
+      font-size: 0.42rem;
+      color: rgba(255,255,255,0.28);
+      padding: 0 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+      white-space: nowrap;
+      border-right: 1px solid rgba(255,255,255,0.09);
+      display: flex;
+      align-items: center;
+    }
+
+    .layer-toggle-btn {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.73rem;
+      padding: 0.45rem 1.1rem;
+      border: none;
+      background: transparent;
+      color: rgba(255,255,255,0.42);
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      transition: color 0.2s, background 0.2s;
+      white-space: nowrap;
+      position: relative;
+    }
+
+    .layer-toggle-btn + .layer-toggle-btn {
+      border-left: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .layer-toggle-btn::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0.7rem; right: 0.7rem;
+      height: 2px;
+      background: transparent;
+      transition: background 0.2s;
+    }
+
+    .layer-toggle-btn.active {
+      color: #fff;
+      background: rgba(255,255,255,0.07);
+    }
+
+    #btnFiction.active::after { background: var(--red); }
+    #btnReal.active::after    { background: #8b7355; }
+
+    .layer-toggle-btn:hover:not(.active) {
+      color: rgba(255,255,255,0.72);
+    }
 
     /* ── MOBILE ── */
     @media (max-width: 680px) {
@@ -1892,6 +2002,16 @@ function buildStickyGenres() {
   obs.observe(header);
 })();
 
+// ── レイヤー切替 ──
+function setLayer(mode) {
+  const isReal = mode === 'real';
+  document.body.classList.toggle('mode-real', isReal);
+  const bf = document.getElementById('btnFiction');
+  const br = document.getElementById('btnReal');
+  if (bf) bf.classList.toggle('active', !isReal);
+  if (br) br.classList.toggle('active',  isReal);
+}
+
 loadStorage();
 renderFilterBar();
 renderStats();
@@ -1904,6 +2024,12 @@ window.addEventListener('scroll', () => {
   if (btn) btn.classList.toggle('visible', window.scrollY > 400);
 }, { passive: true });
 </script>
+
+<div class="layer-toggle" id="layerToggle">
+  <span class="layer-toggle-label">LAYER</span>
+  <button class="layer-toggle-btn active" id="btnFiction" onclick="setLayer('fiction')">映画</button>
+  <button class="layer-toggle-btn"        id="btnReal"    onclick="setLayer('real')">史実</button>
+</div>
 
 <button class="scroll-top-btn" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="ページトップへ">
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg>
