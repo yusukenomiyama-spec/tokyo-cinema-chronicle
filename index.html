@@ -330,49 +330,13 @@
       transform: translateY(-3px);
     }
 
-    .card-head {
+    .card-meta {
       display: flex;
-      gap: 0.65rem;
-      align-items: flex-start;
-      margin-bottom: 0.6rem;
+      gap: 0.4rem;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 0.5rem;
     }
-
-    .card-titles { margin-bottom: 0.15rem; }
-
-    .card-title-row {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 0.5rem;
-    }
-    .genre-tag-sm {
-      font-size: 0.52rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      padding: 0.08rem 0.35rem;
-      border: 1px solid var(--red);
-      color: var(--red);
-      background: transparent;
-      font-family: 'Courier New', monospace;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .card-title {
-      font-size: 0.88rem;
-      font-weight: 700;
-      line-height: 1.4;
-      color: var(--white);
-    }
-
-    .card-title-alt {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--white);
-      margin-top: 0.1rem;
-    }
-
-    .card-meta { display: flex; gap: 0.4rem; align-items: center; flex-wrap: wrap; }
 
     .genre-tag {
       font-size: 0.6rem;
@@ -387,21 +351,45 @@
       font-family: 'Courier New', monospace;
     }
 
-    .card-synopsis {
-      font-size: 0.77rem;
-      color: var(--muted);
-      line-height: 1.7;
+    .genre-tag-sm {
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 0.08rem 0.35rem;
+      border: 1px solid var(--red);
+      color: var(--red);
+      background: transparent;
+      font-family: 'Courier New', monospace;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card-events {
+      font-size: 0.82rem;
+      color: var(--white);
+      line-height: 1.75;
+      margin-bottom: 0.65rem;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 4;
       -webkit-box-orient: vertical;
       overflow: hidden;
     }
 
     .card-movies {
-      margin-top: 0.6rem;
       display: flex;
       flex-wrap: wrap;
       gap: 0.25rem;
+      align-items: center;
+    }
+
+    .card-movies-label {
+      font-size: 0.52rem;
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+      opacity: 0.7;
+      flex-shrink: 0;
+      margin-right: 0.15rem;
     }
 
     .movie-chip {
@@ -412,6 +400,35 @@
       color: var(--muted);
       font-family: 'Courier New', monospace;
       white-space: nowrap;
+    }
+
+    /* 映画ごとの出来事リスト */
+    .card-movie-items {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .card-movie-item {
+      padding: 0.55rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card-movie-item:first-child { padding-top: 0; }
+    .card-movie-item:last-child  { border-bottom: none; padding-bottom: 0; }
+
+    .card-movie-header {
+      margin-bottom: 0.3rem;
+    }
+
+    .card-movie-event {
+      font-size: 0.79rem;
+      color: var(--white);
+      line-height: 1.72;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .connector-dot {
@@ -546,7 +563,7 @@
     .save-btn:hover { background: #e01e1e; }
     .save-ok { color: var(--red); font-size: 0.65rem; font-family: 'Courier New', monospace; margin-left: 0.6rem; opacity: 0; transition: opacity 0.3s; }
 
-    .movie-list-grid { display: flex; flex-direction: column; gap: 0.3rem; }
+    .movie-list-grid { display: flex; flex-direction: column; gap: 0.5rem; }
 
     .movie-list-item {
       display: flex;
@@ -560,6 +577,7 @@
       font-size: 0.84rem;
       color: var(--white);
     }
+
 
     /* Add form */
     .form-modal-title {
@@ -1282,19 +1300,19 @@ function gc() { return '#cc1a1a'; }
 let entries = [
   { id:1, yearDisplay:'1700年代（江戸時代）', yearSort:1750, genre:'コメディ', icon:'🏯', events:'陸奥国湯長谷藩が、幕府の陰謀によりわずか5日での江戸への参勤交代を命じられ、様々な奇策を用いてこれを完遂した。', movieList:["超高速!参勤交代"] },
   { id:2, yearDisplay:'1825年頃（文政年間）', yearSort:1825, genre:'ホラー', icon:'👻', events:'四谷において、夫に毒殺された女性の怨霊が凄惨な復讐劇を繰り広げたという記録が残る。', movieList:["四谷怪談"] },
-  { id:3, yearDisplay:'1868年（明治元年）', yearSort:1868, genre:'アクション', icon:'⚔️', events:'廃刀令下の東京（神田や赤坂等）において、かつて「人斬り抜刀斎」と呼ばれた暗殺者が流浪の旅を行ったとされる。また、現代からタイムスリップした女子高生が森鴎外ら歴史的人物と邂逅したという記録がある。', movieList:["るろうに剣心", "明治東亰恋伽"], movieGenres:["アクション", "ドラマ"] },
+  { id:3, yearDisplay:'1868年（明治元年）', yearSort:1868, genre:'アクション', icon:'⚔️', events:'廃刀令下の東京（神田や赤坂等）において、かつて「人斬り抜刀斎」と呼ばれた暗殺者が流浪の旅を行ったとされる。また、現代からタイムスリップした女子高生が森鴎外ら歴史的人物と邂逅したという記録がある。', movieList:["るろうに剣心", "明治東亰恋伽"], movieGenres:["アクション", "ドラマ"], movieEvents:["廃刀令下の東京（神田や赤坂等）において、かつて「人斬り抜刀斎」と呼ばれた暗殺者が流浪の旅を行ったとされる。", "現代からタイムスリップした女子高生が森鴎外ら歴史的人物と邂逅したという記録がある。"] },
   { id:4, yearDisplay:'1883年', yearSort:1883, genre:'ドラマ', icon:'🎭', events:'日比谷に落成したばかりの「鹿鳴館」にて、華やかな西洋風の舞踏会が催された。', movieList:["鹿鳴館"] },
   { id:5, yearDisplay:'1904年', yearSort:1904, genre:'戦争', icon:'⚔️', events:'日露戦争が勃発し、神田駿河台周辺などで激動の事態が発生した。', movieList:["二百三高地"] },
-  { id:6, yearDisplay:'明治後期〜末期', yearSort:1908, genre:'ドラマ', icon:'💄', events:'近代化が進む東京において、人々の心と生活を彩る化粧師が活動した。また同時期、漱石の小説を原作に、妻のある友人を深く愛し続けた男の苦悩が、明治末期の東京の街を背景に描かれた。', movieList:["化粧師 KEWAISHI", "それから"], movieGenres:["ドラマ", "ドラマ"] },
-  { id:7, yearDisplay:'大正時代', yearSort:1920, genre:'アニメ', icon:'🎞️', events:'浅草の映画館「靑木館」周辺において活動弁士を志す青年を中心とした騒動が勃発。また同時期、浅草などで鬼を狩る剣士たちの秘密裏の戦闘が記録されたほか、お転婆な女学生が古い慣習を打ち破り激動の時代を駆け抜けた。さらに三島由紀夫原作を基に、大正の東京に生きた華族の若い恋人たちの許されぬ悲恋が描かれた。', movieList:["カツベン！", "鬼滅の刃", "はいからさんが通る", "春の雪"], movieGenres:["ドラマ", "アニメ", "アニメ", "ドラマ"] },
+  { id:6, yearDisplay:'明治後期〜末期', yearSort:1908, genre:'ドラマ', icon:'💄', events:'近代化が進む東京において、人々の心と生活を彩る化粧師が活動した。また同時期、漱石の小説を原作に、妻のある友人を深く愛し続けた男の苦悩が、明治末期の東京の街を背景に描かれた。', movieList:["化粧師 KEWAISHI", "それから"], movieGenres:["ドラマ", "ドラマ"], movieEvents:["近代化が進む東京において、人々の心と生活を彩る化粧師が活動した。", "漱石の小説を原作に、妻のある友人を深く愛し続けた男の苦悩が、明治末期の東京の街を背景に描かれた。"] },
+  { id:7, yearDisplay:'大正時代', yearSort:1920, genre:'アニメ', icon:'🎞️', events:'浅草の映画館「靑木館」周辺において活動弁士を志す青年を中心とした騒動が勃発。また同時期、浅草などで鬼を狩る剣士たちの秘密裏の戦闘が記録されたほか、お転婆な女学生が古い慣習を打ち破り激動の時代を駆け抜けた。さらに三島由紀夫原作を基に、大正の東京に生きた華族の若い恋人たちの許されぬ悲恋が描かれた。', movieList:["カツベン！", "鬼滅の刃", "はいからさんが通る", "春の雪"], movieGenres:["ドラマ", "アニメ", "アニメ", "ドラマ"], movieEvents:["浅草の映画館「靑木館」周辺において活動弁士を志す青年を中心とした騒動が勃発した。", "浅草などで鬼を狩る剣士たちの秘密裏の戦闘が記録された。", "お転婆な女学生が古い慣習を打ち破り激動の時代の東京を駆け抜けた。", "三島由紀夫原作を基に、大正の東京に生きた華族の若い恋人たちの許されぬ悲恋が描かれた。"] },
   { id:8, yearDisplay:'1920年代〜1930年代', yearSort:1922, genre:'ドラマ', icon:'🐕', events:'渋谷駅周辺において、亡き主人を待ち続ける秋田犬の姿が人々の涙を誘う事象が長期にわたり観測された。', movieList:["ハチ公物語"] },
-  { id:9, yearDisplay:'1923年', yearSort:1923, genre:'ドラマ', icon:'🌋', events:'関東大震災が発生。ある世界線では女相撲一座とアナキスト集団が接触し、別の世界線ではこの震災自体が魔人・加藤保憲の呪術と怨霊の力によって引き起こされた。本郷の大学に通う青年と上野広小路の少女が震災に遭遇したという記録も残る。', movieList:["菊とギロチン", "帝都物語", "風立ちぬ"], movieGenres:["ドラマ", "SF", "アニメ"] },
+  { id:9, yearDisplay:'1923年', yearSort:1923, genre:'ドラマ', icon:'🌋', events:'関東大震災が発生。ある世界線では女相撲一座とアナキスト集団が接触し、別の世界線ではこの震災自体が魔人・加藤保憲の呪術と怨霊の力によって引き起こされた。本郷の大学に通う青年と上野広小路の少女が震災に遭遇したという記録も残る。', movieList:["菊とギロチン", "帝都物語", "風立ちぬ"], movieGenres:["ドラマ", "SF", "アニメ"], movieEvents:["関東大震災が発生し、女相撲一座とアナキスト集団が接触した。", "震災自体が魔人・加藤保憲の呪術と怨霊の力によって引き起こされたという記録がある。", "本郷の大学に通う青年と上野広小路の少女が震災に遭遇したという記録も残る。"] },
   { id:10, yearDisplay:'1925年', yearSort:1925, genre:'コメディ', icon:'⚾', events:'セーラー服を着た乙女たちによる野球の練習が目撃された。', movieList:["大正野球娘。"] },
   { id:11, yearDisplay:'1926年', yearSort:1926, genre:'ドラマ', icon:'🎪', events:'大正最後の年の東京において、新派の劇作家が夢と現実が交錯する幻想的な世界に迷い込んだという記録がある。', movieList:["陽炎座"] },
-  { id:12, yearDisplay:'1936年', yearSort:1936, genre:'戦争', icon:'❄️', events:'雪降る帝都の永田町や皇居周辺において、青年将校たちによるクーデター（二・二六事件）が勃発した。また同年、下宿屋を舞台にした阿部定事件——激しい情欲の果てに男を絞殺した女中の逃走——が帝都を震撼させた。', movieList:["226", "愛のコリーダ"], movieGenres:["戦争", "ドラマ"] },
+  { id:12, yearDisplay:'1936年', yearSort:1936, genre:'戦争', icon:'❄️', events:'雪降る帝都の永田町や皇居周辺において、青年将校たちによるクーデター（二・二六事件）が勃発した。また同年、下宿屋を舞台にした阿部定事件——激しい情欲の果てに男を絞殺した女中の逃走——が帝都を震撼させた。', movieList:["226", "愛のコリーダ"], movieGenres:["戦争", "ドラマ"], movieEvents:["雪降る帝都の永田町や皇居周辺において、青年将校たちによるクーデター（二・二六事件）が勃発した。", "下宿屋を舞台にした阿部定事件——激しい情欲の果てに男を絞殺した女中の逃走——が帝都を震撼させた。"] },
   { id:13, yearDisplay:'1944年頃', yearSort:1944, genre:'戦争', icon:'🏫', events:'戦局の悪化に伴い、品川区戸越から保母と子供たちが空襲を逃れて疎開を開始した。', movieList:["あの日のオルガン"] },
-  { id:14, yearDisplay:'1940年代後半', yearSort:1947, genre:'ドラマ', icon:'🌃', events:'戦後の有楽町のガード下や上野の闇市において娼婦たちが生存競争を繰り広げ、すられた拳銃を探す若き刑事が路地裏を彷徨う事案が発生した。', movieList:["肉体の門", "野良犬"], movieGenres:["ドラマ", "ドラマ"] },
-  { id:15, yearDisplay:'1945年', yearSort:1945, genre:'戦争', icon:'💣', events:'3月の東京大空襲で下町一帯が火の海となり甚大な被害を受けた。同年8月には、焼け野原となった皇居周辺で玉音放送を巡るクーデター未遂事件が勃発した。また、東京出身の将校たちが硫黄島の守備隊として戦い、故郷への最後の手紙を書き残した。', movieList:["戦争と青春", "ペーパーシティ 東京大空襲の記憶", "日本のいちばん長い日", "東京大空襲 ガラスのうさぎ", "硫黄島からの手紙"], movieGenres:["戦争", "ドラマ", "戦争", "戦争", "戦争"] },
+  { id:14, yearDisplay:'1940年代後半', yearSort:1947, genre:'ドラマ', icon:'🌃', events:'戦後の有楽町のガード下や上野の闇市において娼婦たちが生存競争を繰り広げ、すられた拳銃を探す若き刑事が路地裏を彷徨う事案が発生した。', movieList:["肉体の門", "野良犬"], movieGenres:["ドラマ", "ドラマ"], movieEvents:["戦後の有楽町のガード下や上野の闇市において、娼婦たちが生存競争を繰り広げた。", "すられた拳銃を探す若き刑事が焼け跡の残る路地裏を彷徨う事案が発生した。"] },
+  { id:15, yearDisplay:'1945年', yearSort:1945, genre:'戦争', icon:'💣', events:'3月の東京大空襲で下町一帯が火の海となり甚大な被害を受けた。同年8月には、焼け野原となった皇居周辺で玉音放送を巡るクーデター未遂事件が勃発した。また、東京出身の将校たちが硫黄島の守備隊として戦い、故郷への最後の手紙を書き残した。', movieList:["戦争と青春", "ペーパーシティ 東京大空襲の記憶", "日本のいちばん長い日", "東京大空襲 ガラスのうさぎ", "硫黄島からの手紙"], movieGenres:["戦争", "ドラマ", "戦争", "戦争", "戦争"], movieEvents:["3月の東京大空襲で下町一帯が火の海となり甚大な被害を受けた。", "東京大空襲の生存者たちが語る証言が記録されている。焼け野原となった東京の実態が明かされた。", "同年8月、焼け野原となった皇居周辺で玉音放送を巡るクーデター未遂事件が勃発した。", "空襲で家族を失った少女が焼け野原の東京で生き抜いた様子が記録された。", "東京出身の将校たちが硫黄島の守備隊として戦い、故郷への最後の手紙を書き残した。"] },
   { id:16, yearDisplay:'1950年代（架空）', yearSort:1951, genre:'SF', icon:'🐺', events:'第二次大戦でドイツの占領下におかれた「架空の戦後東京」において、特殊部隊「ケルベロス」と過激派による凄惨な市街戦や地下水路での銃撃戦が展開された。', movieList:["人狼 JIN-ROH"] },
   { id:17, yearDisplay:'1952年', yearSort:1952, genre:'ドラマ', icon:'🎠', events:'末期ガンを宣告された市役所の課長が、お役所仕事を脱して公園建設に奔走した。', movieList:["生きる"] },
   { id:18, yearDisplay:'1953年', yearSort:1953, genre:'ドラマ', icon:'🚂', events:'尾道から上京してきた老夫婦が子供たちを訪ねるも、近代化しつつある東京の生活の中で家族の絆の崩壊や孤独を感じる事象が観察された。', movieList:["東京物語"] },
@@ -1304,11 +1322,11 @@ let entries = [
   { id:22, yearDisplay:'1959年', yearSort:1959, genre:'ドラマ', icon:'🚀', events:'東京オリンピック開催が決定し、高度経済成長時代を迎えつつある夕日町三丁目で、芥川賞を目指す小説家や自動車修理工場の人々が生活していた。', movieList:["ALWAYS 続・三丁目の夕日"] },
   { id:23, yearDisplay:'1962年', yearSort:1962, genre:'ドラマ', icon:'🌟', events:'オリンピックに向けてスタンドが増設された旧国立競技場を背景に、若者たちが希望に向かって歩む姿が見られた。', movieList:["上を向いて歩こう"] },
   { id:24, yearDisplay:'1963年', yearSort:1963, genre:'ドラマ', icon:'🦋', events:'東京タワー建設ブームや新幹線開通前夜の東京において、田舎から上京した女性が娼館のマダムへと成り上がる過程が記録された。', movieList:["にっぽん昆虫記"] },
-  { id:25, yearDisplay:'1964年', yearSort:1964, genre:'ドラマ', icon:'🏅', events:'復興を遂げた国際都市として、平和の祭典である第1回東京オリンピックが開催された。', movieList:["東京オリンピック", "ALWAYS 三丁目の夕日'64"], movieGenres:["ドラマ", "ドラマ"] },
-  { id:26, yearDisplay:'1960年代後半', yearSort:1967, genre:'ドラマ', icon:'✊', events:'新宿において若者たちによるカウンターカルチャーのエネルギーの噴出が確認された。また同時期の学生運動の熱気と虚無感が交錯する中、深い喪失感を抱える若者たちの恋愛と死が記録されている。', movieList:["新宿泥棒日記", "薔薇の葬列", "おもひでぽろぽろ", "ノルウェイの森"], movieGenres:["ドラマ", "ドラマ", "アニメ", "ドラマ"] },
+  { id:25, yearDisplay:'1964年', yearSort:1964, genre:'ドラマ', icon:'🏅', events:'復興を遂げた国際都市として、平和の祭典である第1回東京オリンピックが開催された。', movieList:["東京オリンピック", "ALWAYS 三丁目の夕日'64"], movieGenres:["ドラマ", "ドラマ"], movieEvents:["復興を遂げた国際都市として、平和の祭典である第1回東京オリンピックが開催された。", "オリンピックに沸く東京を背景に、下町の人々の日常と昭和の温かな人情が記録された。"] },
+  { id:26, yearDisplay:'1960年代後半', yearSort:1967, genre:'ドラマ', icon:'✊', events:'新宿において若者たちによるカウンターカルチャーのエネルギーの噴出が確認された。また同時期の学生運動の熱気と虚無感が交錯する中、深い喪失感を抱える若者たちの恋愛と死が記録されている。', movieList:["新宿泥棒日記", "薔薇の葬列", "おもひでぽろぽろ", "ノルウェイの森"], movieGenres:["ドラマ", "ドラマ", "アニメ", "ドラマ"], movieEvents:["新宿において若者たちによるカウンターカルチャーのエネルギーが噴出した。", "新宿のカウンターカルチャーの渦中で、若者たちの自由と退廃が記録された。", "昭和40年代の東京下町で少女が過ごした日常の記憶が描かれた。", "学生運動の熱気と虚無感が交錯する東京で、深い喪失感を抱える若者たちの恋愛と死が記録された。"] },
   { id:27, yearDisplay:'1969年〜', yearSort:1972, genre:'コメディ', icon:'🏮', events:'葛飾区柴又において、テキ屋を稼業とする風来坊と彼を温かく迎える家族や下町の人々との人情劇が長年にわたり観測された。', movieList:["男はつらいよ シリーズ"] },
   { id:28, yearDisplay:'1973年', yearSort:1973, genre:'SF', icon:'🌊', events:'大規模な地殻変動により、東京を含む日本列島が海中へと沈没していく未曾有の大災害が発生した。', movieList:["日本沈没（1973年版）"] },
-  { id:29, yearDisplay:'1975年', yearSort:1975, genre:'アクション', icon:'🚄', events:'東京発の新幹線に爆弾が仕掛けられるというパニック事件が発生した。同時期、新宿や府中ではヤクザによる破滅的な抗争が記録された。', movieList:["新幹線大爆破", "仁義の墓場"], movieGenres:["アクション", "アクション"] },
+  { id:29, yearDisplay:'1975年', yearSort:1975, genre:'アクション', icon:'🚄', events:'東京発の新幹線に爆弾が仕掛けられるというパニック事件が発生した。同時期、新宿や府中ではヤクザによる破滅的な抗争が記録された。', movieList:["新幹線大爆破", "仁義の墓場"], movieGenres:["アクション", "アクション"], movieEvents:["東京発の新幹線に爆弾が仕掛けられるというパニック事件が発生した。", "新宿や府中ではヤクザによる破滅的な抗争が記録された。"] },
   { id:30, yearDisplay:'1976年', yearSort:1976, genre:'SF', icon:'🤖', events:'宇宙からの脅威に立ち向かうため、巨大ロボットが浅草の下町において激しい戦闘を展開した。', movieList:["ジーマイン"] },
   { id:31, yearDisplay:'1980年代半ば', yearSort:1985, genre:'ドラマ', icon:'📷', events:'バブル景気の絶頂期において、ビルの屋上のゴルフ練習場や原宿のネオンが奇妙な迷宮として記録された。', movieList:["東京画"] },
   { id:32, yearDisplay:'1986年頃', yearSort:1986, genre:'ドラマ', icon:'🎵', events:'バブル前夜のエネルギッシュな東京において、アメリカから来た女性がロックバンドの青年と出会い、音楽チャートを駆け上がる事象が発生した。', movieList:["TOKYO POP"] },
@@ -1318,24 +1336,24 @@ let entries = [
   { id:36, yearDisplay:'1990年代末', yearSort:1995, genre:'ホラー', icon:'📼', events:'伊豆大島から始まり、東京などに広がった「見ると1週間後に死ぬビデオテープ」による連続不審死事件が発生した。', movieList:["リング"] },
   { id:37, yearDisplay:'1997年〜', yearSort:1997, genre:'コメディ', icon:'🚓', events:'お台場が空き地から巨大観光地へと開発されていく過程で、青島刑事が湾岸署を舞台に様々な事件の捜査に奔走した。', movieList:["踊る大捜査線"] },
   { id:38, yearDisplay:'1998年', yearSort:1998, genre:'サスペンス', icon:'👁️', events:'下北沢の1時間に10分しか開かない「開かずの踏切」付近において、謎の無差別発砲魔と彼に恋する女の物語が展開された。', movieList:["TOKYO EYES"] },
-  { id:39, yearDisplay:'1999年', yearSort:1999, genre:'アニメ', icon:'🦾', events:'コンピュータウイルスによる汎用作業機械「レイバー」の一斉暴走テロを防ぐため、「方舟」解体作戦が決行された。同時期のお台場や光が丘において、デジタルワールドと現実世界を繋ぐ「選ばれし子供たち」と怪物（デジモン）による戦闘が目撃された。', movieList:["機動警察パトレイバー the Movie", "デジモンアドベンチャー"], movieGenres:["アニメ", "アニメ"] },
+  { id:39, yearDisplay:'1999年', yearSort:1999, genre:'アニメ', icon:'🦾', events:'コンピュータウイルスによる汎用作業機械「レイバー」の一斉暴走テロを防ぐため、「方舟」解体作戦が決行された。同時期のお台場や光が丘において、デジタルワールドと現実世界を繋ぐ「選ばれし子供たち」と怪物（デジモン）による戦闘が目撃された。', movieList:["機動警察パトレイバー the Movie", "デジモンアドベンチャー"], movieGenres:["アニメ", "アニメ"], movieEvents:["コンピュータウイルスによる汎用作業機械「レイバー」の一斉暴走テロを防ぐため、「方舟」解体作戦が決行された。", "お台場や光が丘において、デジタルワールドと現実世界を繋ぐ「選ばれし子供たち」と怪物（デジモン）による戦闘が目撃された。"] },
   { id:40, yearDisplay:'2000年', yearSort:2000, genre:'アニメ', icon:'⚠️', events:'「セカンドインパクト」および新型爆弾の投下により東京都が完全に壊滅した。', movieList:["新世紀エヴァンゲリオン"] },
   { id:41, yearDisplay:'2000年代初頭', yearSort:2002, genre:'アニメ', icon:'📓', events:'名前を書かれた人間が死に至る謎のノートを用いた連続殺人事件が発生し、警視庁に設置された捜査本部と世界最高峰の名探偵が頭脳戦を繰り広げた。', movieList:["DEATH NOTE"] },
-  { id:42, yearDisplay:'2000年代〜', yearSort:2006, genre:'アニメ', icon:'🏍️', events:'豊島区池袋においてカラーギャングの抗争や「首なしライダー」などの都市伝説的な存在が入り乱れ、不良グループによる抗争をタイムリープを繰り返して回避しようとする少年の活動が確認された。', movieList:["デュラララ!!", "東京リベンジャーズ"], movieGenres:["アニメ", "アニメ"] },
+  { id:42, yearDisplay:'2000年代〜', yearSort:2006, genre:'アニメ', icon:'🏍️', events:'豊島区池袋においてカラーギャングの抗争や「首なしライダー」などの都市伝説的な存在が入り乱れ、不良グループによる抗争をタイムリープを繰り返して回避しようとする少年の活動が確認された。', movieList:["デュラララ!!", "東京リベンジャーズ"], movieGenres:["アニメ", "アニメ"], movieEvents:["豊島区池袋においてカラーギャングの抗争や「首なしライダー」などの都市伝説的な存在が入り乱れた。", "不良グループによる抗争をタイムリープを繰り返して回避しようとする少年の活動が確認された。"] },
   { id:43, yearDisplay:'2001年', yearSort:2001, genre:'アクション', icon:'🌿', events:'19年前に姿を消した最愛の女性の死を知り、フランスの警察官がヤクザから娘を守るため東京において戦闘を繰り広げた。', movieList:["WASABI"] },
-  { id:44, yearDisplay:'2003年', yearSort:2003, genre:'SF', icon:'🎄', events:'新宿のホテルでハリウッド俳優と若い女性が孤独を共有し、クリスマスの夜の街をホームレス3人が駆け回る事象が観測された。また、ゴジラと機龍が死闘を繰り広げ、お台場では連続殺人事件に伴うレインボーブリッジの完全封鎖が試みられた。', movieList:["ロスト・イン・トランスレーション", "東京ゴッドファーザーズ", "ゴジラ×モスラ×メカゴジラ 東京SOS", "踊る大捜査線 THE MOVIE 2 レインボーブリッジを封鎖せよ！"], movieGenres:["ドラマ", "アニメ", "SF", "コメディ"] },
+  { id:44, yearDisplay:'2003年', yearSort:2003, genre:'SF', icon:'🎄', events:'新宿のホテルでハリウッド俳優と若い女性が孤独を共有し、クリスマスの夜の街をホームレス3人が駆け回る事象が観測された。また、ゴジラと機龍が死闘を繰り広げ、お台場では連続殺人事件に伴うレインボーブリッジの完全封鎖が試みられた。', movieList:["ロスト・イン・トランスレーション", "東京ゴッドファーザーズ", "ゴジラ×モスラ×メカゴジラ 東京SOS", "踊る大捜査線 THE MOVIE 2 レインボーブリッジを封鎖せよ！"], movieGenres:["ドラマ", "アニメ", "SF", "コメディ"], movieEvents:["新宿のホテルでハリウッド俳優と若い女性が孤独を共有した。", "クリスマスの夜の街をホームレス3人が駆け回る事象が観測された。", "ゴジラと機龍が死闘を繰り広げ、東京に甚大な被害をもたらした。", "お台場では連続殺人事件に伴うレインボーブリッジの完全封鎖が試みられた。"] },
   { id:45, yearDisplay:'2004年', yearSort:2004, genre:'ドラマ', icon:'☕', events:'神保町の純喫茶などにおいて、東京人の生活のディテールが息づく静かな時間が観測された。', movieList:["珈琲時光"] },
   { id:46, yearDisplay:'2007年', yearSort:2007, genre:'コメディ', icon:'🚶', events:'借金を抱えた大学生が借金取りの中年男とともに東京の街を散歩し、奇妙な友情を深める事象が記録された。', movieList:["転々"] },
-  { id:47, yearDisplay:'2008年', yearSort:2008, genre:'ドラマ', icon:'🎹', events:'リーマンショック後にリストラされたサラリーマンの苦悩が浮き彫りになり、怪人や引きこもり男の冒険などシュールな事象が展開した。', movieList:["トウキョウソナタ", "TOKYO!"], movieGenres:["ドラマ", "ドラマ"] },
+  { id:47, yearDisplay:'2008年', yearSort:2008, genre:'ドラマ', icon:'🎹', events:'リーマンショック後にリストラされたサラリーマンの苦悩が浮き彫りになり、怪人や引きこもり男の冒険などシュールな事象が展開した。', movieList:["トウキョウソナタ", "TOKYO!"], movieGenres:["ドラマ", "ドラマ"], movieEvents:["リーマンショック後にリストラされたサラリーマンの苦悩が浮き彫りになった。", "東京を舞台に怪人や引きこもり男の冒険などシュールな事象が展開した。"] },
   { id:48, yearDisplay:'2009年', yearSort:2009, genre:'ドラマ', icon:'💊', events:'ドラッグディーラーの青年が東京のアンダーグラウンドやナイトライフをサイケデリックに彷徨う事案が発生した。', movieList:["エンター・ザ・ボイド"] },
-  { id:49, yearDisplay:'2010年', yearSort:2010, genre:'SF', icon:'📱', events:'千代田区秋葉原の雑居ビルにおいて、若者たちがタイムマシン（電話レンジ）の開発に成功し、複数の世界線が交錯する事態が発生した。また同時期、白黒のコスチュームを身にまとった小学校教師が宇宙人と死闘を繰り広げた。', movieList:["STEINS;GATE", "ゼブラーマン"], movieGenres:["SF", "アクション"] },
-  { id:50, yearDisplay:'2010年代〜', yearSort:2014, genre:'アニメ', icon:'🎤', events:'秋葉原やお台場などで女子高生たちによるスクールアイドル活動が隆盛を極める中、マンションの一室に置かれた謎の黒い球体により、死んだはずの人間たちが異形の星人との戦闘を強いられる事象が確認された。', movieList:["ラブライブ！", "GANTZ"], movieGenres:["アニメ", "SF"] },
-  { id:51, yearDisplay:'2012年', yearSort:2012, genre:'ドラマ', icon:'🌐', events:'新宿や秋葉原などで活動するレジスタンスが空間転送の実験を強行した。一方で、デートクラブで働く女子大生と元大学教授がラブストーリーを展開した。', movieList:["世紀末オカルト学院", "ライク・サムワン・イン・ラブ"], movieGenres:["アニメ", "ドラマ"] },
-  { id:52, yearDisplay:'2015年', yearSort:2015, genre:'アニメ', icon:'🤖', events:'セカンドインパクト後の世界線において、箱根・仙石原に「第3新東京市」が建設され、使徒とエヴァンゲリオンによる決戦の舞台となった。', movieList:["新世紀エヴァンゲリオン", "ヱヴァンゲリヲン新劇場版"], movieGenres:["アニメ", "アニメ"] },
-  { id:53, yearDisplay:'2016年', yearSort:2016, genre:'SF', icon:'🏙️', events:'巨大不明生物が都心へ侵攻し東京駅周辺で凍結される事態が発生した。同時に別の世界線では男子高校生が奇妙な「入れ替わり」現象を体験していた。', movieList:["シン・ゴジラ", "君の名は。"], movieGenres:["SF", "アニメ"] },
-  { id:54, yearDisplay:'2018年', yearSort:2018, genre:'アニメ', icon:'👺', events:'都市の死角に残された平屋で万引きで生計を立てる家族の存在が確認された。同年10月31日には渋谷駅周辺において大規模な呪術テロ「渋谷事変」が発生し甚大な被害を受けた。', movieList:["万引き家族", "呪術廻戦"], movieGenres:["ドラマ", "アニメ"] },
-  { id:55, yearDisplay:'2019年（ネオ東京）', yearSort:2019, genre:'SF', icon:'📚', events:'翌年の五輪を控えた東京湾上のメガロポリス「ネオ東京」で超能力者を巡る死闘が勃発。一方別の世界線では、公序良俗を乱す表現を取り締まる「メディア良化法」のもと、本を守る「図書隊」と検閲機関との武力抗争が展開された。', movieList:["AKIRA", "図書館戦争"], movieGenres:["SF", "アクション"] },
-  { id:56, yearDisplay:'2020年代', yearSort:2023, genre:'アニメ', icon:'🚿', events:'個性豊かな公共トイレで清掃員が静かな日常を送る一方、下北沢のライブハウスでは極度の人見知りの少女がロックバンド活動を開始。墨田区を中心に治安を維持する少女たちの組織（リコリス）が活動し、歌舞伎町では若者たちの逃避行が起きた。', movieList:["PERFECT DAYS", "ぼっち・ざ・ろっく！", "リコリス・リコイル", "東京逃避行"], movieGenres:["ドラマ", "アニメ", "アニメ", "ドラマ"] },
+  { id:49, yearDisplay:'2010年', yearSort:2010, genre:'SF', icon:'📱', events:'千代田区秋葉原の雑居ビルにおいて、若者たちがタイムマシン（電話レンジ）の開発に成功し、複数の世界線が交錯する事態が発生した。また同時期、白黒のコスチュームを身にまとった小学校教師が宇宙人と死闘を繰り広げた。', movieList:["STEINS;GATE", "ゼブラーマン"], movieGenres:["SF", "アクション"], movieEvents:["千代田区秋葉原の雑居ビルにおいて、若者たちがタイムマシン（電話レンジ）の開発に成功し、複数の世界線が交錯する事態が発生した。", "白黒のコスチュームを身にまとった小学校教師が宇宙人と死闘を繰り広げた。"] },
+  { id:50, yearDisplay:'2010年代〜', yearSort:2014, genre:'アニメ', icon:'🎤', events:'秋葉原やお台場などで女子高生たちによるスクールアイドル活動が隆盛を極める中、マンションの一室に置かれた謎の黒い球体により、死んだはずの人間たちが異形の星人との戦闘を強いられる事象が確認された。', movieList:["ラブライブ！", "GANTZ"], movieGenres:["アニメ", "SF"], movieEvents:["秋葉原やお台場などで女子高生たちによるスクールアイドル活動が隆盛を極めた。", "マンションの一室に置かれた謎の黒い球体により、死んだはずの人間たちが異形の星人との戦闘を強いられる事象が確認された。"] },
+  { id:51, yearDisplay:'2012年', yearSort:2012, genre:'ドラマ', icon:'🌐', events:'新宿や秋葉原などで活動するレジスタンスが空間転送の実験を強行した。一方で、デートクラブで働く女子大生と元大学教授がラブストーリーを展開した。', movieList:["世紀末オカルト学院", "ライク・サムワン・イン・ラブ"], movieGenres:["アニメ", "ドラマ"], movieEvents:["新宿や秋葉原などで活動するレジスタンスが空間転送の実験を強行した。", "デートクラブで働く女子大生と元大学教授が東京郊外でラブストーリーを展開した。"] },
+  { id:52, yearDisplay:'2015年', yearSort:2015, genre:'アニメ', icon:'🤖', events:'セカンドインパクト後の世界線において、箱根・仙石原に「第3新東京市」が建設され、使徒とエヴァンゲリオンによる決戦の舞台となった。', movieList:["新世紀エヴァンゲリオン", "ヱヴァンゲリヲン新劇場版"], movieGenres:["アニメ", "アニメ"], movieEvents:["セカンドインパクト後の世界線において、箱根・仙石原に「第3新東京市」が建設され、使徒とエヴァンゲリオンによる決戦の舞台となった。", "再構成された「第3新東京市」を舞台に使徒との戦闘が継続し、人類補完計画が進行した。"] },
+  { id:53, yearDisplay:'2016年', yearSort:2016, genre:'SF', icon:'🏙️', events:'巨大不明生物が都心へ侵攻し東京駅周辺で凍結される事態が発生した。同時に別の世界線では男子高校生が奇妙な「入れ替わり」現象を体験していた。', movieList:["シン・ゴジラ", "君の名は。"], movieGenres:["SF", "アニメ"], movieEvents:["巨大不明生物が都心へ侵攻し東京駅周辺で凍結される事態が発生した。", "別の世界線では男子高校生が奇妙な「入れ替わり」現象を体験し、東京の夜景を共有した。"] },
+  { id:54, yearDisplay:'2018年', yearSort:2018, genre:'アニメ', icon:'👺', events:'都市の死角に残された平屋で万引きで生計を立てる家族の存在が確認された。同年10月31日には渋谷駅周辺において大規模な呪術テロ「渋谷事変」が発生し甚大な被害を受けた。', movieList:["万引き家族", "呪術廻戦"], movieGenres:["ドラマ", "アニメ"], movieEvents:["都市の死角に残された平屋で万引きで生計を立てる家族の存在が確認された。", "同年10月31日には渋谷駅周辺において大規模な呪術テロ「渋谷事変」が発生し甚大な被害を受けた。"] },
+  { id:55, yearDisplay:'2019年（ネオ東京）', yearSort:2019, genre:'SF', icon:'📚', events:'翌年の五輪を控えた東京湾上のメガロポリス「ネオ東京」で超能力者を巡る死闘が勃発。一方別の世界線では、公序良俗を乱す表現を取り締まる「メディア良化法」のもと、本を守る「図書隊」と検閲機関との武力抗争が展開された。', movieList:["AKIRA", "図書館戦争"], movieGenres:["SF", "アクション"], movieEvents:["翌年の五輪を控えた東京湾上のメガロポリス「ネオ東京」で超能力者を巡る死闘が勃発した。", "公序良俗を乱す表現を取り締まる「メディア良化法」のもと、本を守る「図書隊」と検閲機関との武力抗争が展開された。"] },
+  { id:56, yearDisplay:'2020年代', yearSort:2023, genre:'アニメ', icon:'🚿', events:'個性豊かな公共トイレで清掃員が静かな日常を送る一方、下北沢のライブハウスでは極度の人見知りの少女がロックバンド活動を開始。墨田区を中心に治安を維持する少女たちの組織（リコリス）が活動し、歌舞伎町では若者たちの逃避行が起きた。', movieList:["PERFECT DAYS", "ぼっち・ざ・ろっく！", "リコリス・リコイル", "東京逃避行"], movieGenres:["ドラマ", "アニメ", "アニメ", "ドラマ"], movieEvents:["個性豊かな公共トイレで清掃員が静かな日常を送った。", "下北沢のライブハウスでは極度の人見知りの少女がロックバンド活動を開始した。", "墨田区を中心に治安を維持する少女たちの組織（リコリス）が活動した。", "歌舞伎町では若者たちの逃避行が起きた。"] },
   { id:57, yearDisplay:'2021年', yearSort:2021, genre:'アニメ', icon:'⛅', events:'異常気象により、東京において記録的な大雨が降り始める気象異変が観測された。', movieList:["天気の子"] },
   { id:58, yearDisplay:'2022年', yearSort:2022, genre:'アニメ', icon:'☄️', events:'四谷の須賀神社の階段において、大人になった男女が奇跡的な再会を果たす事象が確認された。', movieList:["君の名は。"] },
   { id:59, yearDisplay:'2024年', yearSort:2024, genre:'アニメ', icon:'🌊', events:'3年間降り続いた雨の影響でレインボーブリッジが沈没し、東京都の面積の約3分の1が水没する未曾有の災害が発生した。', movieList:["天気の子"] },
@@ -1345,10 +1363,10 @@ let entries = [
   { id:63, yearDisplay:'21世紀半ば', yearSort:2050, genre:'SF', icon:'🌿', events:'地球温暖化により東京が完全な熱帯ジャングルへと変貌を遂げ、富裕層が住む巨大空中都市と地上に取り残された貧困層との間でゲリラ抗争が勃発した。', movieList:["シャングリ・ラ"] },
   { id:64, yearDisplay:'20XX年（架空の年代）', yearSort:2099, genre:'コメディ', icon:'🗺️', events:'東京都民から迫害を受けていた埼玉県民が、通行手形の撤廃を求めて大規模なレジスタンス運動を展開し、千葉解放戦線との間で抗争状態に陥った。', movieList:["翔んで埼玉"] },
   { id:65, yearDisplay:'1948年', yearSort:1948, genre:'ドラマ', icon:'', events:'終戦から3年、新宿の闇市を支配する若いヤクザが肺結核を患っていることが発覚した。貧しくも良心的な町医者が治療に奔走するが、出所してきた組の親分との対立が激化する。GHQ占領下の欲望と混乱が渦巻く戦後東京の縮図。', movieList:["酔いどれ天使"] },
-  { id:66, yearDisplay:'1960年代初頭', yearSort:1960, genre:'ドラマ', icon:'', events:'東京郊外の団地では、テレビを欲しがる子供たちの反乱が近所の人間関係を揺さぶった。一方、老いた父親が嫁ぎ遅れた娘の縁談を進めながら、残される孤独と静かに向き合う姿が記録された。小津安二郎が描く高度経済成長期の東京の日常。', movieList:["お早よう", "秋刀魚の味"], movieGenres:["ドラマ", "ドラマ"] },
+  { id:66, yearDisplay:'1960年代初頭', yearSort:1960, genre:'ドラマ', icon:'', events:'東京郊外の団地では、テレビを欲しがる子供たちの反乱が近所の人間関係を揺さぶった。一方、老いた父親が嫁ぎ遅れた娘の縁談を進めながら、残される孤独と静かに向き合う姿が記録された。小津安二郎が描く高度経済成長期の東京の日常。', movieList:["お早よう", "秋刀魚の味"], movieGenres:["ドラマ", "ドラマ"], movieEvents:["東京郊外の団地では、テレビを欲しがる子供たちの反乱が近所の人間関係を揺さぶった。", "老いた父親が嫁ぎ遅れた娘の縁談を進めながら、残される孤独と静かに向き合う姿が記録された。"] },
   { id:67, yearDisplay:'1963年（誘拐事件）', yearSort:1963.5, genre:'サスペンス', icon:'', events:'横浜郊外の高台に建つ実業家の豪邸をめぐり、誤って部下の子が誘拐された。犯人はそれでも身代金を要求。捜査の舞台は東京・横浜の歓楽街から麻薬街・簡易宿泊所へと広がり、社会の上層と底辺の鮮烈な対比が描き出された。', movieList:["天国と地獄"] },
   { id:68, yearDisplay:'1974年', yearSort:1974, genre:'サスペンス', icon:'', events:'東京・蒲田の国電操車場内で身元不明の中年男性の絞殺死体が発見された。刑事2人による執念の捜査は全国各地の断片を繋ぎ合わせ、天才ピアニスト兼作曲家の衝撃的な過去と犯行動機を浮かび上がらせた。', movieList:["砂の器"] },
-  { id:69, yearDisplay:'1984年頃', yearSort:1984, genre:'コメディ', icon:'', events:'深夜の国道を走るトラック運転手が東京郊外の寂れたラーメン店の再建に奔走した。同時期、脚本家の義父が急死し、経験のない家族が右往左往しながら初めてのお葬式に臨む様子も記録されている。伊丹十三が描く食と死のユーモア。', movieList:["タンポポ", "お葬式"], movieGenres:["コメディ", "コメディ"] },
+  { id:69, yearDisplay:'1984年頃', yearSort:1984, genre:'コメディ', icon:'', events:'深夜の国道を走るトラック運転手が東京郊外の寂れたラーメン店の再建に奔走した。同時期、脚本家の義父が急死し、経験のない家族が右往左往しながら初めてのお葬式に臨む様子も記録されている。伊丹十三が描く食と死のユーモア。', movieList:["タンポポ", "お葬式"], movieGenres:["コメディ", "コメディ"], movieEvents:["深夜の国道を走るトラック運転手が東京郊外の寂れたラーメン店の再建に奔走した。", "脚本家の義父が急死し、経験のない家族が右往左往しながら初めてのお葬式に臨む様子が記録された。"] },
   { id:70, yearDisplay:'1993年', yearSort:1993, genre:'コメディ', icon:'', events:'東京都心の高級ホテルに組織暴力団が潜り込み、恐喝・ゆすり（ミンボー）を繰り返す実態が明らかになった。対応を迫られたホテル側は女性弁護士に依頼し、法律と機転で暴力と戦うことになる。伊丹十三が暴力団に迫った社会派コメディ。', movieList:["ミンボーの女"] },
   { id:71, yearDisplay:'1996年', yearSort:1996, genre:'コメディ', icon:'', events:'東京郊外に暮らす平凡なサラリーマンが、電車の窓越しに見えたダンス教室に秘かに通い始めた。妻の疑惑を招きながらも社交ダンスにのめり込む男の姿を通じ、くすんでいた日常が光を取り戻していく様子が記録された。', movieList:["Shall We ダンス?"] },
   { id:72, yearDisplay:'2005年', yearSort:2005, genre:'コメディ', icon:'', events:'秋葉原在住のオタク青年が電車内で痴漢から女性を救ったことをネット掲示板に投稿したところ、数千人の「住人」たちに見守られながら生まれて初めての恋愛に挑む事案が発生した。インターネット黎明期の東京が生んだ純愛物語。', movieList:["電車男"] },
@@ -1630,20 +1648,34 @@ function renderTimeline() {
       : `<span class="year-period">${entry.yearDisplay}</span>`;
 
     const hasMovieGenres = entry.movieGenres && entry.movieGenres.length === entry.movieList.length && entry.movieList.length > 1;
-    const titlesHtml = entry.movieList.map((m, idx) => `<div class="${idx === 0 ? 'card-title' : 'card-title card-title-alt'}">${m}</div>`).join('');
+    const hasPerMovieEvents = entry.movieEvents && entry.movieEvents.length === entry.movieList.length && entry.movieList.length > 1;
     const metaHtml = hasMovieGenres
       ? `<div class="card-meta">${[...new Set(entry.movieGenres)].map(g => `<span class="genre-tag-sm">${g}</span>`).join('')}</div>`
       : `<div class="card-meta"><span class="genre-tag">${entry.genre}</span></div>`;
 
+    let contentHtml;
+    if (hasPerMovieEvents) {
+      const itemsHtml = entry.movieList.map((m, i) =>
+        `<div class="card-movie-item">
+          <div class="card-movie-header"><span class="movie-chip">${m}</span></div>
+          <div class="card-movie-event">${entry.movieEvents[i]}</div>
+        </div>`
+      ).join('');
+      contentHtml = `<div class="card-movie-items">${itemsHtml}</div>`;
+    } else {
+      const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
+      contentHtml = `
+        <div class="card-events">${entry.events}</div>
+        <div class="card-movies">
+          <span class="card-movies-label">▸ FILMS</span>
+          ${chipsHtml}
+        </div>`;
+    }
+
     const card = `
       <div class="movie-card" onclick="openDetail(${entry.id})">
-        <div class="card-head">
-          <div>
-            <div class="card-titles">${titlesHtml}</div>
-            ${metaHtml}
-          </div>
-        </div>
-        <div class="card-synopsis">${entry.events}</div>
+        ${metaHtml}
+        ${contentHtml}
       </div>`;
 
     html += `
@@ -1670,6 +1702,8 @@ function openDetail(id) {
   const e = entries.find(x => x.id === id);
   if (!e) return;
 
+  const movieListHtml = e.movieList.map(m => `<div class="movie-list-item">${m}</div>`).join('');
+
   document.getElementById('detailContent').innerHTML = `
     <div class="dm-header">
       <div class="dm-year">${e.yearDisplay}</div>
@@ -1678,10 +1712,7 @@ function openDetail(id) {
     <div class="section-label">東京での出来事</div>
     <div style="font-size:0.84rem;color:rgba(26,21,16,0.82);line-height:1.9;margin-bottom:1rem;">${e.events}</div>
     <div class="section-label">関連作品 — ${e.movieList.length} movies</div>
-    <div class="movie-list-grid">
-      ${e.movieList.map(m => `<div class="movie-list-item">${m}</div>`).join('')}
-      ${e.movieGenres && e.movieGenres.length === e.movieList.length && e.movieList.length > 1 ? `<div class="card-meta" style="margin-top:0.4rem;">${[...new Set(e.movieGenres)].map(g => `<span class="genre-tag-sm">${g}</span>`).join('')}</div>` : ''}
-    </div>`;
+    <div class="movie-list-grid">${movieListHtml}</div>`;
 
   openModal('detailModal');
 }
@@ -1756,7 +1787,7 @@ function activateFadeIn() {
 }
 
 // ── localStorage ──
-const STORAGE_KEY = 'tokyofilm_v1';
+const STORAGE_KEY = 'tokyofilm_v2';
 
 function saveStorage() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(entries)); } catch(e) {}

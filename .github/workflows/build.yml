@@ -1,0 +1,47 @@
+name: Google Sheets からビルド
+
+on:
+  # ── 手動トリガー（GitHub アプリ / ブラウザから1タップで実行） ──
+  workflow_dispatch:
+    inputs:
+      message:
+        description: 'コミットメッセージ（省略可）'
+        required: false
+        default: 'Update: Google Sheets からデータを反映'
+
+  # ── 定期自動ビルド（毎日 午前9時 JST） ──
+  schedule:
+    - cron: '0 0 * * *'   # UTC 0:00 = JST 9:00
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: リポジトリをチェックアウト
+        uses: actions/checkout@v4
+
+      - name: Python をセットアップ
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 依存ライブラリをインストール
+        run: pip install openpyxl
+
+      - name: Google Sheets からビルド
+        run: python3 scripts/build.py
+
+      - name: 変更があればコミット & プッシュ
+        run: |
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git add data/movies.csv index.html
+          if git diff --staged --quiet; then
+            echo "変更なし — スキップ"
+          else
+            MSG="${{ github.event.inputs.message }}"
+            git commit -m "${MSG:-Update: Google Sheets からデータを反映}"
+            git push
+            echo "✅ プッシュ完了 → Vercel が自動デプロイします"
+          fi
