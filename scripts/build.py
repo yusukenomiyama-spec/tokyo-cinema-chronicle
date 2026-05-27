@@ -121,7 +121,7 @@ entries.sort(key=lambda e: e['id'])
 # ── CSV を同期保存（Google Sheets から取得した内容をローカルにバックアップ） ──
 with open(CSV_PATH, 'w', encoding='utf-8', newline='') as f:
     writer = csv.writer(f)
-    writer.writerow(['id','yearDisplay','yearSort','genre','icon','events','movieList','movieGenres','movieEvents'])
+    writer.writerow(['id','yearDisplay','yearSort','genre','icon','events','movieList','movieGenres','movieEvents','realEvents'])
     for e in entries:
         writer.writerow([
             e['id'], e['yearDisplay'], e['yearSort'],
@@ -129,6 +129,7 @@ with open(CSV_PATH, 'w', encoding='utf-8', newline='') as f:
             '|'.join(e['movieList']),
             '|'.join(e.get('movieGenres', [])),
             '|'.join(e.get('movieEvents', [])),
+            e.get('realEvents', ''),
         ])
 
 # ── Python dict → JS オブジェクト文字列 ──────────────────────────
