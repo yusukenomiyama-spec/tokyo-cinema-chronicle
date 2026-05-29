@@ -96,7 +96,8 @@ for row in raw_rows:
     except ValueError:
         year_sort = 0.0
 
-    real_events = str(row.get('realEvents', '')).strip()
+    real_events  = str(row.get('realEvents',  '')).strip()
+    real_culture = str(row.get('realCulture', '')).strip()
 
     entry = {
         'id':          int(float(str(row['id']))),
@@ -113,6 +114,8 @@ for row in raw_rows:
         entry['movieEvents'] = movie_events
     if real_events:
         entry['realEvents'] = real_events
+    if real_culture:
+        entry['realCulture'] = real_culture
 
     entries.append(entry)
 
@@ -121,7 +124,7 @@ entries.sort(key=lambda e: e['id'])
 # ── CSV を同期保存（Google Sheets から取得した内容をローカルにバックアップ） ──
 with open(CSV_PATH, 'w', encoding='utf-8', newline='') as f:
     writer = csv.writer(f)
-    writer.writerow(['id','yearDisplay','yearSort','genre','icon','events','movieList','movieGenres','movieEvents','realEvents'])
+    writer.writerow(['id','yearDisplay','yearSort','genre','icon','events','movieList','movieGenres','movieEvents','realEvents','realCulture'])
     for e in entries:
         writer.writerow([
             e['id'], e['yearDisplay'], e['yearSort'],
@@ -130,6 +133,7 @@ with open(CSV_PATH, 'w', encoding='utf-8', newline='') as f:
             '|'.join(e.get('movieGenres', [])),
             '|'.join(e.get('movieEvents', [])),
             e.get('realEvents', ''),
+            e.get('realCulture', ''),
         ])
 
 # ── Python dict → JS オブジェクト文字列 ──────────────────────────
@@ -150,11 +154,15 @@ def entry_to_js(e):
         f", realEvents:'{esc(e['realEvents'])}'"
         if 'realEvents' in e else ''
     )
+    real_culture_js = (
+        f", realCulture:'{esc(e['realCulture'])}'"
+        if 'realCulture' in e else ''
+    )
     year_sort = int(e['yearSort']) if e['yearSort'] == int(e['yearSort']) else e['yearSort']
     return (
         f"  {{ id:{e['id']}, yearDisplay:'{esc(e['yearDisplay'])}', "
         f"yearSort:{year_sort}, genre:'{esc(e['genre'])}', icon:'{esc(e['icon'])}', "
-        f"events:'{esc(e['events'])}', movieList:{movie_list_js}{movie_genres_js}{movie_events_js}{real_events_js} }}"
+        f"events:'{esc(e['events'])}', movieList:{movie_list_js}{movie_genres_js}{movie_events_js}{real_events_js}{real_culture_js} }}"
     )
 
 entries_js = ',\n'.join(entry_to_js(e) for e in entries)
