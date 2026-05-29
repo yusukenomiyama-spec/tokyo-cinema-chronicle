@@ -458,6 +458,14 @@
       flex-shrink: 0;
     }
 
+    .card-section-label {
+      font-size: 0.5rem;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      opacity: 0.6;
+      margin-bottom: 0.35rem;
+    }
+
     .card-events {
       font-size: 0.82rem;
       color: var(--white);
@@ -1812,9 +1820,15 @@ function renderTimeline() {
 
     const hasMovieGenres = entry.movieGenres && entry.movieGenres.length === entry.movieList.length && entry.movieList.length > 1;
     const hasPerMovieEvents = entry.movieEvents && entry.movieEvents.length === entry.movieList.length && entry.movieList.length > 1;
-    const metaHtml = hasMovieGenres
-      ? `<div class="card-meta">${[...new Set(entry.movieGenres)].map(g => `<span class="genre-tag-sm">${g}</span>`).join('')}</div>`
-      : `<div class="card-meta"><span class="genre-tag">${entry.genre}</span></div>`;
+
+    // ジャンルタグを統一スタイルで表示
+    const genreTagsHtml = hasMovieGenres
+      ? [...new Set(entry.movieGenres)].map(g => `<span class="genre-tag">${g}</span>`).join('')
+      : `<span class="genre-tag">${entry.genre}</span>`;
+    const metaHtml = `<div class="card-meta">${genreTagsHtml}</div>`;
+
+    // 「東京での出来事」ラベルを常に表示
+    const sectionLabel = `<div class="card-section-label">東京での出来事</div>`;
 
     let contentHtml;
     if (hasPerMovieEvents) {
@@ -1824,10 +1838,11 @@ function renderTimeline() {
           <div class="card-movie-event">${entry.movieEvents[i]}</div>
         </div>`
       ).join('');
-      contentHtml = `<div class="card-movie-items">${itemsHtml}</div>`;
+      contentHtml = `${sectionLabel}<div class="card-movie-items">${itemsHtml}</div>`;
     } else {
       const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
       contentHtml = `
+        ${sectionLabel}
         <div class="card-events">${entry.events}</div>
         <div class="card-movies">
           <span class="card-movies-label">▸ MOVIES</span>
