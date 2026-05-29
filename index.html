@@ -332,7 +332,8 @@
     }
 
     .card-layers-stack > .card-fiction-layer,
-    .card-layers-stack > .card-real-layer {
+    .card-layers-stack > .card-real-layer,
+    .card-layers-stack > .movie-cards-stack {
       grid-column: 1;
       grid-row: 1;
       align-self: start;
@@ -402,6 +403,16 @@
       margin-top: 0;
       transform: translate(5px, 7px);
       z-index: 1;
+    }
+
+    /* スタック内：複数 fiction（movie-cards-stack）は前面カード扱い */
+    .card-layers-stack > .movie-cards-stack {
+      position: relative;
+      z-index: 2;
+      transform: translate(0, 0);
+      transition:
+        transform 0.35s cubic-bezier(.25,.46,.45,.94),
+        opacity   0.32s ease;
     }
 
     .card-real-badge {
@@ -478,6 +489,13 @@
       -webkit-line-clamp: 4;
     }
 
+    /* スタック内：movie-cards-stack を背面へ（REAL モード） */
+    body.mode-real .card-layers-stack > .movie-cards-stack {
+      z-index: 1;
+      transform: translate(5px, 7px);
+      opacity: 0.3;
+    }
+
     /* スタック内ホバー（mode-real）：REAL を浮かせ FICTION は背面固定 */
     body.mode-real .movie-card:hover .card-layers-stack > .card-real-layer {
       transform: translate(2px, -6px);
@@ -487,6 +505,10 @@
     }
 
     body.mode-real .movie-card:hover .card-layers-stack > .card-fiction-layer {
+      transform: translate(5px, 7px);
+    }
+
+    body.mode-real .card-layers-stack:hover > .movie-cards-stack {
       transform: translate(5px, 7px);
     }
 
@@ -2027,7 +2049,11 @@ function buildYearGroupCards(group) {
       entry.movieList.length > 1;
     if (hasPerMovieEvents) {
       const stackedCards = buildFictionCards(entry);
-      return `<div class="movie-cards-stack">${stackedCards}${realLayerHtml}${cultureLayerHtml}</div>`;
+      const fictionBlock = `<div class="movie-cards-stack">${stackedCards}</div>`;
+      const stackHtml = realLayerHtml
+        ? `<div class="card-layers-stack">${realLayerHtml}${fictionBlock}</div>`
+        : fictionBlock;
+      return stackHtml + cultureLayerHtml;
     }
     const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
     const fictionHtml = `
@@ -2049,9 +2075,13 @@ function buildYearGroupCards(group) {
       </div>`;
   }
 
-  // 複数エントリ：fiction カードを縦積み、REAL・CULTURE は一番下に一つ
+  // 複数エントリ：fiction カードを縦積み、REAL は背面に重ねる
   const stackedFiction = group.entries.map(e => buildFictionCards(e)).join('');
-  return `<div class="movie-cards-stack">${stackedFiction}${realLayerHtml}${cultureLayerHtml}</div>`;
+  const fictionBlock = `<div class="movie-cards-stack">${stackedFiction}</div>`;
+  const stackHtml = realLayerHtml
+    ? `<div class="card-layers-stack">${realLayerHtml}${fictionBlock}</div>`
+    : fictionBlock;
+  return stackHtml + cultureLayerHtml;
 }
 
 function renderTimeline() {
