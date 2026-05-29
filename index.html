@@ -1837,7 +1837,7 @@ function renderTimeline() {
 
     let cardHtml;
     if (hasPerMovieEvents) {
-      // 映画ごとに個別カードを生成してスタック
+      // 映画ごとに個別カードを生成してスタック（REALは各カードに付けない）
       const stackedCards = entry.movieList.map((movie, idx) => {
         const genre = (entry.movieGenres && entry.movieGenres[idx]) ? entry.movieGenres[idx] : entry.genre;
         return `
@@ -1851,10 +1851,10 @@ function renderTimeline() {
                 <span class="movie-chip">${movie}</span>
               </div>
             </div>
-            ${realLayerHtml}
           </div>`;
       }).join('');
-      cardHtml = `<div class="movie-cards-stack">${stackedCards}</div>`;
+      // REALカードはスタックの一番下に一つだけ
+      cardHtml = `<div class="movie-cards-stack">${stackedCards}${realLayerHtml}</div>`;
     } else {
       // 単一カード（既存レイアウト）
       const genre = entry.genre;
