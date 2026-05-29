@@ -458,6 +458,15 @@
       flex-shrink: 0;
     }
 
+    /* 複数映画カードのスタック */
+    .movie-cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+      width: 100%;
+      max-width: 390px;
+    }
+
     .card-section-label {
       font-size: 0.5rem;
       letter-spacing: 0.06em;
@@ -1818,34 +1827,52 @@ function renderTimeline() {
       ? `<span class="year-num">${entry.yearDisplay.replace('年', '')}</span>`
       : `<span class="year-period">${entry.yearDisplay}</span>`;
 
-    // ジャンルタグ（複数ジャンルは重複排除）
-    const genres = (entry.movieGenres && entry.movieGenres.length === entry.movieList.length && entry.movieList.length > 1)
-      ? [...new Set(entry.movieGenres)]
-      : [entry.genre];
-    const metaHtml = `<div class="card-meta">${genres.map(g => `<span class="genre-tag">${g}</span>`).join('')}</div>`;
-
-    // 全カード共通レイアウト：ジャンル / 東京での出来事 / ▸ MOVIES タイトル
-    const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
-    const contentHtml = `
-      <div class="card-section-label">東京での出来事</div>
-      <div class="card-events">${entry.events}</div>
-      <div class="card-movies">
-        <span class="card-movies-label">▸ MOVIES</span>
-        ${chipsHtml}
-      </div>`;
+    const hasPerMovieEvents = entry.movieEvents &&
+      entry.movieEvents.length === entry.movieList.length &&
+      entry.movieList.length > 1;
 
     const realLayerHtml = entry.realEvents
       ? `<div class="card-real-layer"><span class="card-real-badge">◆ REAL</span><span class="card-real-text">${entry.realEvents}</span></div>`
       : '';
 
-    const card = `
-      <div class="movie-card" onclick="openDetail(${entry.id})">
-        <div class="card-fiction-layer">
-          ${metaHtml}
-          ${contentHtml}
-        </div>
-        ${realLayerHtml}
-      </div>`;
+    let cardHtml;
+    if (hasPerMovieEvents) {
+      // 映画ごとに個別カードを生成してスタック
+      const stackedCards = entry.movieList.map((movie, idx) => {
+        const genre = (entry.movieGenres && entry.movieGenres[idx]) ? entry.movieGenres[idx] : entry.genre;
+        return `
+          <div class="movie-card" onclick="openMovieDetail(${entry.id}, ${idx})">
+            <div class="card-fiction-layer">
+              <div class="card-meta"><span class="genre-tag">${genre}</span></div>
+              <div class="card-section-label">東京での出来事</div>
+              <div class="card-events">${entry.movieEvents[idx]}</div>
+              <div class="card-movies">
+                <span class="card-movies-label">▸ MOVIES</span>
+                <span class="movie-chip">${movie}</span>
+              </div>
+            </div>
+            ${realLayerHtml}
+          </div>`;
+      }).join('');
+      cardHtml = `<div class="movie-cards-stack">${stackedCards}</div>`;
+    } else {
+      // 単一カード（既存レイアウト）
+      const genre = entry.genre;
+      const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
+      cardHtml = `
+        <div class="movie-card" onclick="openDetail(${entry.id})">
+          <div class="card-fiction-layer">
+            <div class="card-meta"><span class="genre-tag">${genre}</span></div>
+            <div class="card-section-label">東京での出来事</div>
+            <div class="card-events">${entry.events}</div>
+            <div class="card-movies">
+              <span class="card-movies-label">▸ MOVIES</span>
+              ${chipsHtml}
+            </div>
+          </div>
+          ${realLayerHtml}
+        </div>`;
+    }
 
     html += `
       <div class="year-group fade-in">
@@ -1856,9 +1883,9 @@ function renderTimeline() {
           </div>
         </div>
         <div class="cards-row">
-          <div class="card-left">${side === 'left' ? card : '<div class="card-empty"></div>'}</div>
+          <div class="card-left">${side === 'left' ? cardHtml : '<div class="card-empty"></div>'}</div>
           <div class="card-center"><div class="connector-dot"></div></div>
-          <div class="card-right">${side === 'right' ? card : '<div class="card-empty"></div>'}</div>
+          <div class="card-right">${side === 'right' ? cardHtml : '<div class="card-empty"></div>'}</div>
         </div>
       </div>`;
   });
@@ -1867,12 +1894,11 @@ function renderTimeline() {
   activateFadeIn();
 }
 
+// 年代バッジ用：まとめ記述 + 全作品一覧
 function openDetail(id) {
   const e = entries.find(x => x.id === id);
   if (!e) return;
-
   const movieListHtml = e.movieList.map(m => `<div class="movie-list-item">${m}</div>`).join('');
-
   document.getElementById('detailContent').innerHTML = `
     <div class="dm-header">
       <div class="dm-year">${e.yearDisplay}</div>
@@ -1880,9 +1906,27 @@ function openDetail(id) {
     </div>
     <div class="section-label">東京での出来事</div>
     <div style="font-size:0.84rem;color:rgba(26,21,16,0.82);line-height:1.9;margin-bottom:1rem;">${e.events}</div>
-    <div class="section-label">関連作品 — ${e.movieList.length} movies</div>
+    <div class="section-label">関連作品 — ${e.movieList.length} movie${e.movieList.length > 1 ? 's' : ''}</div>
     <div class="movie-list-grid">${movieListHtml}</div>`;
+  openModal('detailModal');
+}
 
+// 個別映画カード用：単体の出来事 + 単体タイトル
+function openMovieDetail(id, index) {
+  const e = entries.find(x => x.id === id);
+  if (!e) return;
+  const title  = e.movieList[index];
+  const event  = e.movieEvents[index];
+  const genre  = (e.movieGenres && e.movieGenres[index]) ? e.movieGenres[index] : e.genre;
+  document.getElementById('detailContent').innerHTML = `
+    <div class="dm-header">
+      <div class="dm-year">${e.yearDisplay}</div>
+      <div class="dm-meta"><span class="genre-tag">${genre}</span></div>
+    </div>
+    <div class="section-label">東京での出来事</div>
+    <div style="font-size:0.84rem;color:rgba(26,21,16,0.82);line-height:1.9;margin-bottom:1rem;">${event}</div>
+    <div class="section-label">関連作品</div>
+    <div class="movie-list-grid"><div class="movie-list-item">${title}</div></div>`;
   openModal('detailModal');
 }
 
