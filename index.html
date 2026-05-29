@@ -1818,37 +1818,21 @@ function renderTimeline() {
       ? `<span class="year-num">${entry.yearDisplay.replace('年', '')}</span>`
       : `<span class="year-period">${entry.yearDisplay}</span>`;
 
-    const hasMovieGenres = entry.movieGenres && entry.movieGenres.length === entry.movieList.length && entry.movieList.length > 1;
-    const hasPerMovieEvents = entry.movieEvents && entry.movieEvents.length === entry.movieList.length && entry.movieList.length > 1;
+    // ジャンルタグ（複数ジャンルは重複排除）
+    const genres = (entry.movieGenres && entry.movieGenres.length === entry.movieList.length && entry.movieList.length > 1)
+      ? [...new Set(entry.movieGenres)]
+      : [entry.genre];
+    const metaHtml = `<div class="card-meta">${genres.map(g => `<span class="genre-tag">${g}</span>`).join('')}</div>`;
 
-    // ジャンルタグを統一スタイルで表示
-    const genreTagsHtml = hasMovieGenres
-      ? [...new Set(entry.movieGenres)].map(g => `<span class="genre-tag">${g}</span>`).join('')
-      : `<span class="genre-tag">${entry.genre}</span>`;
-    const metaHtml = `<div class="card-meta">${genreTagsHtml}</div>`;
-
-    // 「東京での出来事」ラベルを常に表示
-    const sectionLabel = `<div class="card-section-label">東京での出来事</div>`;
-
-    let contentHtml;
-    if (hasPerMovieEvents) {
-      const itemsHtml = entry.movieList.map((m, i) =>
-        `<div class="card-movie-item">
-          <div class="card-movie-header"><span class="movie-chip">${m}</span></div>
-          <div class="card-movie-event">${entry.movieEvents[i]}</div>
-        </div>`
-      ).join('');
-      contentHtml = `${sectionLabel}<div class="card-movie-items">${itemsHtml}</div>`;
-    } else {
-      const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
-      contentHtml = `
-        ${sectionLabel}
-        <div class="card-events">${entry.events}</div>
-        <div class="card-movies">
-          <span class="card-movies-label">▸ MOVIES</span>
-          ${chipsHtml}
-        </div>`;
-    }
+    // 全カード共通レイアウト：ジャンル / 東京での出来事 / ▸ MOVIES タイトル
+    const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
+    const contentHtml = `
+      <div class="card-section-label">東京での出来事</div>
+      <div class="card-events">${entry.events}</div>
+      <div class="card-movies">
+        <span class="card-movies-label">▸ MOVIES</span>
+        ${chipsHtml}
+      </div>`;
 
     const realLayerHtml = entry.realEvents
       ? `<div class="card-real-layer"><span class="card-real-badge">◆ REAL</span><span class="card-real-text">${entry.realEvents}</span></div>`
