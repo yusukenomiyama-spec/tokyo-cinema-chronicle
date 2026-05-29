@@ -310,7 +310,7 @@
     .card-center { display: flex; flex-direction: column; align-items: center; padding-top: 0.85rem; }
     .card-empty { min-height: 0; }
 
-    /* ── 2枚カード：虚構（前面・左）＋史実（背面・右） ── */
+    /* ── 2枚カード：虚構（前面）＋史実（背面、重なり表示） ── */
     .movie-card {
       background: transparent;
       border: none;
@@ -323,7 +323,23 @@
       flex-direction: column;
     }
 
-    /* 虚構レイヤー — 前面・左（デフォルト） */
+    /* ── スタックラッパー：MOVIE と REAL を同一セルに重ねる ── */
+    .card-layers-stack {
+      display: grid;
+      grid-template-columns: 1fr;
+      padding-right: 6px;
+      padding-bottom: 8px;
+    }
+
+    .card-layers-stack > .card-fiction-layer,
+    .card-layers-stack > .card-real-layer {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
+      min-width: 0;
+    }
+
+    /* 虚構レイヤー */
     .card-fiction-layer {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -331,31 +347,34 @@
       padding: 1rem 1rem 1rem 0.9rem;
       position: relative;
       z-index: 2;
-      order: 1;
       width: calc(100% - 14px);
-      margin-left: 0;
-      margin-top: 0;
-      transform: translateY(-3px);
+      transform: translate(0, 0);
       box-shadow:
         5px 8px 22px rgba(0,0,0,0.18),
         2px 3px 6px  rgba(0,0,0,0.1);
       transition:
-        margin-left       0.42s cubic-bezier(.4,0,.2,1),
-        transform         0.32s cubic-bezier(.25,.46,.45,.94),
+        transform         0.35s cubic-bezier(.25,.46,.45,.94),
         box-shadow        0.32s ease,
         opacity           0.32s ease,
         border-left-color 0.3s  ease,
         border-left-width 0.3s  ease;
     }
 
-    .movie-card:hover .card-fiction-layer {
-      transform: translateY(-8px) translateX(-2px);
+    /* ホバー：スタック内は前面カードを浮かせる */
+    .movie-card:hover .card-layers-stack > .card-fiction-layer {
+      transform: translate(-2px, -6px);
       box-shadow:
         7px 14px 32px rgba(0,0,0,0.22),
         2px 4px  8px  rgba(0,0,0,0.1);
     }
+    /* スタック外（multi-entry）ホバー */
+    .movie-card:hover .card-fiction-layer {
+      box-shadow:
+        7px 12px 28px rgba(0,0,0,0.2),
+        2px 3px  6px  rgba(0,0,0,0.1);
+    }
 
-    /* 史実レイヤー — 背面・右（デフォルト） */
+    /* 史実レイヤー（スタック外：multi-entry 用） */
     .card-real-layer {
       background: var(--bg-card2);
       border: 1px solid rgba(154,138,120,0.38);
@@ -366,16 +385,23 @@
       order: 2;
       width: calc(100% - 14px);
       margin-left: 14px;
-      margin-top: -3px;
-      transform: translateY(3px);
+      margin-top: 3px;
       display: flex;
       gap: 0.45rem;
       align-items: flex-start;
       transition:
-        margin-left 0.42s cubic-bezier(.4,0,.2,1),
-        transform   0.32s cubic-bezier(.25,.46,.45,.94),
+        transform   0.35s cubic-bezier(.25,.46,.45,.94),
         box-shadow  0.32s ease,
-        opacity     0.32s ease;
+        opacity     0.32s ease,
+        border-left 0.3s  ease;
+    }
+
+    /* スタック内：REAL を背面にずらして「のぞき」を作る */
+    .card-layers-stack > .card-real-layer {
+      margin-left: 0;
+      margin-top: 0;
+      transform: translate(5px, 7px);
+      z-index: 1;
     }
 
     .card-real-badge {
@@ -401,27 +427,41 @@
       overflow: hidden;
     }
 
-    /* ── 史実モード：order で上下を入れ替えて完全に前後を逆転 ── */
+    /* ── 史実モード：スタック内で前後を入れ替える ── */
+
+    /* 全 FICTION をフェード（スタック内外共通） */
     body.mode-real .card-fiction-layer {
-      order: 2;                                           /* 下へ */
-      margin-left: 14px;
-      margin-top: -3px;                                   /* realの下に潜る */
-      transform: translateY(3px);
       opacity: 0.3;
       box-shadow: none;
       border-left-color: rgba(0,0,0,0.08);
       border-left-width: 1px;
     }
 
-    body.mode-real .movie-card:hover .card-fiction-layer {
-      transform: translateY(3px);
-    }
-
-    body.mode-real .card-real-layer {
-      order: 1;                                           /* 上へ */
+    /* スタック内：FICTION を背面位置へ */
+    body.mode-real .card-layers-stack > .card-fiction-layer {
+      z-index: 1;
+      transform: translate(5px, 7px);
       margin-left: 0;
       margin-top: 0;
-      transform: translateY(-3px);
+    }
+
+    /* スタック内：REAL を前面へ */
+    body.mode-real .card-layers-stack > .card-real-layer {
+      z-index: 2;
+      transform: translate(0, 0);
+      margin-left: 0;
+      margin-top: 0;
+      box-shadow:
+        -5px 8px 22px rgba(0,0,0,0.16),
+        -2px 3px 6px  rgba(0,0,0,0.09);
+      border-left: 3px solid #8b7355;
+    }
+
+    /* スタック外（multi-entry）mode-real */
+    body.mode-real .card-real-layer {
+      order: 1;
+      margin-left: 0;
+      margin-top: 3px;
       box-shadow:
         -5px 8px 22px rgba(0,0,0,0.16),
         -2px 3px 6px  rgba(0,0,0,0.09);
@@ -438,14 +478,19 @@
       -webkit-line-clamp: 4;
     }
 
-    body.mode-real .movie-card:hover .card-real-layer {
-      transform: translateY(-8px) translateX(2px);
+    /* スタック内ホバー（mode-real）：REAL を浮かせ FICTION は背面固定 */
+    body.mode-real .movie-card:hover .card-layers-stack > .card-real-layer {
+      transform: translate(2px, -6px);
       box-shadow:
         -7px 14px 32px rgba(0,0,0,0.2),
         -2px 4px  8px  rgba(0,0,0,0.09);
     }
 
-    /* 文化レイヤー — REALの下に並ぶ2枚目の史実カード */
+    body.mode-real .movie-card:hover .card-layers-stack > .card-fiction-layer {
+      transform: translate(5px, 7px);
+    }
+
+    /* 文化レイヤー — スタックの下の2枚目の史実カード */
     .card-culture-layer {
       background: #e4ddd2;
       border: 1px solid rgba(82,105,122,0.28);
@@ -453,16 +498,14 @@
       padding: 0.75rem 1rem 0.75rem 0.95rem;
       position: relative;
       z-index: 1;
-      order: 3;
       width: calc(100% - 14px);
-      margin-left: 14px;
+      margin-left: 8px;
       margin-top: 3px;
       display: flex;
       gap: 0.45rem;
       align-items: flex-start;
       transition:
-        margin-left 0.42s cubic-bezier(.4,0,.2,1),
-        transform   0.32s cubic-bezier(.25,.46,.45,.94),
+        transform   0.35s cubic-bezier(.25,.46,.45,.94),
         box-shadow  0.32s ease,
         opacity     0.32s ease;
     }
@@ -491,8 +534,8 @@
     }
 
     body.mode-real .card-culture-layer {
-      margin-left: 7px;
-      margin-top: 4px;
+      margin-left: 5px;
+      margin-top: 5px;
       box-shadow:
         -3px 6px 16px rgba(0,0,0,0.11),
         -1px 2px 5px  rgba(0,0,0,0.06);
@@ -1607,11 +1650,11 @@ let entries = [
   { id:18, yearDisplay:'1953年', yearSort:1953, genre:'ドラマ', icon:'🚂', events:'尾道から上京してきた老夫婦が子供たちを訪ねるも、近代化しつつある東京の生活の中で家族の絆の崩壊や孤独を感じる事象が観察された。', movieList:["東京物語"], realEvents:'NHKと日本テレビが東京でテレビ放送を開始。映画全盛期、年間入場者数が11億人を突破した。', realCulture:'テレビ放送開始。NHKと日本テレビが開局し、東京の家庭に映像メディアが入り込んだ。' },
   { id:19, yearDisplay:'1954年', yearSort:1954, genre:'SF', icon:'🦕', events:'水爆実験によって目覚めた巨大怪獣（ゴジラ）が品川から上陸し、再建されたばかりの銀座の和光の時計塔や国会議事堂を破壊、火の海へと変えた。', movieList:["ゴジラ"], realEvents:'ビキニ環礁での水爆実験で第五福竜丸が被曝。東京でも反核署名運動が広がった。', realCulture:'力道山のプロレスがテレビで人気爆発。街頭テレビに群衆が集まり、東京の娯楽文化が大きく変わった。' },
   { id:20, yearDisplay:'1955年', yearSort:1955, genre:'アクション', icon:'🎋', events:'戦後の日本において、悪事を働く元軍人のアメリカ人ギャングが暗躍した。', movieList:["竹の家"], realEvents:'神武景気が始まり、東京の人口が800万人を突破。高度経済成長の端緒が開かれた。', realCulture:'神武景気の始まり。「太陽族」映画が話題に。三島由紀夫、松本清張ら文学も活況を呈した。' },
-  { id:21, yearDisplay:'1958年', yearSort:1958, genre:'ドラマ', icon:'🏗️', events:'建設中の東京タワーを背景に、下町の夕日町三丁目で人情味あふれる人々が日常を営んでいた。', movieList:["ALWAYS 三丁目の夕日"], realEvents:'東京タワーが完成。高さ333mで当時の世界一の鉄塔として竣工した。', realCulture:'東京タワー完成。テレビ普及率が急上昇し、大衆文化が一気に全国化。国民の視線が「東京」に向いた年。' },
+  { id:21, yearDisplay:'1958年', yearSort:1958, genre:'ドラマ', icon:'🏗️', events:'建設中の東京タワーを背景に、下町の夕日町三丁目で人情味あふれる人々が日常を営んでいた。', movieList:["ALWAYS 三丁目の夕日"], realEvents:'東京タワーが完成。高さ333mで当時の世界一の鉄塔として竣工した。', realCulture:'昭和33年は石原裕次郎・美空ひばりが映画・歌謡界に君臨し、東宝・日活の娯楽映画が黄金期を迎えた。下町の映画館では週替わりの新作に観客が集い、映画は庶民最大の娯楽だった。' },
   { id:22, yearDisplay:'1959年', yearSort:1959, genre:'ドラマ', icon:'🚀', events:'東京オリンピック開催が決定し、高度経済成長時代を迎えつつある夕日町三丁目で、芥川賞を目指す小説家や自動車修理工場の人々が生活していた。', movieList:["ALWAYS 続・三丁目の夕日"], realEvents:'1964年東京オリンピックの開催が決定。皇太子御成婚パレードが沿道100万人を集めた。', realCulture:'皇太子ご成婚パレードをテレビ中継。テレビが「一億総テレビ」の時代を決定的にした。' },
   { id:23, yearDisplay:'1962年', yearSort:1962, genre:'ドラマ', icon:'🌟', events:'オリンピックに向けてスタンドが増設された旧国立競技場を背景に、若者たちが希望に向かって歩む姿が見られた。', movieList:["上を向いて歩こう"], realEvents:'東京都の人口が1000万人を突破。首都高速の建設が加速し、地価高騰が始まった。', realCulture:'週刊誌ブームと漫画誌の時代。ゴジラシリーズも継続し、東宝特撮が全盛を迎えた。' },
   { id:24, yearDisplay:'1963年', yearSort:1963, genre:'ドラマ', icon:'🦋', events:'東京タワー建設ブームと新幹線開通前夜の東京で、田舎から上京した女性が娼館のマダムへと成り上がった。', movieList:["にっぽん昆虫記"], realEvents:'東海道新幹線の建設が佳境を迎え、首都高速道路が部分開通。下町の急速な変貌が始まった。', realCulture:'手塚治虫「鉄腕アトム」TVアニメ放送開始。日本初の国産テレビアニメが東京から全国へ広まった。' },
-  { id:25, yearDisplay:'1964年', yearSort:1964, genre:'ドラマ', icon:'🏅', events:'1964年の東京は、世界に向けて戦後復興の完成を宣言した。競技場では各国の選手が競い合い、その熱狂から少し外れた下町の路地では変わらぬ日常が淡々と続いていた。華やかな表舞台と静かな裏路地——それが東京という街の真実だった。', movieList:["東京オリンピック", "ALWAYS 三丁目の夕日'64"], movieGenres:["ドラマ", "ドラマ"], movieEvents:["復興を遂げた東京で、戦後初の平和の祭典・東京オリンピックが開催された。", "オリンピックの熱狂に包まれた東京の下町では、昭和の日常が静かに続いていた。"], realEvents:'東京オリンピック開催。首都高速全線開通、東海道新幹線開業。戦後復興の完成が宣言された。', realCulture:'東京オリンピック開催。カラーテレビ普及、新幹線開通。日本の高度成長が世界に示された。' },
+  { id:25, yearDisplay:'1964年', yearSort:1964, genre:'ドラマ', icon:'🏅', events:'1964年の東京は、世界に向けて戦後復興の完成を宣言した。競技場では各国の選手が競い合い、その熱狂から少し外れた下町の路地では変わらぬ日常が淡々と続いていた。華やかな表舞台と静かな裏路地——それが東京という街の真実だった。', movieList:["東京オリンピック", "ALWAYS 三丁目の夕日'64"], movieGenres:["ドラマ", "ドラマ"], movieEvents:["復興を遂げた東京で、戦後初の平和の祭典・東京オリンピックが開催された。", "オリンピックの熱狂に包まれた東京の下町では、昭和の日常が静かに続いていた。"], realEvents:'東京オリンピック開催。首都高速全線開通、東海道新幹線開業。戦後復興の完成が宣言された。', realCulture:'1964年、松竹・東宝・日活・大映・東映の5社が競作する娯楽映画の全盛期。東京の映画館動員数は史上最高水準に達し、テレビ普及とともに映画・歌謡曲・演劇が相乗りする大衆文化の絶頂期となった。' },
   { id:26, yearDisplay:'1960年代後半', yearSort:1967, genre:'ドラマ', icon:'✊', events:'1960年代後半の新宿は、時代が爆発していた。路上では若者が拳を振り上げ、夜の歓楽街では退廃と自由が入り乱れた。その騒乱から少し離れた下町では、女の子が近所の出来事を記憶に刻んでいた。大学のキャンパスでは、運動の熱が冷めた後に残る喪失感の中で、若者たちが恋をして死んでいった。', movieList:["新宿泥棒日記", "薔薇の葬列", "おもひでぽろぽろ", "ノルウェイの森"], movieGenres:["ドラマ", "ドラマ", "アニメ", "ドラマ"], movieEvents:["新宿で、若者たちによるカウンターカルチャーと反体制の熱気が路上に溢れ出た。", "新宿の歓楽街で、時代の変革期に翻弄された若者たちが自由と退廃の中を生きた。", "昭和40年代の東京下町で、ひとりの少女がありふれた日常を生きた。", "全共闘運動が渦巻く東京の大学街で、喪失を抱えた若者たちが恋をして死んでいった。"], realEvents:'大学紛争が激化し、東大・日大闘争が全国に波及。新宿駅西口で反戦フォークゲリラが活動した。', realCulture:'フォークソング・グループサウンズ全盛。ザ・タイガース、ビートルズの影響が東京の若者文化を席巻した。' },
   { id:27, yearDisplay:'1970年代前半', yearSort:1972, genre:'コメディ', icon:'🏮', events:'葛飾区柴又において、テキ屋を稼業とする風来坊と彼を温かく迎える家族や下町の人々との人情劇が長年にわたり観測された。', movieList:["男はつらいよ シリーズ"], realEvents:'東大安田講堂事件が起き、同年の東大入試が中止された。学生運動が社会全体を揺るがした。', realCulture:'あさま山荘事件をテレビが生中継。学生運動の終焉とともに「しらけ世代」の文化が生まれた。' },
   { id:28, yearDisplay:'1973年', yearSort:1973, genre:'SF', icon:'🌊', events:'大規模な地殻変動により、東京を含む日本列島が海中へと沈没していく未曾有の大災害が発生した。', movieList:["日本沈没（1973年版）"], realEvents:'第一次石油ショック。東京でトイレットペーパーの買い占め騒動が起き、物価が急騰した。', realCulture:'テレビアニメ「マジンガーZ」でロボット文化が子供を席巻。「ノストラダムスの大予言」ブームが社会を覆った。' },
@@ -1987,17 +2030,21 @@ function buildYearGroupCards(group) {
       return `<div class="movie-cards-stack">${stackedCards}${realLayerHtml}${cultureLayerHtml}</div>`;
     }
     const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
+    const fictionHtml = `
+      <div class="card-fiction-layer">
+        <div class="card-meta"><span class="genre-tag">${entry.genre}</span></div>
+        <div class="card-events">${entry.events}</div>
+        <div class="card-movies">
+          <span class="card-movies-label">▸ MOVIES</span>
+          ${chipsHtml}
+        </div>
+      </div>`;
+    const stackHtml = realLayerHtml
+      ? `<div class="card-layers-stack">${realLayerHtml}${fictionHtml}</div>`
+      : fictionHtml;
     return `
       <div class="movie-card" onclick="openDetail(${entry.id})">
-        <div class="card-fiction-layer">
-          <div class="card-meta"><span class="genre-tag">${entry.genre}</span></div>
-          <div class="card-events">${entry.events}</div>
-          <div class="card-movies">
-            <span class="card-movies-label">▸ MOVIES</span>
-            ${chipsHtml}
-          </div>
-        </div>
-        ${realLayerHtml}
+        ${stackHtml}
         ${cultureLayerHtml}
       </div>`;
   }
