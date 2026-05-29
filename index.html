@@ -948,9 +948,8 @@
     }
 
     .layer-toggle-label {
-      font-size: 0.42rem;
-      color: rgba(255,255,255,0.28);
-      padding: 0 0.7rem;
+      color: rgba(255,255,255,0.32);
+      padding: 0 0.75rem;
       letter-spacing: 0.15em;
       text-transform: uppercase;
       font-family: 'Courier New', monospace;
@@ -2067,7 +2066,14 @@ window.addEventListener('scroll', () => {
 </script>
 
 <div class="layer-toggle" id="layerToggle">
-  <span class="layer-toggle-label">LAYER</span>
+  <span class="layer-toggle-label">
+    <svg viewBox="0 0 18 14" width="16" height="13" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="13,1 16,4 13,7"/>
+      <line x1="2" y1="4" x2="16" y2="4"/>
+      <polyline points="5,7 2,10 5,13"/>
+      <line x1="2" y1="10" x2="16" y2="10"/>
+    </svg>
+  </span>
   <button class="layer-toggle-btn active" id="btnFiction" onclick="setLayer('fiction')">MOVIE</button>
   <button class="layer-toggle-btn"        id="btnReal"    onclick="setLayer('real')">REAL</button>
 </div>
