@@ -319,9 +319,11 @@
       max-width: 390px;
       cursor: pointer;
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* 虚構レイヤー — 前面・左寄せ（デフォルト） */
+    /* 虚構レイヤー — 前面・左（デフォルト） */
     .card-fiction-layer {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -329,9 +331,11 @@
       padding: 1rem 1rem 1rem 0.9rem;
       position: relative;
       z-index: 2;
+      order: 1;
       width: calc(100% - 14px);
       margin-left: 0;
-      transform: translateY(-3px);                        /* 常時わずかに浮上 */
+      margin-top: 0;
+      transform: translateY(-3px);
       box-shadow:
         5px 8px 22px rgba(0,0,0,0.18),
         2px 3px 6px  rgba(0,0,0,0.1);
@@ -339,7 +343,7 @@
         margin-left       0.42s cubic-bezier(.4,0,.2,1),
         transform         0.32s cubic-bezier(.25,.46,.45,.94),
         box-shadow        0.32s ease,
-        opacity           0.35s ease,
+        opacity           0.32s ease,
         border-left-color 0.3s  ease,
         border-left-width 0.3s  ease;
     }
@@ -351,7 +355,7 @@
         2px 4px  8px  rgba(0,0,0,0.1);
     }
 
-    /* 史実レイヤー — 背面・右寄せ（デフォルト） */
+    /* 史実レイヤー — 背面・右（デフォルト） */
     .card-real-layer {
       background: var(--bg-card2);
       border: 1px solid rgba(154,138,120,0.38);
@@ -359,10 +363,11 @@
       padding: 0.75rem 1rem 0.75rem 0.95rem;
       position: relative;
       z-index: 1;
+      order: 2;
       width: calc(100% - 14px);
-      margin-left: 14px;                                  /* 奥に引いた右寄せ */
+      margin-left: 14px;
       margin-top: -3px;
-      transform: translateY(3px);                         /* 常時わずかに沈む */
+      transform: translateY(3px);
       display: flex;
       gap: 0.45rem;
       align-items: flex-start;
@@ -370,7 +375,7 @@
         margin-left 0.42s cubic-bezier(.4,0,.2,1),
         transform   0.32s cubic-bezier(.25,.46,.45,.94),
         box-shadow  0.32s ease,
-        opacity     0.35s ease;
+        opacity     0.32s ease;
     }
 
     .card-real-badge {
@@ -396,23 +401,27 @@
       overflow: hidden;
     }
 
-    /* ── 史実モード：立体的に入れ替え ── */
+    /* ── 史実モード：order で上下を入れ替えて完全に前後を逆転 ── */
     body.mode-real .card-fiction-layer {
+      order: 2;                                           /* 下へ */
       margin-left: 14px;
-      transform: translateY(3px);                         /* 奥へ沈む */
-      opacity: 0.45;
+      margin-top: -3px;                                   /* realの下に潜る */
+      transform: translateY(3px);
+      opacity: 0.3;
       box-shadow: none;
       border-left-color: rgba(0,0,0,0.08);
       border-left-width: 1px;
     }
 
     body.mode-real .movie-card:hover .card-fiction-layer {
-      transform: translateY(3px);                         /* hover でも動かない */
+      transform: translateY(3px);
     }
 
     body.mode-real .card-real-layer {
+      order: 1;                                           /* 上へ */
       margin-left: 0;
-      transform: translateY(-3px);                        /* 手前に浮上 */
+      margin-top: 0;
+      transform: translateY(-3px);
       box-shadow:
         -5px 8px 22px rgba(0,0,0,0.16),
         -2px 3px 6px  rgba(0,0,0,0.09);
