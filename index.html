@@ -980,6 +980,31 @@
       .decade-desc { font-size: 0.72rem; }
     }
 
+    /* 前半・後半サブ区切り */
+    .half-decade-divider {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      margin: 1.4rem 0 0.7rem;
+      padding: 0;
+    }
+    .half-decade-divider::before,
+    .half-decade-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .half-decade-label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.5rem;
+      letter-spacing: 0.22em;
+      color: var(--muted);
+      text-transform: uppercase;
+      white-space: nowrap;
+      opacity: 0.72;
+    }
+
     ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 0; }
@@ -1862,12 +1887,96 @@ const DECADE_INFO = {
 function getDecadeKey(yearSort) {
   const d = Math.floor(yearSort / 10) * 10;
   if (DECADE_INFO[d]) return d;
-  // fallback: find closest defined key
   const keys = Object.keys(DECADE_INFO).map(Number).sort((a, b) => a - b);
   for (let i = keys.length - 1; i >= 0; i--) {
     if (keys[i] <= d) return keys[i];
   }
   return keys[0];
+}
+
+function getHalfDecadeKey(floorYear) {
+  const decade = Math.floor(floorYear / 10) * 10;
+  return decade + (floorYear < decade + 5 ? 0 : 5);
+}
+
+function getHalfDecadeLabel(floorYear) {
+  const decade = Math.floor(floorYear / 10) * 10;
+  return `${decade}年代${floorYear < decade + 5 ? '前半' : '後半'}`;
+}
+
+// 単一エントリまたはグループの fiction カードを生成（REALなし）
+function buildFictionCards(entry) {
+  const hasPerMovieEvents = entry.movieEvents &&
+    entry.movieEvents.length === entry.movieList.length &&
+    entry.movieList.length > 1;
+  if (hasPerMovieEvents) {
+    return entry.movieList.map((movie, idx) => {
+      const genre = (entry.movieGenres && entry.movieGenres[idx]) ? entry.movieGenres[idx] : entry.genre;
+      return `
+        <div class="movie-card" onclick="openMovieDetail(${entry.id}, ${idx})">
+          <div class="card-fiction-layer">
+            <div class="card-meta"><span class="genre-tag">${genre}</span></div>
+            <div class="card-events">${entry.movieEvents[idx]}</div>
+            <div class="card-movies">
+              <span class="card-movies-label">▸ MOVIES</span>
+              <span class="movie-chip">${movie}</span>
+            </div>
+          </div>
+        </div>`;
+    }).join('');
+  }
+  const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
+  return `
+    <div class="movie-card" onclick="openDetail(${entry.id})">
+      <div class="card-fiction-layer">
+        <div class="card-meta"><span class="genre-tag">${entry.genre}</span></div>
+        <div class="card-events">${entry.events}</div>
+        <div class="card-movies">
+          <span class="card-movies-label">▸ MOVIES</span>
+          ${chipsHtml}
+        </div>
+      </div>
+    </div>`;
+}
+
+// 年グループ全体のカード HTML を生成
+function buildYearGroupCards(group) {
+  const first = group.entries[0];
+  const realLayerHtml = first.realEvents
+    ? `<div class="card-real-layer"><span class="card-real-badge">◆ REAL</span><span class="card-real-text">${first.realEvents}</span></div>`
+    : '';
+  const cultureLayerHtml = first.realCulture
+    ? `<div class="card-culture-layer"><span class="card-culture-badge">◆ CULTURE</span><span class="card-culture-text">${first.realCulture}</span></div>`
+    : '';
+
+  if (group.entries.length === 1) {
+    const entry = first;
+    const hasPerMovieEvents = entry.movieEvents &&
+      entry.movieEvents.length === entry.movieList.length &&
+      entry.movieList.length > 1;
+    if (hasPerMovieEvents) {
+      const stackedCards = buildFictionCards(entry);
+      return `<div class="movie-cards-stack">${stackedCards}${realLayerHtml}${cultureLayerHtml}</div>`;
+    }
+    const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
+    return `
+      <div class="movie-card" onclick="openDetail(${entry.id})">
+        <div class="card-fiction-layer">
+          <div class="card-meta"><span class="genre-tag">${entry.genre}</span></div>
+          <div class="card-events">${entry.events}</div>
+          <div class="card-movies">
+            <span class="card-movies-label">▸ MOVIES</span>
+            ${chipsHtml}
+          </div>
+        </div>
+        ${realLayerHtml}
+        ${cultureLayerHtml}
+      </div>`;
+  }
+
+  // 複数エントリ：fiction カードを縦積み、REAL・CULTURE は一番下に一つ
+  const stackedFiction = group.entries.map(e => buildFictionCards(e)).join('');
+  return `<div class="movie-cards-stack">${stackedFiction}${realLayerHtml}${cultureLayerHtml}</div>`;
 }
 
 function renderTimeline() {
@@ -1883,12 +1992,30 @@ function renderTimeline() {
   }
 
   const sorted = [...filtered].sort((a, b) => a.yearSort - b.yearSort);
+
+  // 同一 floor 年のエントリをグループ化
+  const yearGroups = [];
+  const yearGroupMap = new Map();
+  for (const entry of sorted) {
+    const key = Math.floor(entry.yearSort);
+    if (!yearGroupMap.has(key)) {
+      const g = { key, entries: [] };
+      yearGroups.push(g);
+      yearGroupMap.set(key, g);
+    }
+    yearGroupMap.get(key).entries.push(entry);
+  }
+
   let html = '';
   let prevDecadeKey = null;
+  let prevHalfDecadeKey = null;
   let cardIndex = 0;
 
-  sorted.forEach((entry) => {
-    const decadeKey = getDecadeKey(entry.yearSort);
+  for (const group of yearGroups) {
+    const floorYear = group.key;
+
+    // 10年代ヘッダー
+    const decadeKey = getDecadeKey(floorYear);
     if (decadeKey !== prevDecadeKey) {
       const info = DECADE_INFO[decadeKey];
       html += `
@@ -1902,69 +2029,36 @@ function renderTimeline() {
         </div>
       </div>`;
       prevDecadeKey = decadeKey;
+      prevHalfDecadeKey = null; // decade が変わったら必ず前半/後半を表示
     }
 
-    const i = cardIndex++;
-    const side = i % 2 === 0 ? 'left' : 'right';
-    const isSimple = /^\d{4}年$/.test(entry.yearDisplay);
-    const badgeInner = isSimple
-      ? `<span class="year-num">${entry.yearDisplay.replace('年', '')}</span>`
-      : `<span class="year-period">${entry.yearDisplay}</span>`;
+    // 前半・後半サブ区切り
+    const hdKey = getHalfDecadeKey(floorYear);
+    if (hdKey !== prevHalfDecadeKey) {
+      html += `<div class="half-decade-divider fade-in"><span class="half-decade-label">${getHalfDecadeLabel(floorYear)}</span></div>`;
+      prevHalfDecadeKey = hdKey;
+    }
 
-    const hasPerMovieEvents = entry.movieEvents &&
-      entry.movieEvents.length === entry.movieList.length &&
-      entry.movieList.length > 1;
-
-    const realLayerHtml = entry.realEvents
-      ? `<div class="card-real-layer"><span class="card-real-badge">◆ REAL</span><span class="card-real-text">${entry.realEvents}</span></div>`
-      : '';
-
-    const cultureLayerHtml = entry.realCulture
-      ? `<div class="card-culture-layer"><span class="card-culture-badge">◆ CULTURE</span><span class="card-culture-text">${entry.realCulture}</span></div>`
-      : '';
-
-    let cardHtml;
-    if (hasPerMovieEvents) {
-      // 映画ごとに個別カードを生成してスタック（REALは各カードに付けない）
-      const stackedCards = entry.movieList.map((movie, idx) => {
-        const genre = (entry.movieGenres && entry.movieGenres[idx]) ? entry.movieGenres[idx] : entry.genre;
-        return `
-          <div class="movie-card" onclick="openMovieDetail(${entry.id}, ${idx})">
-            <div class="card-fiction-layer">
-              <div class="card-meta"><span class="genre-tag">${genre}</span></div>
-              <div class="card-events">${entry.movieEvents[idx]}</div>
-              <div class="card-movies">
-                <span class="card-movies-label">▸ MOVIES</span>
-                <span class="movie-chip">${movie}</span>
-              </div>
-            </div>
-          </div>`;
-      }).join('');
-      // REAL・CULTUREカードはスタックの一番下に一つずつ
-      cardHtml = `<div class="movie-cards-stack">${stackedCards}${realLayerHtml}${cultureLayerHtml}</div>`;
+    // 年バッジ表示テキストを決定
+    const cleanEntry = group.entries.find(e => /^\d{4}年$/.test(e.yearDisplay));
+    let badgeInner;
+    if (cleanEntry || group.entries.length > 1) {
+      badgeInner = `<span class="year-num">${floorYear}</span>`;
     } else {
-      // 単一カード（既存レイアウト）
-      const genre = entry.genre;
-      const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
-      cardHtml = `
-        <div class="movie-card" onclick="openDetail(${entry.id})">
-          <div class="card-fiction-layer">
-            <div class="card-meta"><span class="genre-tag">${genre}</span></div>
-            <div class="card-events">${entry.events}</div>
-            <div class="card-movies">
-              <span class="card-movies-label">▸ MOVIES</span>
-              ${chipsHtml}
-            </div>
-          </div>
-          ${realLayerHtml}
-          ${cultureLayerHtml}
-        </div>`;
+      const isSimple = /^\d{4}年$/.test(group.entries[0].yearDisplay);
+      badgeInner = isSimple
+        ? `<span class="year-num">${group.entries[0].yearDisplay.replace('年', '')}</span>`
+        : `<span class="year-period">${group.entries[0].yearDisplay}</span>`;
     }
+
+    const cardHtml = buildYearGroupCards(group);
+    const side = cardIndex % 2 === 0 ? 'left' : 'right';
+    cardIndex++;
 
     html += `
       <div class="year-group fade-in">
         <div class="year-marker">
-          <div class="year-badge" onclick="openDetail(${entry.id})">
+          <div class="year-badge" onclick="openDetail(${group.entries[0].id})">
             ${badgeInner}
             <span class="year-hint">▶ DETAIL</span>
           </div>
@@ -1975,7 +2069,7 @@ function renderTimeline() {
           <div class="card-right">${side === 'right' ? cardHtml : '<div class="card-empty"></div>'}</div>
         </div>
       </div>`;
-  });
+  }
 
   container.innerHTML = html;
   activateFadeIn();
