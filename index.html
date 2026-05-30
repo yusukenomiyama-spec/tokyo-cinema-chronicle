@@ -323,12 +323,11 @@
       flex-direction: column;
     }
 
-    /* ── スタックラッパー：MOVIE と REAL を同一セルに重ねる ── */
+    /* ── スタックラッパー：MOVIE(左・前面) と REAL(右・背面) を重ねる ── */
     .card-layers-stack {
       display: grid;
       grid-template-columns: 1fr;
-      padding-right: 6px;
-      padding-bottom: 8px;
+      padding-right: 76px;   /* REAL の右側 peek 分を確保 */
     }
 
     .card-layers-stack > .card-fiction-layer,
@@ -340,42 +339,41 @@
       min-width: 0;
     }
 
-    /* 虚構レイヤー */
+    /* ── 虚構レイヤー：常に左(x=0)・モードによって前後が変わる ── */
     .card-fiction-layer {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-left: 3px solid var(--red);
       padding: 1rem 1rem 1rem 0.9rem;
       position: relative;
-      z-index: 2;
+      z-index: 2;               /* MOVIE モード：前面 */
       width: calc(100% - 14px);
-      transform: translate(0, 0);
+      transform: translate(0, 0); /* 常に左(x=0)・変えない */
       box-shadow:
         5px 8px 22px rgba(0,0,0,0.18),
         2px 3px 6px  rgba(0,0,0,0.1);
       transition:
-        transform         0.35s cubic-bezier(.25,.46,.45,.94),
         box-shadow        0.32s ease,
         opacity           0.32s ease,
         border-left-color 0.3s  ease,
         border-left-width 0.3s  ease;
     }
 
-    /* ホバー：スタック内は前面カードを浮かせる */
+    /* ホバー（MOVIE モード）：前面カードを浮かせる */
     .movie-card:hover .card-layers-stack > .card-fiction-layer {
-      transform: translate(-2px, -6px);
+      transform: translate(-2px, -5px);
       box-shadow:
         7px 14px 32px rgba(0,0,0,0.22),
         2px 4px  8px  rgba(0,0,0,0.1);
     }
-    /* スタック外（multi-entry）ホバー */
+    /* スタック外（multi-entry 単体 .movie-card）ホバー */
     .movie-card:hover .card-fiction-layer {
       box-shadow:
         7px 12px 28px rgba(0,0,0,0.2),
         2px 3px  6px  rgba(0,0,0,0.1);
     }
 
-    /* 史実レイヤー（スタック外：multi-entry 用） */
+    /* ── 史実レイヤー（スタック外：multi-entry 用） ── */
     .card-real-layer {
       background: var(--bg-card2);
       border: 1px solid rgba(154,138,120,0.38);
@@ -391,28 +389,25 @@
       gap: 0.45rem;
       align-items: flex-start;
       transition:
-        transform   0.35s cubic-bezier(.25,.46,.45,.94),
         box-shadow  0.32s ease,
         opacity     0.32s ease,
         border-left 0.3s  ease;
     }
 
-    /* スタック内：REAL を背面にずらして「のぞき」を作る */
+    /* ── スタック内：REAL は常に右(x=+60px)・モードによって前後が変わる ── */
     .card-layers-stack > .card-real-layer {
       margin-left: 0;
       margin-top: 0;
-      transform: translate(5px, 7px);
-      z-index: 1;
+      transform: translate(60px, 6px); /* 常に右・変えない */
+      z-index: 1;                       /* MOVIE モード：背面 */
     }
 
-    /* スタック内：複数 fiction（movie-cards-stack）は前面カード扱い */
+    /* スタック内：複数 fiction（movie-cards-stack）は左(x=0)・前面扱い */
     .card-layers-stack > .movie-cards-stack {
       position: relative;
-      z-index: 2;
-      transform: translate(0, 0);
-      transition:
-        transform 0.35s cubic-bezier(.25,.46,.45,.94),
-        opacity   0.32s ease;
+      z-index: 2;               /* MOVIE モード：前面 */
+      transform: translate(0, 0); /* 常に左・変えない */
+      transition: opacity 0.32s ease;
     }
 
     .card-real-badge {
@@ -438,9 +433,9 @@
       overflow: hidden;
     }
 
-    /* ── 史実モード：スタック内で前後を入れ替える ── */
+    /* ── REAL モード：z-index のみスワップ。translate は変えない ── */
 
-    /* 全 FICTION をフェード（スタック内外共通） */
+    /* FICTION：前面→背面（左のまま、フェード） */
     body.mode-real .card-fiction-layer {
       opacity: 0.3;
       box-shadow: none;
@@ -448,20 +443,18 @@
       border-left-width: 1px;
     }
 
-    /* スタック内：FICTION を背面位置へ */
     body.mode-real .card-layers-stack > .card-fiction-layer {
-      z-index: 1;
-      transform: translate(5px, 7px);
-      margin-left: 0;
-      margin-top: 0;
+      z-index: 1; /* 背面へ。translate(0,0) は変えない */
     }
 
-    /* スタック内：REAL を前面へ */
+    body.mode-real .card-layers-stack > .movie-cards-stack {
+      z-index: 1; /* 背面へ。translate(0,0) は変えない */
+      opacity: 0.3;
+    }
+
+    /* REAL：背面→前面（右のまま、浮上） */
     body.mode-real .card-layers-stack > .card-real-layer {
-      z-index: 2;
-      transform: translate(0, 0);
-      margin-left: 0;
-      margin-top: 0;
+      z-index: 2; /* 前面へ。translate(60px,6px) は変えない */
       box-shadow:
         -5px 8px 22px rgba(0,0,0,0.16),
         -2px 3px 6px  rgba(0,0,0,0.09);
@@ -489,30 +482,15 @@
       -webkit-line-clamp: 4;
     }
 
-    /* スタック内：movie-cards-stack を背面へ（REAL モード） */
-    body.mode-real .card-layers-stack > .movie-cards-stack {
-      z-index: 1;
-      transform: translate(5px, 7px);
-      opacity: 0.3;
-    }
-
-    /* スタック内ホバー（mode-real）：REAL を浮かせ FICTION は背面固定 */
+    /* ホバー（REAL モード）：前面(右側)カードを浮かせる */
     body.mode-real .movie-card:hover .card-layers-stack > .card-real-layer {
-      transform: translate(2px, -6px);
+      transform: translate(58px, 0);   /* 60px→58pxで少し左上へ */
       box-shadow:
         -7px 14px 32px rgba(0,0,0,0.2),
         -2px 4px  8px  rgba(0,0,0,0.09);
     }
 
-    body.mode-real .movie-card:hover .card-layers-stack > .card-fiction-layer {
-      transform: translate(5px, 7px);
-    }
-
-    body.mode-real .card-layers-stack:hover > .movie-cards-stack {
-      transform: translate(5px, 7px);
-    }
-
-    /* 文化レイヤー — スタックの下の2枚目の史実カード */
+    /* 文化レイヤー — REALカードの位置(右60px)に揃えて下に表示 */
     .card-culture-layer {
       background: #e4ddd2;
       border: 1px solid rgba(82,105,122,0.28);
@@ -520,9 +498,9 @@
       padding: 0.75rem 1rem 0.75rem 0.95rem;
       position: relative;
       z-index: 1;
-      width: calc(100% - 14px);
-      margin-left: 8px;
-      margin-top: 3px;
+      width: calc(100% - 74px);  /* 右の余白と合わせる */
+      margin-left: 60px;          /* REALカードの左端に揃える */
+      margin-top: 4px;
       display: flex;
       gap: 0.45rem;
       align-items: flex-start;
@@ -556,7 +534,9 @@
     }
 
     body.mode-real .card-culture-layer {
-      margin-left: 5px;
+      /* REALカード位置に揃えたまま */
+      margin-left: 60px;
+      width: calc(100% - 74px);
       margin-top: 5px;
       box-shadow:
         -3px 6px 16px rgba(0,0,0,0.11),
