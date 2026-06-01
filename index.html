@@ -345,7 +345,7 @@
 
     /* REALカード：MOVIE モードでは右上に peek */
     .card-layers-stack > .card-real-layer {
-      transform: translate(60px, -10px);
+      transform: translate(60px, -26px);
       z-index: 1;
       width: 100%;
       margin-left: 0;
@@ -398,7 +398,7 @@
       background: var(--bg-card2);
       border: 1px solid rgba(154,138,120,0.38);
       border-left: 2px solid rgba(154,138,120,0.52);
-      padding: 0.8rem 1rem 0.8rem 0.95rem;
+      padding: 0.45rem 1rem 0.85rem 0.95rem;
       position: relative;
       z-index: 1;
       display: flex;
@@ -411,15 +411,15 @@
     }
 
     .card-real-badge {
-      font-size: 0.43rem;
+      font-size: 0.62rem;
       font-weight: 700;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.14em;
       color: var(--muted);
       font-family: 'Courier New', monospace;
       text-transform: uppercase;
       opacity: 0.72;
       display: block;
-      margin-bottom: 0.55rem;
+      margin-bottom: 0.5rem;
       transition: color 0.3s ease, opacity 0.3s ease;
     }
 
@@ -522,7 +522,7 @@
     /* ホバー（REAL モード）：REALカードを浮かせる */
     body.mode-real .movie-card:hover .card-layers-stack > .card-real-layer,
     body.mode-real .card-layers-stack:hover > .card-real-layer {
-      transform: translate(58px, -14px);
+      transform: translate(58px, -30px);
     }
 
     .card-meta {
@@ -1997,7 +1997,7 @@ function buildYearGroupCards(group) {
     ? `<div class="card-culture-sub"><span class="card-culture-subbadge">◆ CULTURE</span><span class="card-culture-text">${first.realCulture}</span></div>`
     : '';
   const mergedRealHtml = (realSubHtml || cultureSubHtml)
-    ? `<div class="card-real-layer"><span class="card-real-badge">◆ REAL</span>${realSubHtml}${cultureSubHtml}</div>`
+    ? `<div class="card-real-layer"><span class="card-real-badge">REAL</span>${realSubHtml}${cultureSubHtml}</div>`
     : '';
 
   if (group.entries.length === 1) {
