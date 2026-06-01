@@ -265,12 +265,15 @@
       transition: all 0.22s;
       user-select: none;
       max-width: 90vw;
+      box-shadow: 2px 4px 12px rgba(0,0,0,0.22), 0 1px 3px rgba(0,0,0,0.1);
     }
 
     .year-badge:hover {
       background: var(--red-dim);
       border-color: rgba(0,0,0,0.2);
       border-left-color: var(--red);
+      box-shadow: 4px 7px 18px rgba(0,0,0,0.28), 0 1px 3px rgba(0,0,0,0.1);
+      transform: translateY(-1px);
     }
 
     .year-num {
@@ -323,45 +326,30 @@
       flex-direction: column;
     }
 
-    /* ── スタックラッパー：MOVIE(左・前面) と REAL(右・背面) を重ねる ── */
+    /* ── スタックラッパー：MOVIE(左・前面) と REAL(右上・背面) を重ねる ── */
     .card-layers-stack {
       display: grid;
       grid-template-columns: 1fr;
-      padding-right: 76px;   /* 右側 peek 分を確保 */
+      padding-right: 76px;
     }
 
     /* グリッド同一セルに重ねる要素 */
     .card-layers-stack > .card-fiction-layer,
     .card-layers-stack > .movie-cards-stack,
-    .card-layers-stack > .card-right-stack {
+    .card-layers-stack > .card-real-layer {
       grid-column: 1;
       grid-row: 1;
       align-self: start;
       min-width: 0;
     }
 
-    /* ── 右側ユニット：REAL と CULTURE を上下くっつけてまとめる ── */
-    .card-right-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 0;
-      transform: translate(60px, 6px); /* 常に右固定・変えない */
-      z-index: 1;                       /* MOVIE モード：背面 */
-      transition: opacity 0.32s ease;
-    }
-
-    /* 右ユニット内：REAL と CULTURE は全幅・隙間なし */
-    .card-right-stack > .card-real-layer {
+    /* REALカード：MOVIE モードでは右上に peek */
+    .card-layers-stack > .card-real-layer {
+      transform: translate(60px, -10px);
+      z-index: 1;
       width: 100%;
       margin-left: 0;
       margin-top: 0;
-      order: unset;
-    }
-
-    .card-right-stack > .card-culture-layer {
-      width: 100%;
-      margin-left: 0;
-      margin-top: 3px;
     }
 
     /* ── 虚構レイヤー：常に左(x=0)・モードによって前後 ── */
@@ -371,7 +359,7 @@
       border-left: 3px solid var(--red);
       padding: 1rem 1rem 1rem 0.9rem;
       position: relative;
-      z-index: 2;               /* MOVIE モード：前面 */
+      z-index: 2;
       width: calc(100% - 14px);
       transform: translate(0, 0);
       box-shadow:
@@ -397,7 +385,7 @@
         2px 3px  6px  rgba(0,0,0,0.1);
     }
 
-    /* スタック内：複数 fiction（movie-cards-stack）は左(x=0)・前面 */
+    /* スタック内：複数 fiction */
     .card-layers-stack > .movie-cards-stack {
       position: relative;
       z-index: 2;
@@ -405,20 +393,17 @@
       transition: opacity 0.32s ease;
     }
 
-    /* ── 史実レイヤー（基本スタイル） ── */
+    /* ── REALカード統合版（東京での出来事 ＋ CULTURE） ── */
     .card-real-layer {
       background: var(--bg-card2);
       border: 1px solid rgba(154,138,120,0.38);
       border-left: 2px solid rgba(154,138,120,0.52);
-      padding: 0.75rem 1rem 0.75rem 0.95rem;
+      padding: 0.8rem 1rem 0.8rem 0.95rem;
       position: relative;
       z-index: 1;
-      width: calc(100% - 14px);
-      margin-left: 14px;
-      margin-top: 3px;
       display: flex;
-      gap: 0.45rem;
-      align-items: flex-start;
+      flex-direction: column;
+      gap: 0;
       transition:
         box-shadow  0.32s ease,
         opacity     0.32s ease,
@@ -431,10 +416,46 @@
       letter-spacing: 0.1em;
       color: var(--muted);
       font-family: 'Courier New', monospace;
-      flex-shrink: 0;
-      padding-top: 0.15rem;
       text-transform: uppercase;
       opacity: 0.72;
+      display: block;
+      margin-bottom: 0.55rem;
+      transition: color 0.3s ease, opacity 0.3s ease;
+    }
+
+    /* サブセクション共通 */
+    .card-real-sub,
+    .card-culture-sub {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .card-culture-sub {
+      border-top: 1px solid rgba(82,105,122,0.18);
+      padding-top: 0.55rem;
+      margin-top: 0.55rem;
+    }
+
+    .card-real-subbadge {
+      font-size: 0.42rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase;
+      opacity: 0.65;
+      transition: color 0.3s ease, opacity 0.3s ease;
+    }
+
+    .card-culture-subbadge {
+      font-size: 0.42rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #52697a;
+      font-family: 'Courier New', monospace;
+      text-transform: uppercase;
+      opacity: 0.65;
       transition: color 0.3s ease, opacity 0.3s ease;
     }
 
@@ -448,8 +469,17 @@
       overflow: hidden;
     }
 
-    /* ── REAL モード：z-index スワップ（translate は変えない） ── */
+    .card-culture-text {
+      font-size: 0.7rem;
+      color: rgba(26,21,16,0.58);
+      line-height: 1.72;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
 
+    /* ── REAL モード：z-index スワップ ── */
     body.mode-real .card-fiction-layer {
       opacity: 0.3;
       box-shadow: none;
@@ -466,85 +496,33 @@
       opacity: 0.3;
     }
 
-    /* 右ユニット：背面→前面（translate(60px,6px) は変えない） */
-    body.mode-real .card-right-stack {
+    /* REALカード：背面→前面 */
+    body.mode-real .card-layers-stack > .card-real-layer {
       z-index: 2;
-    }
-
-    body.mode-real .card-right-stack > .card-real-layer {
       box-shadow:
         -5px 8px 22px rgba(0,0,0,0.16),
         -2px 3px 6px  rgba(0,0,0,0.09);
       border-left: 3px solid #8b7355;
     }
 
-    body.mode-real .card-real-badge { color: #6b5b45; opacity: 1; }
+    body.mode-real .card-real-badge  { color: #6b5b45; opacity: 1; }
+    body.mode-real .card-real-subbadge   { color: #6b5b45; opacity: 0.85; }
+    body.mode-real .card-culture-subbadge { color: #3d5f72; opacity: 0.85; }
 
     body.mode-real .card-real-text {
       color: rgba(26,21,16,0.82);
       -webkit-line-clamp: 4;
     }
 
-    /* ホバー（REAL モード）：右ユニット全体を浮かせる */
-    body.mode-real .movie-card:hover .card-right-stack {
-      transform: translate(58px, 1px);
-    }
-    body.mode-real .card-layers-stack:hover > .card-right-stack {
-      transform: translate(58px, 1px);
-    }
-
-    /* ── 文化レイヤー（基本スタイル） ── */
-    .card-culture-layer {
-      background: #e4ddd2;
-      border: 1px solid rgba(82,105,122,0.28);
-      border-left: 2px solid rgba(82,105,122,0.42);
-      padding: 0.75rem 1rem 0.75rem 0.95rem;
-      position: relative;
-      z-index: 1;
-      width: calc(100% - 14px);
-      margin-left: 8px;
-      margin-top: 4px;
-      display: flex;
-      gap: 0.45rem;
-      align-items: flex-start;
-      transition: box-shadow 0.32s ease, opacity 0.32s ease;
-    }
-
-    .card-culture-badge {
-      font-size: 0.43rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      color: #52697a;
-      font-family: 'Courier New', monospace;
-      flex-shrink: 0;
-      padding-top: 0.15rem;
-      text-transform: uppercase;
-      opacity: 0.72;
-      transition: color 0.3s ease, opacity 0.3s ease;
-    }
-
-    .card-culture-text {
-      font-size: 0.7rem;
-      color: rgba(26,21,16,0.58);
-      line-height: 1.72;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }
-
-    body.mode-real .card-right-stack > .card-culture-layer {
-      box-shadow:
-        -3px 6px 16px rgba(0,0,0,0.11),
-        -1px 2px 5px  rgba(0,0,0,0.06);
-      border-left: 2px solid rgba(82,105,122,0.72);
-    }
-
-    body.mode-real .card-culture-badge { color: #3d5f72; opacity: 1; }
-
     body.mode-real .card-culture-text {
       color: rgba(26,21,16,0.78);
       -webkit-line-clamp: 4;
+    }
+
+    /* ホバー（REAL モード）：REALカードを浮かせる */
+    body.mode-real .movie-card:hover .card-layers-stack > .card-real-layer,
+    body.mode-real .card-layers-stack:hover > .card-real-layer {
+      transform: translate(58px, -14px);
     }
 
     .card-meta {
@@ -2010,16 +1988,16 @@ function buildFictionCards(entry) {
 // 年グループ全体のカード HTML を生成
 function buildYearGroupCards(group) {
   const first = group.entries[0];
-  const realLayerHtml = first.realEvents
-    ? `<div class="card-real-layer"><span class="card-real-badge">◆ REAL</span><span class="card-real-text">${first.realEvents}</span></div>`
-    : '';
-  const cultureLayerHtml = first.realCulture
-    ? `<div class="card-culture-layer"><span class="card-culture-badge">◆ CULTURE</span><span class="card-culture-text">${first.realCulture}</span></div>`
-    : '';
 
-  // REAL と CULTURE を常にひとつの右側ユニットにまとめる
-  const rightStackHtml = (realLayerHtml || cultureLayerHtml)
-    ? `<div class="card-right-stack">${realLayerHtml}${cultureLayerHtml}</div>`
+  // REAL + CULTURE を一枚のカードに統合
+  const realSubHtml = first.realEvents
+    ? `<div class="card-real-sub"><span class="card-real-subbadge">◆ 東京での出来事</span><span class="card-real-text">${first.realEvents}</span></div>`
+    : '';
+  const cultureSubHtml = first.realCulture
+    ? `<div class="card-culture-sub"><span class="card-culture-subbadge">◆ CULTURE</span><span class="card-culture-text">${first.realCulture}</span></div>`
+    : '';
+  const mergedRealHtml = (realSubHtml || cultureSubHtml)
+    ? `<div class="card-real-layer"><span class="card-real-badge">◆ REAL</span>${realSubHtml}${cultureSubHtml}</div>`
     : '';
 
   if (group.entries.length === 1) {
@@ -2030,8 +2008,8 @@ function buildYearGroupCards(group) {
     if (hasPerMovieEvents) {
       const stackedCards = buildFictionCards(entry);
       const fictionBlock = `<div class="movie-cards-stack">${stackedCards}</div>`;
-      const stackHtml = rightStackHtml
-        ? `<div class="card-layers-stack">${rightStackHtml}${fictionBlock}</div>`
+      const stackHtml = mergedRealHtml
+        ? `<div class="card-layers-stack">${mergedRealHtml}${fictionBlock}</div>`
         : fictionBlock;
       return stackHtml;
     }
@@ -2045,8 +2023,8 @@ function buildYearGroupCards(group) {
           ${chipsHtml}
         </div>
       </div>`;
-    const stackHtml = rightStackHtml
-      ? `<div class="card-layers-stack">${rightStackHtml}${fictionHtml}</div>`
+    const stackHtml = mergedRealHtml
+      ? `<div class="card-layers-stack">${mergedRealHtml}${fictionHtml}</div>`
       : fictionHtml;
     return `
       <div class="movie-card" onclick="openDetail(${entry.id})">
@@ -2057,8 +2035,8 @@ function buildYearGroupCards(group) {
   // 複数エントリ：fiction カードを縦積み、REAL は背面に重ねる
   const stackedFiction = group.entries.map(e => buildFictionCards(e)).join('');
   const fictionBlock = `<div class="movie-cards-stack">${stackedFiction}</div>`;
-  const stackHtml = rightStackHtml
-    ? `<div class="card-layers-stack">${rightStackHtml}${fictionBlock}</div>`
+  const stackHtml = mergedRealHtml
+    ? `<div class="card-layers-stack">${mergedRealHtml}${fictionBlock}</div>`
     : fictionBlock;
   return stackHtml;
 }
