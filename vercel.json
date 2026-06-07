@@ -1,5 +1,5 @@
 {
-  "buildCommand": "python3 scripts/build.py",
+  "buildCommand": "python3 scripts/build.py --local",
   "outputDirectory": ".",
   "headers": [
     {
