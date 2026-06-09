@@ -2049,13 +2049,14 @@ function renderTimeline() {
 
   const sorted = [...filtered].sort((a, b) => a.yearSort - b.yearSort);
 
-  // 同一 floor 年のエントリをグループ化
+  // 同一 floor 年のエントリをグループ化（年代表記エントリは独立グループ）
   const yearGroups = [];
   const yearGroupMap = new Map();
   for (const entry of sorted) {
-    const key = Math.floor(entry.yearSort);
+    const isSpecificYear = /^\d{4}年$/.test(entry.yearDisplay);
+    const key = isSpecificYear ? `y_${Math.floor(entry.yearSort)}` : `p_${entry.id}`;
     if (!yearGroupMap.has(key)) {
-      const g = { key, entries: [] };
+      const g = { key, floorYear: Math.floor(entry.yearSort), entries: [] };
       yearGroups.push(g);
       yearGroupMap.set(key, g);
     }
@@ -2068,7 +2069,7 @@ function renderTimeline() {
   let cardIndex = 0;
 
   for (const group of yearGroups) {
-    const floorYear = group.key;
+    const floorYear = group.floorYear;
 
     // 10年代ヘッダー
     const decadeKey = getDecadeKey(floorYear);
