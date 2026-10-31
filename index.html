@@ -261,19 +261,11 @@
       border-left: 3px solid var(--red);
       border-radius: 0;
       padding: 0.35rem 1rem 0.35rem 0.8rem;
-      cursor: pointer;
+      cursor: default;
       transition: all 0.22s;
       user-select: none;
       max-width: 90vw;
       box-shadow: 2px 4px 12px rgba(0,0,0,0.22), 0 1px 3px rgba(0,0,0,0.1);
-    }
-
-    .year-badge:hover {
-      background: var(--red-dim);
-      border-color: rgba(0,0,0,0.2);
-      border-left-color: var(--red);
-      box-shadow: 4px 7px 18px rgba(0,0,0,0.28), 0 1px 3px rgba(0,0,0,0.1);
-      transform: translateY(-1px);
     }
 
     .year-num {
@@ -1129,6 +1121,129 @@
       color: rgba(255,255,255,0.72);
     }
 
+    /* ── INLINE YEAR CARD ── */
+    .year-inline-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--red);
+      padding: 1rem 1rem 0.85rem 0.9rem;
+      width: 100%;
+      max-width: 390px;
+      box-sizing: border-box;
+      box-shadow: 5px 8px 22px rgba(0,0,0,0.18), 2px 3px 6px rgba(0,0,0,0.1);
+    }
+    .yic-fiction { transition: opacity 0.3s; }
+    .yic-events {
+      font-size: 0.82rem;
+      color: var(--white);
+      line-height: 1.75;
+      margin-bottom: 0.8rem;
+    }
+    .yic-real {
+      background: var(--bg-card2);
+      border: 1px solid rgba(154,138,120,0.38);
+      border-left: 2px solid rgba(154,138,120,0.52);
+      padding: 0.5rem 0.7rem 0.6rem;
+      margin-bottom: 0.85rem;
+      position: relative;
+      transition: opacity 0.3s;
+      display: none;
+    }
+    body.mode-real .yic-real { display: block; }
+    .yic-real-badge {
+      position: absolute;
+      top: 0.35rem;
+      right: 0.5rem;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      opacity: 0.7;
+    }
+    .yic-real-sub, .yic-culture-sub { display: flex; flex-direction: column; gap: 0.15rem; }
+    .yic-culture-sub {
+      border-top: 1px solid rgba(82,105,122,0.18);
+      padding-top: 0.4rem;
+      margin-top: 0.4rem;
+    }
+    .yic-real-subbadge, .yic-culture-subbadge {
+      font-size: 0.42rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      font-family: 'Courier New', monospace;
+      opacity: 0.65;
+      text-transform: uppercase;
+    }
+    .yic-real-subbadge { color: var(--muted); }
+    .yic-culture-subbadge { color: #52697a; }
+    .yic-real-text, .yic-culture-text {
+      font-size: 0.7rem;
+      color: rgba(26,21,16,0.62);
+      line-height: 1.72;
+    }
+    .yic-movies { display: flex; flex-direction: column; }
+    .yic-movies-label {
+      font-size: 0.5rem;
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.1em;
+      opacity: 0.65;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+    }
+    .yic-movie-item {
+      border-top: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+    }
+    .yic-movie-item:last-child { border-bottom: 1px solid var(--border); }
+    .yic-movie-header {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.42rem 0;
+      transition: opacity 0.18s;
+    }
+    .yic-movie-item:hover .yic-movie-header { opacity: 0.72; }
+    .yic-movie-arrow {
+      font-size: 0.52rem;
+      color: var(--red);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+      display: inline-block;
+      width: 0.7rem;
+    }
+    .yic-movie-arrow.open { transform: rotate(90deg); }
+    .yic-movie-title {
+      font-size: 0.78rem;
+      color: var(--white);
+      font-family: 'Noto Serif JP', serif;
+      flex: 1;
+      line-height: 1.4;
+    }
+    .yic-movie-body {
+      font-size: 0.78rem;
+      color: rgba(26,21,16,0.72);
+      line-height: 1.75;
+      padding: 0.1rem 0 0.6rem 1rem;
+      display: none;
+      border-left: 1px solid rgba(204,26,26,0.22);
+      margin-left: 0.1rem;
+    }
+    .yic-movie-body.open { display: block; }
+    /* REAL モード対応 */
+    body.mode-real .yic-fiction { opacity: 0.3; }
+    body.mode-real .yic-real {
+      border-left-color: #8b7355;
+      border-color: rgba(139,115,85,0.5);
+    }
+    body.mode-real .yic-real-badge { color: #6b5b45; opacity: 1; }
+    body.mode-real .yic-real-subbadge { color: #6b5b45; opacity: 0.85; }
+    body.mode-real .yic-culture-subbadge { color: #3d5f72; opacity: 0.85; }
+    body.mode-real .yic-real-text { color: rgba(26,21,16,0.82); }
+    body.mode-real .yic-culture-text { color: rgba(26,21,16,0.78); }
+
     /* ── MOBILE ── */
     @media (max-width: 680px) {
       .timeline::before { left: 1rem; }
@@ -1979,60 +2094,67 @@ function buildFictionCards(entry) {
     </div>`;
 }
 
-// 年グループ全体のカード HTML を生成
+function toggleYicMovie(bodyId) {
+  const body = document.getElementById(bodyId);
+  const arr = document.getElementById('arr_' + bodyId);
+  if (!body) return;
+  const isOpen = body.classList.toggle('open');
+  if (arr) arr.classList.toggle('open', isOpen);
+}
+
+// 年グループ全体のカード HTML を生成（インライン表示）
 function buildYearGroupCards(group) {
   const first = group.entries[0];
 
-  // REAL + CULTURE を一枚のカードに統合
-  const realSubHtml = first.realEvents
-    ? `<div class="card-real-sub"><span class="card-real-subbadge">◆ 東京での出来事</span><span class="card-real-text">${first.realEvents}</span></div>`
-    : '';
-  const cultureSubHtml = first.realCulture
-    ? `<div class="card-culture-sub"><span class="card-culture-subbadge">◆ CULTURE</span><span class="card-culture-text">${first.realCulture}</span></div>`
-    : '';
-  const mergedRealHtml = (realSubHtml || cultureSubHtml)
-    ? `<div class="card-real-layer"><span class="card-real-badge">REAL</span>${realSubHtml}${cultureSubHtml}</div>`
-    : '';
+  // Era summary
+  const eventsHtml = `<div class="yic-fiction"><div class="yic-events">${first.events}</div></div>`;
 
-  if (group.entries.length === 1) {
-    const entry = first;
-    const hasPerMovieEvents = entry.movieEvents &&
-      entry.movieEvents.length === entry.movieList.length &&
-      entry.movieList.length > 1;
-    if (hasPerMovieEvents) {
-      const stackedCards = buildFictionCards(entry);
-      const fictionBlock = `<div class="movie-cards-stack">${stackedCards}</div>`;
-      const stackHtml = mergedRealHtml
-        ? `<div class="card-layers-stack">${mergedRealHtml}${fictionBlock}</div>`
-        : fictionBlock;
-      return stackHtml;
-    }
-    const chipsHtml = entry.movieList.map(m => `<span class="movie-chip">${m}</span>`).join('');
-    const fictionHtml = `
-      <div class="card-fiction-layer">
-        <div class="card-meta"><span class="genre-tag">${entry.genre}</span></div>
-        <div class="card-events">${entry.events}</div>
-        <div class="card-movies">
-          <span class="card-movies-label">▸ MOVIES</span>
-          ${chipsHtml}
-        </div>
-      </div>`;
-    const stackHtml = mergedRealHtml
-      ? `<div class="card-layers-stack">${mergedRealHtml}${fictionHtml}</div>`
-      : fictionHtml;
-    return `
-      <div class="movie-card" onclick="openDetail(${entry.id})">
-        ${stackHtml}
-      </div>`;
+  // REAL section
+  let realHtml = '';
+  if (first.realEvents || first.realCulture) {
+    const realSubHtml = first.realEvents
+      ? `<div class="yic-real-sub"><span class="yic-real-subbadge">◆ 東京での出来事</span><div class="yic-real-text">${first.realEvents}</div></div>`
+      : '';
+    const cultureSubHtml = first.realCulture
+      ? `<div class="yic-culture-sub"><span class="yic-culture-subbadge">◆ CULTURE</span><div class="yic-culture-text">${first.realCulture}</div></div>`
+      : '';
+    realHtml = `<div class="yic-real"><span class="yic-real-badge">REAL</span>${realSubHtml}${cultureSubHtml}</div>`;
   }
 
-  // 複数エントリ：fiction カードを縦積み、REAL は背面に重ねる
-  const stackedFiction = group.entries.map(e => buildFictionCards(e)).join('');
-  const fictionBlock = `<div class="movie-cards-stack">${stackedFiction}</div>`;
-  const stackHtml = mergedRealHtml
-    ? `<div class="card-layers-stack">${mergedRealHtml}${fictionBlock}</div>`
-    : fictionBlock;
-  return stackHtml;
+  // Movies accordion
+  let movieItems = '';
+  let totalMovies = 0;
+  for (const entry of group.entries) {
+    const hasDesc = entry.movieEvents && entry.movieEvents.length === entry.movieList.length;
+    for (let idx = 0; idx < entry.movieList.length; idx++) {
+      const movie = entry.movieList[idx];
+      const genre = (entry.movieGenres && entry.movieGenres[idx]) ? entry.movieGenres[idx] : entry.genre;
+      const bodyId = `yic_${entry.id}_${idx}`;
+      const desc = hasDesc ? entry.movieEvents[idx] : null;
+      const arrowHtml = desc
+        ? `<span class="yic-movie-arrow" id="arr_${bodyId}">▶</span>`
+        : `<span class="yic-movie-arrow" style="opacity:0;pointer-events:none">▶</span>`;
+      const onclickAttr = desc ? `onclick="toggleYicMovie('${bodyId}')"` : '';
+      const bodyHtml = desc ? `<div class="yic-movie-body" id="${bodyId}">${desc}</div>` : '';
+      movieItems += `
+        <div class="yic-movie-item" ${onclickAttr}>
+          <div class="yic-movie-header">
+            ${arrowHtml}
+            <span class="yic-movie-title">${movie}</span>
+            <span class="genre-tag-sm">${genre}</span>
+          </div>
+          ${bodyHtml}
+        </div>`;
+      totalMovies++;
+    }
+  }
+
+  const moviesHtml = `<div class="yic-movies">
+    <span class="yic-movies-label">▸ MOVIES — ${totalMovies} title${totalMovies > 1 ? 's' : ''}</span>
+    ${movieItems}
+  </div>`;
+
+  return `<div class="year-inline-card">${eventsHtml}${realHtml}${moviesHtml}</div>`;
 }
 
 function renderTimeline() {
@@ -2115,9 +2237,8 @@ function renderTimeline() {
     html += `
       <div class="year-group fade-in">
         <div class="year-marker">
-          <div class="year-badge" onclick="openDetail(${group.entries[0].id})">
+          <div class="year-badge">
             ${badgeInner}
-            <span class="year-hint">▶ DETAIL</span>
           </div>
         </div>
         <div class="cards-row">
