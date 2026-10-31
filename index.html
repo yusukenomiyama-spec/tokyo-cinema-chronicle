@@ -1123,16 +1123,22 @@
 
     /* ── INLINE YEAR CARD ── */
     .year-inline-card {
+      background: transparent;
+      border: none;
+      padding: 0;
+      width: 100%;
+      max-width: 390px;
+      box-sizing: border-box;
+      box-shadow: none;
+    }
+    .yic-fiction {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-left: 3px solid var(--red);
       padding: 1rem 1rem 0.85rem 0.9rem;
-      width: 100%;
-      max-width: 390px;
-      box-sizing: border-box;
       box-shadow: 5px 8px 22px rgba(0,0,0,0.18), 2px 3px 6px rgba(0,0,0,0.1);
+      transition: opacity 0.38s, transform 0.38s;
     }
-    .yic-fiction { transition: opacity 0.3s; }
     .yic-events {
       font-size: 0.82rem;
       color: var(--white);
@@ -1144,12 +1150,13 @@
       border: 1px solid rgba(154,138,120,0.38);
       border-left: 2px solid rgba(154,138,120,0.52);
       padding: 0.5rem 0.7rem 0.6rem;
-      margin-bottom: 0.85rem;
+      margin-top: 4px;
       position: relative;
-      transition: opacity 0.3s;
-      display: none;
+      opacity: 0.5;
+      transform: translateX(8px);
+      transition: opacity 0.38s, transform 0.38s;
+      box-shadow: 2px 4px 12px rgba(0,0,0,0.07);
     }
-    body.mode-real .yic-real { display: block; }
     .yic-real-badge {
       position: absolute;
       top: 0.35rem;
@@ -1232,11 +1239,17 @@
       margin-left: 0.1rem;
     }
     .yic-movie-body.open { display: block; }
-    /* REAL モード対応 */
-    body.mode-real .yic-fiction { opacity: 0.3; }
+    /* REAL モード対応 — レイヤーの入れ替え */
+    body.mode-real .yic-fiction {
+      opacity: 0.3;
+      transform: translateX(8px);
+    }
     body.mode-real .yic-real {
+      opacity: 1;
+      transform: translateX(0);
       border-left-color: #8b7355;
       border-color: rgba(139,115,85,0.5);
+      box-shadow: 4px 7px 20px rgba(139,115,85,0.18), 2px 3px 8px rgba(139,115,85,0.1);
     }
     body.mode-real .yic-real-badge { color: #6b5b45; opacity: 1; }
     body.mode-real .yic-real-subbadge { color: #6b5b45; opacity: 0.85; }
@@ -2106,21 +2119,6 @@ function toggleYicMovie(bodyId) {
 function buildYearGroupCards(group) {
   const first = group.entries[0];
 
-  // Era summary
-  const eventsHtml = `<div class="yic-fiction"><div class="yic-events">${first.events}</div></div>`;
-
-  // REAL section
-  let realHtml = '';
-  if (first.realEvents || first.realCulture) {
-    const realSubHtml = first.realEvents
-      ? `<div class="yic-real-sub"><span class="yic-real-subbadge">◆ 東京での出来事</span><div class="yic-real-text">${first.realEvents}</div></div>`
-      : '';
-    const cultureSubHtml = first.realCulture
-      ? `<div class="yic-culture-sub"><span class="yic-culture-subbadge">◆ CULTURE</span><div class="yic-culture-text">${first.realCulture}</div></div>`
-      : '';
-    realHtml = `<div class="yic-real"><span class="yic-real-badge">REAL</span>${realSubHtml}${cultureSubHtml}</div>`;
-  }
-
   // Movies accordion
   let movieItems = '';
   let totalMovies = 0;
@@ -2154,7 +2152,22 @@ function buildYearGroupCards(group) {
     ${movieItems}
   </div>`;
 
-  return `<div class="year-inline-card">${eventsHtml}${realHtml}${moviesHtml}</div>`;
+  // Fiction card (white) — contains era summary + movies
+  const fictionHtml = `<div class="yic-fiction"><div class="yic-events">${first.events}</div>${moviesHtml}</div>`;
+
+  // REAL card (beige) — always rendered, hidden via opacity/transform in MOVIE mode
+  let realHtml = '';
+  if (first.realEvents || first.realCulture) {
+    const realSubHtml = first.realEvents
+      ? `<div class="yic-real-sub"><span class="yic-real-subbadge">◆ 東京での出来事</span><div class="yic-real-text">${first.realEvents}</div></div>`
+      : '';
+    const cultureSubHtml = first.realCulture
+      ? `<div class="yic-culture-sub"><span class="yic-culture-subbadge">◆ CULTURE</span><div class="yic-culture-text">${first.realCulture}</div></div>`
+      : '';
+    realHtml = `<div class="yic-real"><span class="yic-real-badge">REAL</span>${realSubHtml}${cultureSubHtml}</div>`;
+  }
+
+  return `<div class="year-inline-card">${fictionHtml}${realHtml}</div>`;
 }
 
 function renderTimeline() {
