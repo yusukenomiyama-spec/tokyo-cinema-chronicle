@@ -1267,29 +1267,28 @@
 
     /* ── 幽霊アニメーション ── */
     @keyframes ghost-emerge {
-      0%   { transform: translate(14px, 14px); opacity: 0.45; filter: none; }
-      38%  { transform: translate(4px, 4px);   opacity: 0.68; filter: brightness(1.05); }
-      62%  { transform: translate(-2px, -2px); opacity: 0.88; filter: brightness(1.14) blur(0.5px); }
-      80%  { transform: translate(0.8px, 0.8px); opacity: 0.97; filter: brightness(1.04); }
-      100% { transform: translate(0, 0); opacity: 1; filter: none; }
+      0%   { transform: translate(14px, 14px); opacity: 0.42; }
+      42%  { transform: translate(6px, 6px);   opacity: 0.72; filter: brightness(1.07); }
+      72%  { transform: translate(1px, 1px);   opacity: 0.94; filter: brightness(1.06); }
+      100% { transform: translate(0, 0);       opacity: 1;    filter: none; }
     }
     @keyframes ghost-recede {
-      0%   { transform: translate(0, 0); opacity: 1; filter: none; }
-      30%  { opacity: 0.55; filter: brightness(0.95); }
+      0%   { transform: translate(0, 0);       opacity: 1; }
+      45%  { transform: translate(6px, 6px);   opacity: 0.5; }
       100% { transform: translate(14px, 14px); opacity: 0.28; filter: none; }
     }
-    /* アニメーション中：z-indexは切り替え済み、transformとopacityをoverrideして幽霊効果 */
+    /* z-indexは切り替え済み、transformとopacityをoverrideして幽霊効果 */
     .year-inline-card.ghost-to-real .yic-real {
-      animation: ghost-emerge 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: ghost-emerge 0.78s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
     }
     .year-inline-card.ghost-to-real .yic-fiction {
-      animation: ghost-recede 0.52s ease-in forwards;
+      animation: ghost-recede 0.55s cubic-bezier(0.4, 0, 0.6, 1) forwards;
     }
     .year-inline-card.ghost-to-movie .yic-fiction {
-      animation: ghost-emerge 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation: ghost-emerge 0.78s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
     }
     .year-inline-card.ghost-to-movie .yic-real {
-      animation: ghost-recede 0.52s ease-in forwards;
+      animation: ghost-recede 0.55s cubic-bezier(0.4, 0, 0.6, 1) forwards;
     }
 
     /* ── MOBILE ── */
@@ -2459,25 +2458,31 @@ function setLayer(mode) {
   if (isReal === wasReal) return;
 
   const animClass = isReal ? 'ghost-to-real' : 'ghost-to-movie';
-  const cards = document.querySelectorAll('.year-inline-card');
+  const cards = [...document.querySelectorAll('.year-inline-card')];
 
-  // アニメーションを再トリガーするためにいったんクラスを外す
-  cards.forEach(card => {
-    card.classList.remove('ghost-to-real', 'ghost-to-movie');
-  });
-  // reflow を強制してアニメーション再スタート
-  void document.body.offsetWidth;
+  // 前回のアニメーションを即座にクリア
+  cards.forEach(card => card.classList.remove('ghost-to-real', 'ghost-to-movie'));
+  void document.body.offsetWidth; // reflow
 
-  // mode切り替え（z-indexが即座に変わる ＝ 「手前」に来るカードが決まる）
+  // mode切り替え（z-indexが決まる）→ アニメーションクラスを付与
   document.body.classList.toggle('mode-real', isReal);
-
-  // アニメーションクラスを付与（z-index変更後に動きを演出）
   cards.forEach(card => card.classList.add(animClass));
 
-  // アニメーション終了後にクラスを除去
-  setTimeout(() => {
+  // ghost-emerge 終了を待ってクリーンアップ（setTimeoutより正確）
+  let done = false;
+  const cleanup = () => {
+    if (done) return;
+    done = true;
     cards.forEach(card => card.classList.remove(animClass));
-  }, 780);
+  };
+  // ghost-emergeアニメーション終了イベントを1回だけ捕捉
+  document.body.addEventListener('animationend', function onEnd(e) {
+    if (e.animationName === 'ghost-emerge') {
+      document.body.removeEventListener('animationend', onEnd);
+      cleanup();
+    }
+  });
+  setTimeout(cleanup, 950); // イベント未発火時のフォールバック
 
   const bf = document.getElementById('btnFiction');
   const br = document.getElementById('btnReal');
